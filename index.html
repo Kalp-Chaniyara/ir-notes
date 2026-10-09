@@ -1,0 +1,1870 @@
+<title>IR Exam War Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a study handbook. Home page reads like an inverted index (lecture -> posting list of topics); inner pages are one readable column. */
+:root{
+  --paper:#f4f6f9; --card:#ffffff; --ink:#15202d; --muted:#566273; --line:#d9dfe7;
+  --accent:#2142a3; --accent-soft:#e5eaf8; --hl:#fff0a0; --hl-ink:#3d3200;
+  --num:#a54d07; --num-soft:#fbecdc; --ok:#1d7a4a; --ok-soft:#e1f3e9;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0e131a; --card:#151c26; --ink:#e4e9f0; --muted:#9aa6b5; --line:#263142;
+  --accent:#93abff; --accent-soft:#1b2540; --hl:#4b4210; --hl-ink:#fff2b3;
+  --num:#f2a65e; --num-soft:#33230f; --ok:#6fd49c; --ok-soft:#12291d; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0e131a; --card:#151c26; --ink:#e4e9f0; --muted:#9aa6b5; --line:#263142;
+  --accent:#93abff; --accent-soft:#1b2540; --hl:#4b4210; --hl-ink:#fff2b3;
+  --num:#f2a65e; --num-soft:#33230f; --ok:#6fd49c; --ok-soft:#12291d; color-scheme:dark }
+
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:18px;padding-block:0 64px}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,6vw,3.4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.45rem,3.6vw,1.9rem);font-weight:700;margin-top:2.4rem;scroll-margin-top:72px}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:.6em 0}
+.lede{font-size:1.1rem;color:var(--muted);max-width:68ch}
+.mark{background:var(--hl);color:var(--hl-ink);padding:0 .2em;border-radius:3px}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.bar .in{max-width:1040px;margin:0 auto;padding-inline:18px;padding-block:10px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+.navlinks{display:flex;gap:8px;flex-wrap:wrap}
+.navlinks a{font-family:var(--f-mono);font-size:.8rem;text-decoration:none;padding:5px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink);background:var(--card)}
+.navlinks a:hover{border-color:var(--accent)}
+
+/* hero */
+.hero{padding-block:34px 8px;display:grid;gap:14px}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;min-width:0}
+.fact b{display:block;font-family:var(--f-display);font-size:1.35rem;line-height:1.1}
+.fact span{font-size:.85rem;color:var(--muted)}
+
+/* index as an inverted index */
+.index{margin-top:28px;display:grid;gap:12px}
+.entry{display:grid;grid-template-columns:150px 1fr auto;gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;text-decoration:none;color:var(--ink)}
+.entry:hover{border-color:var(--accent)}
+.entry .term{font-family:var(--f-mono);font-weight:600;font-size:.95rem}
+.entry .term small{display:block;color:var(--muted);font-weight:400;font-size:.75rem}
+.entry h3{margin-bottom:6px}
+.postings{display:flex;flex-wrap:wrap;gap:4px 0;align-items:center;font-family:var(--f-mono);font-size:.74rem;min-width:0}
+.postings span{border:1px solid var(--line);padding:2px 7px;background:var(--paper);border-radius:3px}
+.postings i{font-style:normal;color:var(--muted);padding:0 4px}
+.side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.chip{font-family:var(--f-mono);font-size:.72rem;padding:3px 8px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+.chip.num{background:var(--num-soft);color:var(--num)}
+.chip.mcq{background:var(--accent-soft);color:var(--accent)}
+.chip.ready{background:var(--ok-soft);color:var(--ok)}
+.chip.wait{border-color:var(--line);color:var(--muted)}
+.entry.featured{border-width:2px;border-color:var(--accent)}
+@media (max-width:720px){ .entry{grid-template-columns:1fr} .side{flex-direction:row;align-items:center;flex-wrap:wrap} }
+
+/* content pages */
+.page{padding-top:28px}
+.prose{max-width:72ch}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 6px}
+.toc a{font-size:.85rem;text-decoration:none;border:1px solid var(--line);padding:4px 10px;border-radius:999px;background:var(--card);color:var(--ink)}
+.callout{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:14px 16px;margin:16px 0;max-width:76ch}
+.callout.warn{border-left-color:var(--num)}
+.analogy{background:var(--accent-soft);border-radius:8px;padding:12px 14px;margin:12px 0;max-width:76ch}
+.analogy b{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px}
+
+/* course story */
+.story{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px;counter-reset:st}
+.stage{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;min-width:0;position:relative}
+.stage .step{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.stage h3{margin:4px 0 6px}
+.stage p{font-size:.93rem;margin:.3em 0}
+.stage .ls{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.stage .ls a{font-family:var(--f-mono);font-size:.75rem;text-decoration:none;background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:4px}
+
+/* glossary */
+.gl-group{margin-top:22px}
+.gl-group>h3{font-size:1.05rem;color:var(--accent);margin-bottom:8px}
+.gl{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+.g{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.g dt{font-weight:700;font-family:var(--f-display);font-size:1.02rem}
+.g dd{margin:4px 0 0;font-size:.94rem}
+.g .ex{color:var(--muted);font-size:.9rem;margin-top:6px}
+.g .ex::before{content:"e.g. ";font-family:var(--f-mono);font-size:.75rem;color:var(--accent)}
+
+/* tables */
+.tbl{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:640px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--paper)}
+tr:last-child td{border-bottom:0}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.lvl{font-family:var(--f-mono);font-size:.72rem;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.lvl.h{background:var(--num-soft);color:var(--num);font-weight:600}
+.lvl.m{background:var(--accent-soft);color:var(--accent)}
+.lvl.l{border:1px solid var(--line);color:var(--muted)}
+
+/* plan */
+.plan{display:grid;gap:10px;margin-top:12px}
+.blk{display:grid;grid-template-columns:120px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.blk .t{font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+.blk .t b{display:block;color:var(--ink);font-size:1rem}
+.blk.rest{background:transparent;border-style:dashed}
+@media (max-width:560px){ .blk{grid-template-columns:1fr;gap:4px} }
+
+ul.clean{padding-left:1.1em;margin:.4em 0}
+ul.clean li{margin:.25em 0}
+.formula{font-family:var(--f-mono);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:8px 12px;display:inline-block;max-width:100%;overflow-x:auto;font-size:.9rem}
+
+/* lecture page */
+.lec-head{display:grid;gap:10px}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.pending{border:2px dashed var(--line);border-radius:var(--r);padding:18px;margin-top:22px;max-width:76ch}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:40px;flex-wrap:wrap}
+.pager a{text-decoration:none;border:1px solid var(--line);background:var(--card);padding:10px 14px;border-radius:8px;color:var(--ink);font-size:.92rem}
+.pager a:hover{border-color:var(--accent)}
+.done-toggle{display:inline-flex;gap:8px;align-items:center;font-size:.9rem;cursor:pointer;user-select:none}
+.done-toggle input{width:18px;height:18px;accent-color:var(--accent)}
+.foot{margin-top:48px;color:var(--muted);font-size:.85rem}
+
+/* full lecture content */
+.lx{max-width:80ch}
+.lx h2{border-top:1px solid var(--line);padding-top:1.6rem}
+.lx h3{margin-top:1.6rem}
+.lx p,.lx li{max-width:76ch}
+.lx .formula{display:block;margin:10px 0;white-space:pre-wrap;line-height:1.7}
+.sym{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;font-size:.93rem;margin:6px 0 12px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.sym dt{font-family:var(--f-mono);font-weight:600;color:var(--accent)}
+.sym dd{margin:0}
+.work{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--num);border-radius:8px;padding:14px 16px;margin:16px 0}
+.work>b:first-child{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--num);display:block;margin-bottom:4px}
+.work ol{padding-left:1.3em;margin:.4em 0}
+.work li{margin:.35em 0}
+.ans{margin:10px 0;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.ans summary{cursor:pointer;padding:10px 14px;font-weight:700}
+.ans>div{padding:0 14px 12px}
+.ans[open] summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:10px 0}
+.q ol{list-style:upper-alpha;margin:.3em 0;padding-left:1.6em}
+.q details summary{cursor:pointer;color:var(--accent);font-size:.9rem;margin-top:6px}
+.trap{list-style:none;padding:0;margin:10px 0;display:grid;gap:8px}
+.trap li{background:var(--num-soft);border-radius:6px;padding:8px 12px;font-size:.95rem}
+.trap li b{color:var(--num)}
+.mini{width:auto;min-width:0}
+.mini td,.mini th{padding:6px 10px}
+.hlrow td{background:var(--hl);color:var(--hl-ink)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--f-mono);font-size:.8rem;margin:10px 0}
+.flow span{border:1px solid var(--line);background:var(--card);padding:4px 9px;border-radius:5px}
+.flow i{font-style:normal;color:var(--muted)}
+.inmin{background:var(--accent-soft);border-radius:10px;padding:14px 16px;margin:18px 0;max-width:76ch}
+.inmin b.l{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block}
+.note{font-size:.9rem;color:var(--muted)}
+.bits{font-family:var(--f-mono);letter-spacing:.15em}
+@media (prefers-reduced-motion:no-preference){ .view{animation:in .25s ease-out} @keyframes in{from{transform:translateY(6px)}to{transform:none}} }
+</style>
+
+<header class="bar"><div class="in">
+  <a class="brand" href="#home">IR <span>War Room</span></a>
+  <nav class="navlinks" aria-label="Quick links">
+    <a href="#home">Index</a><a href="#overview">Overview</a><a href="#numericals">Numericals</a><a href="#plan">Plan</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<!-- ================= HOME ================= -->
+<section class="view" id="v-home">
+  <div class="hero">
+    <div class="eyebrow">IT550 Information Retrieval · exam prep</div>
+    <h1>IR Exam War Room</h1>
+    <p class="lede">Everything in your 12 lecture PDFs, explained from zero. Start with the Overview, then open one lecture at a time. Each lecture page will get its full explanation, worked numericals and MCQ traps as we go.</p>
+    <div class="facts">
+      <div class="fact"><b>MCQs + 5</b><span>numericals in the paper</span></div>
+      <div class="fact"><b>12 PDFs</b><span>614 slides, all read</span></div>
+      <div class="fact"><b>~18 h</b><span>of focused study planned</span></div>
+      <div class="fact"><b id="progress">0 / 12</b><span>lectures marked done</span></div>
+    </div>
+  </div>
+
+  <div class="index" id="index">
+    <a class="entry featured" href="#overview">
+      <div class="term">00<small>start here</small></div>
+      <div><h3>Overview: the whole course on one page</h3>
+        <div class="postings"><span>what IR is</span><i>→</i><span>course story</span><i>→</i><span>glossary</span><i>→</i><span>lecture weights</span><i>→</i><span>numericals list</span><i>→</i><span>study plan</span></div></div>
+      <div class="side"><span class="chip ready">ready</span></div>
+    </a>
+    <!-- lecture entries injected by script -->
+  </div>
+  <p class="foot">The home page is laid out like an inverted index, the data structure you will learn in Lecture 5: each lecture is a "term", and the row of boxes after it is its "posting list" of topics.</p>
+</section>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="view page" id="v-overview" hidden>
+  <div class="eyebrow">00 · Overview</div>
+  <h1>The whole course on one page</h1>
+  <p class="lede">Read this first, slowly, once. It gives you the map, the vocabulary and the plan. After this, every lecture page will feel like filling in a map you already have.</p>
+  <nav class="toc" aria-label="On this page">
+    <a href="#ov-what">1. What IR is</a><a href="#ov-story">2. Course story</a><a href="#ov-words">3. Glossary</a><a href="#ov-map">4. Lecture weights</a><a href="#numericals">5. Numericals</a><a href="#ov-threads">6. Repeating ideas</a><a href="#plan">7. Study plan</a>
+  </nav>
+
+  <!-- 1 -->
+  <h2 id="ov-what">1. What is Information Retrieval?</h2>
+  <div class="prose">
+    <p><b>Information Retrieval (IR)</b> means: a person needs some information, there is a huge pile of documents, and a computer has to find the few documents that help, and show them in the best order.</p>
+    <p>Your professor's definition (Lecture 1, from the Stanford textbook): <span class="mark">IR is finding material (usually documents) of an unstructured nature (usually text) that satisfies an information need from within large collections (usually stored on computers).</span></p>
+    <p>Break that sentence into its words:</p>
+    <ul class="clean">
+      <li><b>Material / documents</b>: the things being searched. A web page, a PDF, an email, a tweet, a product description.</li>
+      <li><b>Unstructured</b>: not arranged in neat rows and columns like an Excel sheet. Normal free text, written for humans.</li>
+      <li><b>Information need</b>: what the person actually wants to know, inside their head.</li>
+      <li><b>Large collection</b>: millions or billions of documents, far too many to read one by one.</li>
+    </ul>
+  </div>
+  <div class="analogy"><b>Analogy</b>You walk into a giant library with no catalogue and ask the librarian "something on cheap laptops for college". A great librarian understands what you mean (even if the books say "affordable notebooks"), pulls out the 10 best books from millions, and hands you the best one first. IR is the science of building that librarian as software. Google, Amazon search, Google Scholar and the retrieval step in ChatGPT-style RAG systems are all IR systems.</div>
+  <div class="prose">
+    <p><b>Why is it hard?</b> Lecture 1 does a small calculation: Google has about 100 billion pages. If checking one page took just 1 millisecond, checking all of them for one query would take 100,000,000 seconds, about <b>3.17 years</b>. So we cannot read every document per query. We must <b>prepare in advance</b> (build an index) and <b>score cleverly</b> (rank by relevance). That one problem drives the whole course.</p>
+    <p>IR is also different from a database. A database (SQL) works on structured tables, finds <i>exact</i> matches and gives one precise answer. IR works on messy text, does <i>approximate</i> matching, and returns a <b>ranked list</b> sorted by how relevant each document probably is.</p>
+  </div>
+
+  <!-- 2 -->
+  <h2 id="ov-story">2. The story of the course</h2>
+  <p class="prose">The 12 PDFs are not 12 random topics. They are one pipeline, in the same order a real search engine works. Keep this picture in your head.</p>
+  <div class="story">
+    <div class="stage"><div class="step">stage 1 · the problem</div><h3>What does the user want?</h3>
+      <p>Information need vs query, types of queries, documents, corpora, and what "relevant" even means.</p>
+      <div class="ls"><a href="#l1">L1-2 Intro</a><a href="#l3">L3 Query &amp; relevance</a></div></div>
+    <div class="stage"><div class="step">stage 2 · prepare the text</div><h3>Cut text into pieces</h3>
+      <p>Split text into tokens (words or sub-words), clean them (lowercase, stem, remove stopwords).</p>
+      <div class="ls"><a href="#l4">L4 Tokenizers</a><a href="#l5">L5 Preprocessing</a></div></div>
+    <div class="stage"><div class="step">stage 3 · organise for speed</div><h3>Build the index</h3>
+      <p>The inverted index: for every word, the list of documents that contain it. Like the index at the back of a book.</p>
+      <div class="ls"><a href="#l5">L5 Inverted index</a></div></div>
+    <div class="stage"><div class="step">stage 4 · score and rank</div><h3>Which document is best?</h3>
+      <p>Three families of scoring: geometry (vectors, TF-IDF, cosine), probability (BIM, BM25), and language models (query likelihood).</p>
+      <div class="ls"><a href="#l6">L6 Boolean &amp; VSM</a><a href="#l10">L10 BIM &amp; BM25</a><a href="#l11">L11 N-grams</a><a href="#l12">L12 LM for IR</a></div></div>
+    <div class="stage"><div class="step">stage 5 · improve the query</div><h3>Fix bad queries</h3>
+      <p>Use feedback on results to move the query closer to what the user meant, or add synonyms.</p>
+      <div class="ls"><a href="#l7">L7 Rocchio &amp; expansion</a></div></div>
+    <div class="stage"><div class="step">stage 6 · measure</div><h3>Is the system good?</h3>
+      <p>Precision, recall, F1, MAP, nDCG, MRR. How we prove system A beats system B.</p>
+      <div class="ls"><a href="#l8">L8 Evaluation I</a><a href="#l9">L9 Evaluation II</a></div></div>
+    <div class="stage"><div class="step">stage 7 · beyond search</div><h3>Sort documents into classes</h3>
+      <p>Same probability tools, new job: decide if an email is spam, or a review is positive (Naive Bayes).</p>
+      <div class="ls"><a href="#l13">L13 Naive Bayes</a></div></div>
+  </div>
+  <div class="callout"><b>One sentence summary of the course:</b> turn text into tokens, index them, score every document against the query with some formula, optionally improve the query using feedback, and measure how good the ranking is.</div>
+
+  <!-- 3 -->
+  <h2 id="ov-words">3. Glossary: every word you will meet</h2>
+  <p class="prose">Every important word from all 12 PDFs, in plain English, with an everyday example. Do not memorise this now. Read it once so no word in the lectures feels foreign; come back whenever a word confuses you.</p>
+  <div id="glossary"></div>
+
+  <!-- 4 -->
+  <h2 id="ov-map">4. What each PDF contains, and how much it matters</h2>
+  <p class="prose"><b>MCQ weight</b> is how many testable facts and definitions the lecture has. <b>Numerical weight</b> is how much of the lecture is calculation with worked examples on the slides (professors usually set numericals close to their own slide examples). Time is focused study time, including practice.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Lecture</th><th>Main topics</th><th>MCQ</th><th>Numerical</th><th>Time</th></tr></thead>
+    <tbody id="maprows"></tbody>
+  </table></div>
+
+  <!-- 5 -->
+  <h2 id="numericals">5. The numericals arsenal</h2>
+  <p class="prose">The paper has 5 numericals. These are all the calculation types that appear in your slides. "Likely" is my estimate based on how much slide time and how many worked examples each one gets, not a promise. If you can do every <span class="lvl h">high</span> row confidently, you are well covered.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Numerical</th><th>From</th><th>What you actually compute</th><th>Likely</th></tr></thead>
+    <tbody id="numrows"></tbody>
+  </table></div>
+  <div class="callout warn"><b>Log base warning.</b> Your slides use three different logs: <span class="mono">log<sub>10</sub></span> for IDF in Lecture 6 (idf of Brutus = 6 when N = 1,000,000), <span class="mono">log<sub>2</sub></span> in the TF-IDF worked example and in nDCG, and natural log <span class="mono">ln</span> in the BM25 example (ln 998.5 ≈ 6.906). In the exam, use the base the question states. If it states none, use the base that lecture used, and write it down in your answer.</div>
+
+  <!-- 6 -->
+  <h2 id="ov-threads">6. Ideas that repeat across lectures</h2>
+  <p class="prose">These patterns show up again and again. Spotting them makes the later lectures much easier and they are favourite MCQ material.</p>
+  <div class="gl">
+    <div class="g"><dt>"Independence" is assumed three times</dt><dd>BIM (L10), Naive Bayes (L13) and the unigram language model (L11, L12) all pretend each word appears independently of the others. It is false in real language ("New" and "York" go together) but it makes the math easy and still works well.</dd></div>
+    <div class="g"><dt>Smoothing appears four times</dt><dd>Whenever a count can be zero, a probability becomes zero and kills the whole product. Fixes: +0.5 in BIM/BM25 (L10), add-1 Laplace for bigrams (L11), Laplace / Jelinek-Mercer / Dirichlet for query likelihood (L12), add-1 for Naive Bayes (L13).</dd></div>
+    <div class="g"><dt>"Sum over query terms" is the same shape everywhere</dt><dd>TF-IDF score, BIM's RSV, BM25 and log query likelihood all end up as: for each query word found in the document, add up some weight. Three different theories, one computation. This is why one inverted index serves all of them.</dd></div>
+    <div class="g"><dt>Logs are used to avoid tiny numbers</dt><dd>Multiplying many probabilities like 0.001 gives numbers too small for a computer (underflow). Taking logs turns multiply into add. Seen in L11 (n-grams), L12 and L13 (Naive Bayes).</dd></div>
+    <div class="g"><dt>Rare words matter more</dt><dd>IDF (L6), BIM's term weight (L10) and the "IDF-like term" in BM25 (L10) all say: a word that appears in few documents tells you more. "arachnocentric" is a stronger clue than "the".</dd></div>
+    <div class="g"><dt>The same toy examples come back</dt><dd>Shakespeare plays (Brutus, Caesar, Calpurnia) in L5, L6, L10. The hug / pug / pun / bun / hugs corpus in BPE, WordPiece and Unigram (L4). Chinese / Tokyo / Japan in both Naive Bayes models (L13). Practice these exact examples.</dd></div>
+    <div class="g"><dt>Precision vs recall is a trade-off</dt><dd>Stemming, query expansion and feedback usually raise recall (find more relevant documents) but can lower precision (also pull in junk). This trade-off is mentioned in L5, L7, L8 and L9.</dd></div>
+    <div class="g"><dt>Every model is a "BoW" model</dt><dd>Bag of words: word order is thrown away, only counts (or presence) matter. "John is quicker than Mary" and "Mary is quicker than John" look identical. True for VSM, BIM, BM25, unigram LM and Naive Bayes.</dd></div>
+  </div>
+
+  <!-- 7 -->
+  <h2 id="plan">7. Battle plan for the next ~30 hours</h2>
+  <p class="prose">About 18 hours of real study, plus sleep, food and breaks. The order follows the course story, because later lectures reuse earlier ones (BM25 needs IDF, Naive Bayes needs smoothing). Tonight is for the lighter, foundational lectures. Each block ends with you solving that lecture's numericals by hand, without looking.</p>
+  <div class="plan" id="planrows"></div>
+  <div class="callout"><b>How to study each lecture page</b> (when it is ready): read the explanation once, then cover the worked example and redo it on paper, then do the MCQ traps list. Mark the lecture done on its page. Writing a calculation by hand once is worth more than reading it three times.</div>
+
+
+  <div class="pager"><a href="#home">← Index</a><a href="#l1">Next: L1-2 Introduction →</a></div>
+</section>
+
+<!-- ================= LECTURE PAGES (generated) ================= -->
+<div id="lecpages"></div>
+
+</main>
+
+<template id="t-l1">
+<div class="inmin"><b class="l">This lecture in one minute</b>
+Search engines hold billions of documents, so reading all of them for every query is impossible. Information Retrieval (IR) is the field that finds the right documents quickly and puts them in the best order. This lecture gives the definition, where IR is used, the kinds of data that exist, how IR differs from a database, the basic vocabulary (query, document, corpus, relevance, ranking), the parts of an IR system, and the tasks IR helps with (classification, clustering, extraction, question answering, summarization). It is mostly MCQ material with one small calculation.</div>
+
+<h2 id="l1-why">1. Why we need IR: the "naive search engine"</h2>
+<p>The slides first show real searches: "best pizza in Gandhinagar" on Google (results plus a map), "what is information retrieval" (Wikipedia, GeeksforGeeks, IBM), an LLM answer for "best book to learn C++", e-commerce search, and research paper search. All of these are IR systems.</p>
+<p>Then the professor asks: <b>what if a search engine did the simplest possible thing?</b> Suppose:</p>
+<ul class="clean">
+  <li>Google stores <b>100 billion</b> web pages.</li>
+  <li>Each page has about <b>1,000 words</b>.</li>
+  <li>A user searches for <i>information retrieval</i>.</li>
+</ul>
+<p>The <b>naive approach</b> ("naive" means simple and unclever) is to scan every page for every query: open each page, check if "information" and "retrieval" occur, count them, compute a relevance score, and finally rank all matching pages.</p>
+<div class="work"><b>Worked calculation from the slides</b>
+<ol>
+  <li>Time to check one page = 1 millisecond = 0.001 seconds.</li>
+  <li>Total time = 100,000,000,000 pages × 0.001 s = <b>100,000,000 seconds</b> (100 million).</li>
+  <li>One year = 365 × 24 × 60 × 60 = 31,536,000 seconds.</li>
+  <li>100,000,000 ÷ 31,536,000 ≈ <b>3.17 years</b> for one search.</li>
+</ol>
+Nobody waits 3 years for a search result.</div>
+<div class="callout"><b>The central challenge of IR</b> (slide wording): retrieve the most relevant documents from massive collections <b>efficiently</b>. Two words carry the course: <span class="mark">relevant</span> (the right documents) and <span class="mark">efficiently</span> (fast).</div>
+<div class="analogy"><b>Analogy</b>Finding one phone number by reading every page of a city phone book from page 1 is the naive approach. A phone book sorted by name, where you jump straight to "S", is the IR approach: the work is done in advance (indexing) so each lookup is fast.</div>
+
+<h2 id="l1-def">2. Definition of Information Retrieval</h2>
+<div class="callout"><b>Definition (memorise this sentence):</b> Information retrieval (IR) is finding <b>material</b> (usually documents) of an <b>unstructured</b> nature (usually text) that satisfies an <b>information need</b> from within <b>large collections</b> (usually stored on computers).</div>
+<dl class="sym">
+  <dt>material</dt><dd>the things we look for; usually documents (pages, papers, emails, posts).</dd>
+  <dt>unstructured</dt><dd>not arranged as rows and columns; free text written for humans.</dd>
+  <dt>information need</dt><dd>what the person really wants to know (it lives in their head).</dd>
+  <dt>large collections</dt><dd>huge sets of documents stored on computers.</dd>
+</dl>
+
+<h2 id="l1-apps">3. Where IR is used (applications)</h2>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Area</th><th>Examples from the slides</th><th>What is being searched</th></tr></thead>
+<tbody>
+<tr><td>Web search</td><td>Google, Bing</td><td>Billions of web pages</td></tr>
+<tr><td>Digital libraries</td><td>Google Scholar, PubMed, ACM Digital Library</td><td>Research papers, medical articles</td></tr>
+<tr><td>Enterprise search</td><td>Company documents, emails, knowledge bases (DBpedia), legal IR</td><td>A company's own private files</td></tr>
+<tr><td>E-commerce search</td><td>Amazon, Flipkart</td><td>Product listings</td></tr>
+<tr><td>RAG systems</td><td>ChatGPT + retrieval, enterprise QA systems</td><td>Passages fed to an LLM</td></tr>
+</tbody></table></div>
+<p><b>RAG</b> means <i>Retrieval-Augmented Generation</i>: before a chatbot (LLM, a Large Language Model) answers, an IR system first <i>retrieves</i> relevant passages, and the LLM writes its answer using them. So IR is the "look it up first" step behind modern AI assistants. <b>DBpedia</b> is a knowledge base built from Wikipedia's structured information.</p>
+
+<h2 id="l1-terms">4. Four basic IR terms</h2>
+<ul class="clean">
+  <li><b>Document collection</b>: all the documents the system can search.</li>
+  <li><b>User query</b>: the words the user types.</li>
+  <li><b>Relevance</b>: how well a document satisfies what the user wanted.</li>
+  <li><b>Ranking</b>: putting results in order, best first.</li>
+</ul>
+<div class="callout"><b>Key line:</b> IR is not just <i>finding</i> documents but <b>ranking</b> them by relevance.</div>
+
+<h2 id="l1-overload">5. Information overload</h2>
+<p>Automated IR systems are used to reduce <b>information overload</b>. Wikipedia's definition on the slide: information overload is <i>the difficulty in understanding an issue and effectively making decisions when one has too much information (TMI) about that issue</i>, usually linked with the huge quantity of daily information.</p>
+<div class="analogy"><b>Analogy</b>Asking 50 friends for a phone recommendation and getting 50 long, different answers. You now know more but can decide less. A good IR system hands you the 3 most useful answers instead of all 50.</div>
+
+<h2 id="l1-data">6. Data vs information</h2>
+<p><b>Data</b> (singular: <b>datum</b>) is raw facts. The slides split data into two kinds:</p>
+<ul class="clean">
+  <li><b>Quantitative</b> (numbers): <b>discrete</b> data is <i>counted</i> (number of students: 60, never 60.5); <b>continuous</b> data is <i>measured</i> (height 172.4 cm, can be any value in a range).</li>
+  <li><b>Qualitative</b> (descriptions, not numbers): e.g. "India and China have massive populations."</li>
+</ul>
+<p><b>Information</b> is data that has been <b>processed</b>, <b>organized</b>, and is <b>meaningful to the user</b>.</p>
+<div class="analogy"><b>Analogy</b>A list of 200 students' raw marks is data. "You ranked 5th in the class, 12 marks above average" is information: processed, organized, and meaningful to you.</div>
+
+<h2 id="l1-types">7. Types of data: structured, semi-structured, unstructured</h2>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Type</th><th>What it means</th><th>Examples (from slides)</th><th>Stored in</th></tr></thead>
+<tbody>
+<tr><td><b>Structured</b></td><td>Follows a predefined data model (fixed schema), tabular rows and columns with relationships between them, easy to analyze. The most traditional form of data storage.</td><td>Excel files, SQL databases</td><td>RDBMS (Relational Database Management System)</td></tr>
+<tr><td><b>Semi-structured</b></td><td>Has some structure (tags, keys) but does not obey a fixed table schema. <b>Self-describing</b>: the data carries its own labels. A combination of structured and unstructured.</td><td><b>CSV, XML, JSON</b> (e.g. a tweet's JSON)</td><td>NoSQL databases</td></tr>
+<tr><td><b>Unstructured</b></td><td>Unorganized; does not fit rows/columns of an RDBMS.</td><td>Text, images, video, audio</td><td>Files, document stores</td></tr>
+</tbody></table></div>
+<p><b>Schema</b> means the fixed blueprint of a table (which columns exist and what type each one is). <b>Self-describing</b> means each record names its own fields, like <span class="mono">{"name": "Kalp", "city": "Gandhinagar"}</span>, so two records can have different fields.</p>
+<ul class="trap"><li><b>Trap:</b> your slides list <b>CSV</b> as semi-structured (along with XML and JSON). Many people would guess "structured". Go with the slide.</li></ul>
+
+<h2 id="l1-db">8. IR vs database systems</h2>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Database system</th><th>Information retrieval</th></tr></thead>
+<tbody>
+<tr><td>Structured data</td><td>Unstructured text</td></tr>
+<tr><td>Exact matching</td><td>Approximate matching</td></tr>
+<tr><td>SQL queries</td><td>Keyword queries</td></tr>
+<tr><td>Precise answers</td><td>Ranked documents</td></tr>
+<tr><td>Deterministic (same input, same single correct answer)</td><td>Relevance-based (best guess, ordered by usefulness)</td></tr>
+</tbody></table></div>
+<div class="analogy"><b>Analogy</b>Database: "Give me the student with roll number 42" has one exact answer. IR: "good beginner books on machine learning" has no single correct answer, only better and worse ones.</div>
+
+<h2 id="l1-oil">9. "Data is the new oil"</h2>
+<p>The phrase was coined by data science entrepreneur <b>Clive Humby</b>. His point: like crude oil, data is valuable, but <b>unrefined it cannot really be used</b>. Oil must be turned into gas, plastic, chemicals; data must be broken down and analysed to have value. The Economist (May 2017) headline on the slide: <i>"The world's most valuable resource is no longer oil, but data."</i> IR is one of the "refineries" that turns raw text into useful answers.</p>
+
+<h2 id="l1-hist">10. History of IR</h2>
+<ul class="clean">
+  <li><b>1960s to 1970s</b>: first text retrieval systems for "small" collections (corpora) of scientific abstracts, law and business documents.</li>
+  <li>The basic <b>Boolean</b> and <b>vector-space</b> models of retrieval were developed (you will study both in Lecture 6).</li>
+  <li><b>Prof. (Gerard) Salton and his students at Cornell University</b> were the leading researchers.</li>
+</ul>
+
+<h2 id="l1-term">11. IR terminology</h2>
+<dl class="sym">
+  <dt>Query</dt><dd>a formal statement of an information need.</dd>
+  <dt>Document</dt><dd>data that may satisfy the user's need: text by default, but also other media.</dd>
+  <dt>Database / Collection / Corpus</dt><dd>a set of documents (three names, same idea).</dd>
+  <dt>Corpora</dt><dd>a set of databases (plural of corpus). Valuable corpora come from <b>TREC</b> (Text REtrieval Conference).</dd>
+</dl>
+<p>For now we assume a <b>static collection</b> (documents don't change while we search). <b>Goal:</b> retrieve documents with information that is relevant to the user's information need and helps the user complete a task.</p>
+<p><b>The IR problem, formally:</b> <i>Input</i>: a corpus of natural-language text documents and a user query as a text string. <i>Find</i>: a <b>ranked</b> set of documents relevant to the query.</p>
+
+<h2 id="l1-sys">12. An IR system at a high level</h2>
+<div class="flow"><span>user's Query String</span><i>→</i><span>IR System</span><i>←</i><span>Document corpus</span><i>→</i><span>Ranked documents (1. Doc1, 2. Doc2, 3. Doc3...)</span></div>
+<p><b>Components</b> of an IR system and what each does:</p>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Component</th><th>Job</th><th>Library analogy</th></tr></thead>
+<tbody>
+<tr><td>Document collection</td><td>All documents to search</td><td>All books on the shelves</td></tr>
+<tr><td>Preprocessing</td><td>Clean and split text into tokens (L4, L5)</td><td>Reading each book and noting key words</td></tr>
+<tr><td>Indexer</td><td>Builds the index (term → documents) (L5)</td><td>Making the catalogue card system</td></tr>
+<tr><td>Query processor</td><td>Cleans the query the same way</td><td>Understanding what the visitor asked</td></tr>
+<tr><td>Ranking module</td><td>Scores and orders documents (L6, L10, L12)</td><td>Deciding which book to hand over first</td></tr>
+<tr><td>User interface</td><td>Shows results, takes the query</td><td>The help desk</td></tr>
+</tbody></table></div>
+<h3>The classic search model</h3>
+<p>The slide shows a chain where meaning can be lost at each step:</p>
+<div class="flow"><span>User task</span><i>→</i><span>Info need</span><i>→</i><span>Query</span><i>→</i><span>Search engine</span><i>→</i><span>Results</span><i>→</i><span>Query refinement</span><i>↺</i></div>
+<ul class="clean">
+  <li><b>Task</b>: "Get rid of mice in a politically correct way."</li>
+  <li><b>Info need</b>: "Info about removing mice without killing them." A <b>misconception</b> can happen between task and need (misunderstanding your own task).</li>
+  <li><b>Query</b>: "how trap mice alive". A <b>misformulation</b> can happen between need and query (typing words that don't capture the need).</li>
+  <li>The user sees results and <b>refines</b> the query, and the loop repeats.</li>
+</ul>
+
+<h2 id="l1-rel">13. Relevance</h2>
+<p>Relevance is a <b>subjective</b> judgment (it depends on the person). It may include:</p>
+<ul class="clean">
+  <li>Being on the proper <b>subject</b>.</li>
+  <li>Being <b>timely</b> (recent information).</li>
+  <li>Being <b>authoritative</b> (from a trusted source).</li>
+  <li>Satisfying the <b>goals</b> of the user and their intended use of the information (the information need).</li>
+</ul>
+
+<h2 id="l1-chal">14. Why IR is hard (challenges)</h2>
+<ul class="clean">
+  <li><b>Data is unstructured</b>: the system must guess what in a document is important.</li>
+  <li><b>Query is unstructured</b>: the system must guess the user's intent.</li>
+  <li><b>But computers don't guess!</b> Inferring relevance and intent from data and queries <i>is</i> the science of information retrieval.</li>
+</ul>
+
+<h2 id="l1-disc">15. IR and other disciplines</h2>
+<p>The slide's bubble diagram puts IR in the middle, overlapping with: Machine Learning / Pattern Recognition / Statistical Learning, Natural Language Processing, Image Understanding, Information Extraction, Text Mining, Database, Data Mining, Visualization, Library &amp; Information Science, Security, Medical Informatics and Bioinformatics. It is labelled from <b>Theory</b> (top) to <b>Applications</b> and <b>System Support</b>, with <b>Deep Analysis</b> on one side.</p>
+
+<h2 id="l1-tasks">16. IR applications beyond search</h2>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Task</th><th>Meaning</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Automated document categorization / Text classification</td><td>Put each document into a fixed class</td><td>Tweet: HATEFUL or NOT (L13)</td></tr>
+<tr><td>Information filtering</td><td>Continuously pick items for a user; <b>recommendation systems</b></td><td>Netflix / YouTube suggestions</td></tr>
+<tr><td>Automated document clustering</td><td>Group similar documents with no predefined labels</td><td>Grouping news stories about the same event</td></tr>
+<tr><td>Recommending information or products</td><td>Suggest what the user may like</td><td>"Customers also bought"</td></tr>
+<tr><td>Information extraction</td><td>Pull a specific fact out of text</td><td>"birthdate of Sachin Tendulkar" → 24 April 1973</td></tr>
+<tr><td>Question answering</td><td>Return a direct answer, not just pages</td><td>"what is natural language processing" → definition box</td></tr>
+<tr><td>Text summarization</td><td>Shorten many texts into a summary</td><td>Tweet summarization (Modha et al.)</td></tr>
+</tbody></table></div>
+<p><b>Classification vs clustering:</b> classification has <i>known</i> classes decided in advance; clustering discovers groups by itself. <b>Extractive summarization</b> (shown for tweets) picks existing sentences as the summary; <i>abstractive</i> summarization writes new sentences.</p>
+
+<h2 id="l1-practice">Practice</h2>
+<div class="work"><b>Practice numerical</b>
+A search engine has 10 billion pages and checks one page in 0.5 ms. How long does one naive search take?
+<details class="ans"><summary>Show solution</summary><div>
+10,000,000,000 × 0.0005 s = 5,000,000 s. 5,000,000 ÷ 86,400 (seconds per day) ≈ <b>57.9 days</b>. Still far too slow, so an index is needed.</div></details></div>
+
+<div class="q"><b>Q1.</b> Which pair best describes IR compared to a database?
+<ol><li>Exact matching, precise answers</li><li>Approximate matching, ranked documents</li><li>SQL queries, structured data</li><li>Deterministic, single answer</li></ol>
+<details><summary>Answer</summary>B. Databases do exact matching on structured data; IR does approximate matching and ranks documents by relevance.</details></div>
+<div class="q"><b>Q2.</b> According to the slides, JSON, XML and CSV are examples of:
+<ol><li>Structured data</li><li>Semi-structured data</li><li>Unstructured data</li><li>Qualitative data</li></ol>
+<details><summary>Answer</summary>B. Semi-structured: self-describing, no fixed schema, often stored in NoSQL databases.</details></div>
+<div class="q"><b>Q3.</b> "Number of cars in a parking lot" is:
+<ol><li>Continuous quantitative</li><li>Discrete quantitative</li><li>Qualitative</li><li>Information</li></ol>
+<details><summary>Answer</summary>B. It is counted, so discrete.</details></div>
+<div class="q"><b>Q4.</b> Who were the leading researchers in early IR (1960s to 70s)?
+<ol><li>Page and Brin at Stanford</li><li>Salton and students at Cornell</li><li>Cleverdon at Cranfield only</li><li>Robertson at City University</li></ol>
+<details><summary>Answer</summary>B. (Cleverdon appears in Lecture 8 for evaluation; Robertson in Lecture 10 for BM25.)</details></div>
+<div class="q"><b>Q5.</b> "Corpora" means:
+<ol><li>A single document</li><li>A set of documents</li><li>A set of databases (collections)</li><li>A query log</li></ol>
+<details><summary>Answer</summary>C. Corpus = a set of documents; corpora = a set of databases.</details></div>
+<div class="q"><b>Q6.</b> Recommendation systems are an example of:
+<ol><li>Information filtering</li><li>Information extraction</li><li>Clustering</li><li>Indexing</li></ol>
+<details><summary>Answer</summary>A.</details></div>
+
+<h2 id="l1-traps">MCQ traps and quick facts</h2>
+<ul class="trap">
+  <li><b>3.17 years</b> = 100 billion pages × 1 ms. Remember both inputs.</li>
+  <li>IR = <b>ranking</b> by relevance, not just finding.</li>
+  <li>Relevance is <b>subjective</b>: subject, timeliness, authority, user's goals.</li>
+  <li>Datum is singular, data is plural. Discrete is <b>counted</b>, continuous is <b>measured</b>.</li>
+  <li>Structured data lives in an <b>RDBMS</b>; semi-structured is popular with <b>NoSQL</b>.</li>
+  <li>"Data is the new oil" was coined by <b>Clive Humby</b>.</li>
+  <li>Queries are "formal statements of information needs". Corpus = set of documents; corpora = set of databases; valuable corpora from <b>TREC</b>.</li>
+  <li>Misconception sits between task and need; misformulation sits between need and query.</li>
+</ul>
+
+</template>
+<template id="t-l3">
+<div class="inmin"><b class="l">This lecture in one minute</b>
+Four ideas form the foundation of every search system: the <b>information need</b> (what you want, in your head), the <b>query</b> (what you type), the <b>corpus</b> (what the system searches), and <b>relevance</b> (how useful a result is). The gap between need and query is a central problem of IR. Queries come in three types (navigational, informational, transactional). Relevance can be binary or graded and today has many dimensions. Pure MCQ material.</div>
+
+<h2 id="l3-gap">1. The gap between information need and query</h2>
+<p>Suppose a user types <b>"python"</b>. What do they want? The programming language? The snake? Tutorials? Jobs? Installation instructions? The system only sees six letters.</p>
+<div class="callout">The same query can represent different information needs. Understanding this <b>gap between what the user wants and what the user types</b> is one of the central problems in IR.</div>
+
+<h2 id="l3-need">2. Information need</h2>
+<p>An <b>information need</b> is the actual information a user wants to obtain: the underlying desire to uncover knowledge, solve a problem, or satisfy curiosity.</p>
+<ul class="clean">
+  <li>It originates entirely in the <b>human mind</b>.</li>
+  <li>It is an underlying, <b>abstract</b> desire or a <b>gap</b> in the user's knowledge.</li>
+  <li>It is often <b>vague or incomplete</b> at first.</li>
+  <li>It exists <b>before</b> any text is typed into a search box.</li>
+</ul>
+<p>Examples from the slides: a student wants "good books to learn information retrieval"; you feel sick and want to understand why your head hurts after drinking coffee; you want to know if it is safe to travel to Paris next month.</p>
+<p><b>One need, many queries.</b> Need: <i>learn machine learning from beginner level</i>. Possible queries: "machine learning books", "best ML textbook", "machine learning for beginners". Need: <i>today's weather in Ahmedabad</i>. Queries: "weather Ahmedabad", "Temperature in Ahmedabad", "Ahmedabad forecast today".</p>
+<div class="callout"><b>Key observation:</b> Information Need ≠ Query. The need is in the user's mind; the query is only an <b>attempt</b> to express it.</div>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Information need</th><th>User query</th></tr></thead>
+<tbody><tr><td>Learn Python programming</td><td>Python tutorial</td></tr><tr><td>Buy a laptop</td><td>gaming laptop</td></tr><tr><td>Find a paper on IR</td><td>neural retrieval survey</td></tr><tr><td>Book a flight</td><td>flights to Delhi</td></tr></tbody></table></div>
+
+<h2 id="l3-query">3. Query</h2>
+<p>A <b>query</b> is the concrete, formal expression of the user's information need, submitted to a search engine.</p>
+<ul class="clean">
+  <li>It translates an abstract human thought into <b>machine-readable</b> text or commands.</li>
+  <li>It is often an <b>imperfect</b> representation of the true need, because of language limits.</li>
+  <li>It can be <b>keywords</b>, full <b>natural-language sentences</b>, or <b>Boolean operators</b> (AND, OR, NOT).</li>
+  <li>Example: you type "caffeine headache causes".</li>
+</ul>
+<div class="analogy"><b>Analogy</b>The information need is the dish you are craving. The query is what you say to the waiter. "Something spicy" is a poor query for "paneer tikka with extra chutney", and the waiter (the search engine) can only work with what you said.</div>
+<h3>Why queries are imperfect</h3>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Problem</th><th>Example</th><th>Possible meanings</th></tr></thead>
+<tbody>
+<tr><td><b>Too short</b></td><td>apple</td><td>fruit, Apple Inc., Apple stock, Apple products</td></tr>
+<tr><td><b>Ambiguous</b> (one word, many meanings)</td><td>jaguar</td><td>animal, car brand, sports team</td></tr>
+<tr><td><b>Incomplete</b></td><td>transformer</td><td>deep learning model, electrical transformer, movie character</td></tr>
+</tbody></table></div>
+<p><b>Key challenge:</b> the retrieval system must <b>infer</b> (work out) the user's information need from a very short, often ambiguous query.</p>
+
+<h2 id="l3-types">4. Three types of queries</h2>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Type</th><th>Goal</th><th>Examples</th><th>Expected result</th></tr></thead>
+<tbody>
+<tr><td><b>Navigational</b></td><td>Go to a specific website or page</td><td>Facebook, Gmail, ChatGPT, DAU</td><td>One specific page</td></tr>
+<tr><td><b>Informational</b></td><td>Learn something</td><td>what is machine learning, causes of diabetes, how does PageRank work</td><td>Several relevant documents</td></tr>
+<tr><td><b>Transactional</b></td><td>Perform an action (buy, download, book)</td><td>buy an iPhone 17, Download VSCode, book hotel in Goa</td><td>Product pages or service portals</td></tr>
+</tbody></table></div>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Query (slide example)</th><th>Type</th></tr></thead>
+<tbody><tr><td>youtube</td><td>Navigational</td></tr><tr><td>machine learning tutorial</td><td>Informational</td></tr><tr><td>buy wireless headphones</td><td>Transactional</td></tr><tr><td>amazon</td><td>Navigational</td></tr><tr class="hlrow"><td>weather today</td><td>Informational (you want to <i>know</i> something)</td></tr></tbody></table></div>
+<div class="analogy"><b>Memory trick</b>Navigational = "take me <b>there</b>". Informational = "tell me <b>about</b> it". Transactional = "let me <b>do</b> it". "Download VSCode" is transactional (an action), even though it names a product.</div>
+
+<h2 id="l3-good">5. Good query vs bad query</h2>
+<p><b>Scenario:</b> you are travelling with your dog and need a place to eat dinner where pets are allowed.</p>
+<ul class="clean">
+  <li><b>Bad query:</b> "restaurants nearby". It is missing the most critical condition (the dog), so effort is wasted: you get popular nearby restaurants, most of which won't allow pets.</li>
+  <li><b>Good query:</b> "dog friendly restaurants patio seating open now". It includes <b>constraints</b> ("dog friendly", "patio" where dogs are usually allowed) and <b>real-time context</b> ("open now" filters closed places).</li>
+</ul>
+
+<h2 id="l3-corpus">6. Corpus and documents</h2>
+<p>A <b>corpus</b> is the structured collection of documents, texts, or data objects that the system searches through. It <b>defines the boundaries of available knowledge</b> for that system: if something is not in the corpus, the system can never return it. Corpora can be massive and general (the entire indexed web) or highly specialized (medical records, legal case files). Examples: Reuters Corpus, TREC collections, Wikipedia corpus, Common Crawl.</p>
+<p>A <b>document</b> is a unit of information stored in a retrieval system: web pages, research papers, news articles, emails, product descriptions, social media posts.</p>
+<h3>Corpus vs document collection</h3>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Document collection</th><th>Corpus (plural: corpora)</th></tr></thead>
+<tbody>
+<tr><td>A set of documents available for retrieval</td><td>A structured and <b>curated</b> collection used for analysis, experimentation, or evaluation</td></tr>
+<tr><td>Focus: the operational retrieval system</td><td>Focus: research, training, evaluation</td></tr>
+<tr><td><b>Dynamic</b> (keeps changing)</td><td><b>Static</b> (fixed)</td></tr>
+<tr><td>Used by search engines to retrieve documents</td><td>Used by researchers to develop and evaluate models</td></tr>
+<tr><td>May <b>not</b> have relevance judgments</td><td>Often comes with <b>queries and relevance judgments</b></td></tr>
+</tbody></table></div>
+<p><b>Curated</b> means carefully selected and cleaned by people. <b>Relevance judgments</b> are human labels saying which documents are relevant to which query (the answer key).</p>
+
+<h2 id="l3-bench">7. Why researchers need benchmark corpora</h2>
+<p>A <b>benchmark corpus</b> is a standardized collection of <b>documents, queries, and (often) relevance judgments</b> that researchers use to evaluate and compare IR systems.</p>
+<ul class="clean">
+  <li><b>Fair comparison:</b> if System A (BM25) and System B (Dense Retrieval) are tested on different datasets, the comparison is unfair. A benchmark gives the same documents, same queries, same judgments, so any difference comes from the <b>model</b>, not the data.</li>
+  <li><b>Reproducible research:</b> if a paper reports MAP = 0.42 on TREC Robust04, others can rerun on the same corpus and verify it.</li>
+  <li><b>Standardized evaluation:</b> it provides a document collection, a query set (called <b>topics</b>), and relevance judgments (called <b>qrels</b>), so everyone can compute Precision, Recall, MAP, MRR, NDCG the same way (Lectures 8 and 9).</li>
+</ul>
+<div class="analogy"><b>Analogy</b>A benchmark corpus is a common board exam paper with an official answer key. Two students can only be compared fairly if they wrote the same paper.</div>
+<div class="tbl"><table class="mini">
+<thead><tr><th>Benchmark</th><th>Used for</th></tr></thead>
+<tbody><tr><td>TREC collections</td><td>Classical IR evaluation</td></tr><tr><td>Robust04</td><td>Ad-hoc retrieval</td></tr><tr><td>MS MARCO</td><td>Neural IR and dense retrieval</td></tr><tr><td>BEIR</td><td>Zero-shot retrieval evaluation</td></tr><tr><td>Natural Questions</td><td>Question answering</td></tr><tr><td>Wikipedia</td><td>Large-scale retrieval</td></tr><tr><td>Cranfield collection</td><td>Historical IR evaluation</td></tr></tbody></table></div>
+<p class="note"><b>Zero-shot</b> means testing a model on a kind of data it was never trained on. <b>Dense retrieval</b> means searching with neural embeddings (vectors of meaning) instead of exact words.</p>
+
+<h2 id="l3-rel">8. Relevance</h2>
+<p><b>Relevance</b> measures how useful a document is for satisfying the user's information need. Query "machine learning books": a list of ML textbooks (Document A) is obviously more relevant than Cricket World Cup news (Document B).</p>
+<p><b>Traditional definition:</b> the degree to which a document matches the <b>content</b> of the user's query. Important subtlety: <span class="mark">a document may be relevant to a query but still not be useful to the user</span> (for example, correct but too advanced).</p>
+<h3>Binary vs graded relevance</h3>
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+<div class="tbl"><table class="mini"><thead><tr><th>Binary</th><th></th></tr></thead><tbody><tr><td>D1</td><td>Relevant (1)</td></tr><tr><td>D2</td><td>Not relevant (0)</td></tr><tr><td>D3</td><td>Relevant (1)</td></tr></tbody></table></div>
+<div class="tbl"><table class="mini"><thead><tr><th>Graded</th><th>Grade</th></tr></thead><tbody><tr><td>Highly relevant</td><td>3</td></tr><tr><td>Relevant</td><td>2</td></tr><tr><td>Marginally relevant</td><td>1</td></tr><tr><td>Not relevant</td><td>0</td></tr></tbody></table></div>
+</div>
+<p>Binary relevance is used by precision, recall and MAP. Graded relevance is used by nDCG (Lecture 9).</p>
+<h3>Modern view: multidimensional relevance</h3>
+<p>Relevance has several dimensions: <b>topical relevance</b> (about the right subject), <b>recency</b> (how new), <b>credibility</b> (trustworthy source), <b>popularity</b>, <b>understandability</b> (fits the reader's level), <b>truthfulness</b>.</p>
+<p><b>Example:</b> query "COVID treatment guidelines". Document A: published yesterday by a trusted medical source. Document B: published 5 years ago. Both are topically relevant, but A is more useful because of <b>recency</b> and <b>trustworthiness</b>.</p>
+<h3>Challenges in matching queries and documents</h3>
+<ul class="clean">
+  <li><b>Vocabulary mismatch:</b> query "car", document says "automobile". Same meaning, zero shared words (solved partly in Lecture 7).</li>
+  <li><b>Ambiguity:</b> "java" can mean programming language, island, or coffee.</li>
+</ul>
+<h3>Relevance is not static, and depends on context</h3>
+<p>Relevance changes as users learn: initial query "machine learning", later "transformer architecture". The information need has <b>evolved</b>. And for "machine learning tutorial", a beginner-friendly tutorial (B) may be more relevant than a NeurIPS research paper (A). <b>Relevance depends on the user's task, background knowledge and context</b>, not only topic matching.</p>
+
+<h2 id="l3-practice">Practice</h2>
+<div class="q"><b>Q1.</b> Classify each query: (a) "irctc login" (b) "symptoms of dengue" (c) "download zoom" (d) "linkedin".
+<details><summary>Answer</summary>(a) Navigational (go to a site) (b) Informational (c) Transactional (d) Navigational.</details></div>
+<div class="q"><b>Q2.</b> Which statement is TRUE?
+<ol><li>The information need and the query are the same thing</li><li>The query exists before the information need</li><li>One information need can be expressed by many different queries</li><li>A query always fully represents the need</li></ol>
+<details><summary>Answer</summary>C.</details></div>
+<div class="q"><b>Q3.</b> Compared with a document collection, a research corpus is usually:
+<ol><li>Dynamic and without judgments</li><li>Static and often with queries and relevance judgments</li><li>Only used by search engines</li><li>Always smaller than 1,000 documents</li></ol>
+<details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q4.</b> The relevance labels that come with a benchmark are called:
+<ol><li>topics</li><li>qrels</li><li>postings</li><li>tokens</li></ol>
+<details><summary>Answer</summary>B. Queries are called topics; relevance judgments are called qrels.</details></div>
+<div class="q"><b>Q5.</b> Which benchmark is linked with zero-shot retrieval evaluation?
+<ol><li>Cranfield</li><li>BEIR</li><li>Robust04</li><li>Reuters</li></ol>
+<details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q6.</b> A grade scale of 0, 1, 2, 3 is:
+<ol><li>Binary relevance</li><li>Graded relevance</li><li>Multidimensional relevance</li><li>Topical relevance</li></ol>
+<details><summary>Answer</summary>B.</details></div>
+
+<h2 id="l3-traps">MCQ traps and quick facts</h2>
+<ul class="trap">
+  <li>Information need is in the <b>mind</b>, exists <b>before</b> typing, is often <b>vague</b>.</li>
+  <li>"weather today" is <b>informational</b>; "Download VSCode" is <b>transactional</b>; "DAU", "amazon", "youtube" are <b>navigational</b>.</li>
+  <li>apple = too short; jaguar = ambiguous; transformer = incomplete (as labelled on the slides).</li>
+  <li>Document collection is <b>dynamic</b>; corpus is <b>static</b> and curated.</li>
+  <li>Benchmark gives: documents + topics (queries) + qrels (judgments).</li>
+  <li>MS MARCO = neural/dense retrieval; BEIR = zero-shot; Robust04 = ad hoc; Natural Questions = QA; Cranfield = historical.</li>
+  <li>A document can be relevant but <b>not useful</b>.</li>
+  <li>Six relevance dimensions: topical, recency, credibility, popularity, understandability, truthfulness.</li>
+</ul>
+
+</template>
+<template id="t-l4">
+<div class="inmin"><b class="l">This lecture in one minute</b>
+Before a computer can search or learn from text, the text must be cut into small pieces called <b>tokens</b>. You can cut into words, characters, or something in between (<b>subwords</b>). Words cause the "unknown word" problem; characters make sequences too long and meaningless; subwords are the middle path used by every modern language model. Three subword algorithms are tested: <b>BPE</b> (merge the most frequent pair; GPT), <b>WordPiece</b> (merge the pair with the best score; BERT), and <b>Unigram</b> (start big and delete; T5). BPE merges are a very likely numerical.</div>
+
+<h2 id="l4-what">1. What is tokenization?</h2>
+<p><b>Tokens</b> are the building blocks of natural language. <b>Tokenization</b> is separating a piece of text into smaller units called tokens. Tokens can be <b>words</b>, <b>characters</b>, or <b>subwords</b>, so there are three broad types of tokenization.</p>
+<p>The <b>vocabulary</b> is the list of all distinct tokens the system knows. <span class="mark">Creating the vocabulary is the ultimate goal of tokenization.</span></p>
+<div class="analogy"><b>Analogy</b>Think of LEGO. A sentence is a finished model. Tokenization breaks it into bricks. Big bricks (whole words) build fast but you need a huge box of special pieces and you are stuck when a piece is missing. Tiny bricks (characters) can build anything but take forever. Medium bricks (subwords) are the sweet spot.</div>
+<h3>Tokenization libraries and NLTK functions</h3>
+<p>The outline lists libraries: <b>spaCy, NLTK, RegEx</b> (regular expressions, text patterns), <b>Gensim, Keras</b>. In NLTK (Natural Language Toolkit, a Python library):</p>
+<dl class="sym">
+  <dt>word_tokenize</dt><dd>splits a string into word tokens.</dd>
+  <dt>sent_tokenize</dt><dd>splits a string into sentences.</dd>
+  <dt>WordPunctTokenizer</dt><dd>splits into words <i>and</i> punctuation as separate tokens.</dd>
+  <dt>TweetTokenizer</dt><dd>designed for tweets (keeps hashtags, @mentions, emoticons together).</dd>
+</dl>
+
+<h2 id="l4-word">2. Word tokenization</h2>
+<p>Split on spaces and punctuation; each word is one token. Common for languages with clear word separation like English. Traditional methods such as <b>Count Vectorizer</b> and <b>TF-IDF</b> use the vocabulary as features: each word is one column.</p>
+<div class="tbl"><table class="mini"><thead><tr><th></th><th>I</th><th>play</th><th>cricket</th><th>football</th><th>tennis</th></tr></thead>
+<tbody><tr><td>Doc 1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>Doc 2</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>Doc 3</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr><tr><td>Doc 4</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr></tbody></table></div>
+<h3>The big problem: OOV words</h3>
+<p><b>OOV (out-of-vocabulary)</b> words are new words seen at test time that are not in the vocabulary. Word-based methods simply fail on them.</p>
+<p><b>The UNK trick:</b> build the vocabulary from the <b>top K most frequent words</b> and replace rare words in the training data with a special token <span class="mono">UNK</span> (unknown). The model learns a representation for UNK, which it then uses for any OOV word. Downside: every unknown word looks identical.</p>
+
+<h2 id="l4-char">3. Character tokenization</h2>
+<p>Split text into single characters: <span class="mono">L e t ' s d o t o k e n i z a t i o n !</span>. Useful for languages without clear word boundaries or very detailed analysis.</p>
+<ul class="clean">
+  <li><b>Benefits:</b> the vocabulary is much smaller (just the alphabet and symbols), and there are <b>no unknown words ever</b>.</li>
+  <li><b>Drawbacks:</b> characters carry almost no meaning on their own; sequences become very long (harder to learn patterns); the model must learn how characters combine into meaningful units.</li>
+</ul>
+<p><b>What we want</b> (slide): a manageable vocabulary size (typically <b>30,000 to 50,000 tokens</b>), <b>no unknown words</b>, and <b>meaningful units</b>. That is subword tokenization.</p>
+
+<h2 id="l4-sub">4. Subword tokenization</h2>
+<p>Subword tokenization splits text into pieces larger than characters but smaller than words (also called <b>n-gram characters</b>; an n-gram is a sequence of n items).</p>
+<div class="callout"><b>Principle:</b> <span class="mark">frequently used words should not be split</span>, but <span class="mark">rare words should be decomposed into meaningful subwords</span>. Examples: lower → low + er, smartest → smart + est. Transformer models (the state of the art, SOTA) rely on subword tokenization.</div>
+<div class="tbl"><table class="mini"><thead><tr><th>Model</th><th>Tokenizer</th></tr></thead><tbody><tr><td>BERT</td><td>WordPiece</td></tr><tr><td>GPT-2</td><td>Byte-level BPE</td></tr><tr><td>T5</td><td>SentencePiece (Unigram)</td></tr></tbody></table></div>
+
+<h2 id="l4-pipe">5. The tokenization pipeline</h2>
+<div class="flow"><span>"Hello how are U tday?"</span><i>→ normalization →</i><span>"hello how are u tday?"</span><i>→ pre-tokenization →</i><span>[hello, how, are, u, tday, ?]</span><i>→ model →</i><span>[hello, how, are, u, td, ##ay, ?]</span><i>→ postprocessor →</i><span>[CLS, hello, how, are, u, td, ##ay, ?, SEP]</span></div>
+<dl class="sym">
+  <dt>Normalization</dt><dd>general cleanup: remove needless whitespace, lowercase, remove accents.</dd>
+  <dt>Pre-tokenization</dt><dd>first rough split into words (a subword tokenizer cannot be trained on raw text alone).</dd>
+  <dt>Model</dt><dd>the subword algorithm (BPE / WordPiece / Unigram) splits words into tokens.</dd>
+  <dt>Postprocessor</dt><dd>adds special tokens; for BERT, <span class="mono">[CLS]</span> at the start (classification token) and <span class="mono">[SEP]</span> at the end (separator).</dd>
+</dl>
+<h3>How GPT-2 and T5 handle spaces</h3>
+<ul class="clean">
+  <li><b>GPT-2 tokenizer</b>: splits on whitespace <i>and</i> punctuation, but keeps spaces by replacing them with the symbol <b>Ġ</b> so the original text can be recovered when decoding. Unlike BERT, it does <b>not</b> ignore a double space.</li>
+  <li><b>T5 tokenizer</b> (SentencePiece): also keeps spaces, replacing them with <b>▁</b> (underscore-like symbol), but splits <b>only on whitespace, not punctuation</b>. It adds a space at the start of the sentence (before "Hello") and <b>ignores</b> the double space.</li>
+  <li><b>BERT</b> ignores (drops) the double space.</li>
+</ul>
+
+<h2 id="l4-bpe">6. Byte Pair Encoding (BPE)</h2>
+<p>Used by OpenAI for GPT pretraining and by GPT, GPT-2, RoBERTa, BART, DeBERTa. BPE handles OOV words by breaking them into known subwords, and its sequences are shorter than character tokenization. It is a word segmentation algorithm that <b>repeatedly merges the most frequently occurring pair</b> of characters or character sequences.</p>
+<p>Two phases:</p>
+<ol>
+  <li><b>Vocabulary construction (training):</b> take words with their frequencies; repeatedly merge the most frequent pair; vocabulary size is a parameter you choose.</li>
+  <li><b>Tokenization:</b> use the learned vocabulary and <b>merge rules</b> (in the order learned) to tokenize new text.</li>
+</ol>
+<div class="callout"><b>Steps to learn BPE</b>
+<ol style="margin:.3em 0">
+<li>Split words into characters, appending an end-of-word marker <span class="mono">&lt;/w&gt;</span> or <span class="mono">_</span>.</li>
+<li>Initialize the vocabulary with all unique characters.</li>
+<li>Count the frequency of every adjacent pair (a pair inside a word counts as many times as that word's frequency).</li>
+<li>Merge the most frequent pair everywhere.</li>
+<li>Save the new merged symbol to the vocabulary (and record the merge rule).</li>
+<li>Repeat 3 to 5 for a set number of iterations (or until the target vocabulary size).</li>
+</ol></div>
+
+<div class="work"><b>Worked example 1 (slides): hug, pug, pun, bun, hugs</b>
+Corpus: ("hug", 10), ("pug", 5), ("pun", 12), ("bun", 4), ("hugs", 5). (No end marker in this example.)
+<ol>
+<li>Base vocabulary: [b, g, h, n, p, s, u]. Split: (h u g, 10), (p u g, 5), (p u n, 12), (b u n, 4), (h u g s, 5).</li>
+<li>Count pairs:
+<div class="tbl"><table class="mini"><thead><tr><th>pair</th><th>from</th><th>count</th></tr></thead><tbody>
+<tr><td>h u</td><td>hug 10 + hugs 5</td><td>15</td></tr>
+<tr class="hlrow"><td>u g</td><td>hug 10 + pug 5 + hugs 5</td><td><b>20</b></td></tr>
+<tr><td>p u</td><td>pug 5 + pun 12</td><td>17</td></tr>
+<tr><td>u n</td><td>pun 12 + bun 4</td><td>16</td></tr>
+<tr><td>b u</td><td>bun 4</td><td>4</td></tr>
+<tr><td>g s</td><td>hugs 5</td><td>5</td></tr></tbody></table></div>
+Merge <b>u g → ug</b>. Corpus: (h ug, 10), (p ug, 5), (p u n, 12), (b u n, 4), (h ug s, 5).</li>
+<li>Recount: h-ug 15, p-ug 5, p-u 12, <b>u-n 16</b>, b-u 4, ug-s 5. Merge <b>u n → un</b>. Corpus: (h ug, 10), (p ug, 5), (p un, 12), (b un, 4), (h ug s, 5).</li>
+<li>Recount: <b>h-ug 15</b>, p-ug 5, p-un 12, b-un 4, ug-s 5. Merge <b>h ug → hug</b>. Vocabulary: [b, g, h, n, p, s, u, ug, un, hug]. Corpus: (hug, 10), (p ug, 5), (p un, 12), (b un, 4), (hug s, 5).</li>
+<li>Continue until the desired vocabulary size.</li>
+</ol></div>
+
+<div class="work"><b>Worked example 2 (slides): low, lower, newest, widest with end marker _</b>
+Text: "low ×5, lower ×2, newest ×6, widest ×3". After pre-tokenization: (low_: 5, lower_: 2, newest_: 6, widest_: 3).
+<ol>
+<li>Base vocabulary: (l, o, w, e, r, n, s, t, i, d, _). Words as symbols: (l o w _):5, (l o w e r _):2, (n e w e s t _):6, (w i d e s t _):3.</li>
+<li>Pair counts in round 1: e-s = 6+3 = <b>9</b>, s-t = 9, t-_ = 9, w-e = 2+6 = 8, l-o = 7, o-w = 7, n-e 6, e-w 6, w-_ 5, w-i 3, i-d 3, d-e 3, e-r 2, r-_ 2. Three pairs tie at 9; the slide merges the first one found, <b>(e, s) → es</b>.</li>
+<li>Merge 2: (es, t) occurs 9 → <b>est</b>.</li>
+<li>Merge 3: (est, _) occurs 9 → <b>est_</b>. Now: (l o w _):5, (l o w e r _):2, (n e w est_):6, (w i d est_):3.</li>
+<li>Merge 4: (l, o) occurs 5 + 2 = 7 → <b>lo</b> (ties with o-w = 7; first one taken).</li>
+<li>Merge 5: (lo, w) occurs 7 → <b>low</b>. Now: (low _):5, (low e r _):2, (n e w est_):6, (w i d est_):3.</li>
+</ol>
+Final vocabulary: (l, o, w, e, r, n, s, t, i, d, _, es, est, est_, lo, low).<br>
+<b>Merge rules, in order:</b> (e, s) → es, (es, t) → est, (est, _) → est_, (l, o) → lo, (lo, w) → low.</div>
+
+<div class="work"><b>Tokenizing new text with BPE: "newest binded lowers"</b>
+<ol>
+<li>Pre-tokenize and add _: (newest_, binded_, lowers_).</li>
+<li>Split to characters: (n e w e s t _), (b i n d e d _), (l o w e r s _).</li>
+<li>Apply each rule <b>in learned order</b>:
+<br>(e,s)→es: (n e w es t _), (b i n d e d _), (l o w e r s _)
+<br>(es,t)→est: (n e w est _), ...
+<br>(est,_)→est_: (n e w est_), ...
+<br>(l,o)→lo: ..., (lo w e r s _)
+<br>(lo,w)→low: ..., (low e r s _)</li>
+<li>"b" never appeared in training, so it is not in the vocabulary → replaced by <span class="mono">[UNK]</span>.</li>
+<li>Result: <b>[n, e, w, est_, [UNK], i, n, d, e, d, _, low, e, r, s, _]</b></li>
+</ol></div>
+<p><b>Observations:</b> BPE is <b>frequency-based</b> and <b>greedy</b> (always takes the best pair right now, never reconsiders). Common words get their own tokens; rare words are broken into subwords.</p>
+<ul class="trap"><li><b>Exam tip for ties:</b> if two pairs have the same count, say which one you pick and why ("first in order of appearance"), as the slide did. The examiner will accept a clearly stated tie-break.</li></ul>
+
+<h2 id="l4-wp">7. WordPiece (BERT)</h2>
+<p>Developed by Google to pretrain <b>BERT</b>; reused in DistilBERT, MobileBERT, Funnel Transformers, MPNET. Training is like BPE (it learns merges), but with two differences.</p>
+<p><b>Difference 1: the ## prefix.</b> Subwords that do not start a word get a <span class="mono">##</span> prefix. So the initial split of "word" is <span class="mono">w ##o ##r ##d</span>. Examples: "playing" → [play, ##ing]; "unwanted" → [un, ##want, ##ed].</p>
+<p><b>Difference 2: how the pair is chosen.</b> Not the most frequent pair, but the pair that maximizes the likelihood of the training data, using:</p>
+<div class="formula">score(a, b) = freq(pair ab) / ( freq(a) × freq(b) )</div>
+<dl class="sym"><dt>freq(pair ab)</dt><dd>how many times a is directly followed by b (weighted by word counts).</dd><dt>freq(a), freq(b)</dt><dd>how many times each part appears on its own anywhere.</dd></dl>
+<p><b>Why divide?</b> It prefers pairs whose parts are <b>individually rare</b> but often appear together. It won't rush to merge ("un", "##able") even if frequent, because "un" and "##able" each appear in lots of other words. But ("hu", "##gging") would merge fast, since those parts are rarely seen apart.</p>
+<div class="analogy"><b>Analogy</b>Two friends who are seen together 10 times are not special if each of them is seen with everyone 1,000 times. Two people who are almost never seen apart are a real "pair". WordPiece rewards the second kind.</div>
+
+<div class="work"><b>Worked example (slides): same corpus</b>
+<ol>
+<li>Split with ##: (h ##u ##g, 10), (p ##u ##g, 5), (p ##u ##n, 12), (b ##u ##n, 4), (h ##u ##g ##s, 5).</li>
+<li>Single-token frequencies: h = 15, p = 17, b = 4, ##u = 36, ##g = 20, ##n = 16, ##s = 5.</li>
+<li>Scores:
+<div class="tbl"><table class="mini"><thead><tr><th>pair</th><th>freq</th><th>score</th></tr></thead><tbody>
+<tr><td>(h, ##u)</td><td>15</td><td>15/(15×36) = 1/36</td></tr>
+<tr><td>(##u, ##g)</td><td>20 (most frequent!)</td><td>20/(36×20) = 1/36</td></tr>
+<tr><td>(p, ##u)</td><td>17</td><td>17/(17×36) = 1/36</td></tr>
+<tr><td>(##u, ##n)</td><td>16</td><td>16/(36×16) = 1/36</td></tr>
+<tr><td>(b, ##u)</td><td>4</td><td>4/(4×36) = 1/36</td></tr>
+<tr class="hlrow"><td>(##g, ##s)</td><td>5</td><td>5/(20×5) = <b>1/20</b></td></tr></tbody></table></div>
+Every pair containing ##u is dragged down because ##u is so common. The winner is <b>(##g, ##s) → ##gs</b>, even though it is the least frequent pair but one.</li>
+<li>Now ##u is in every remaining pair, so all tie at 1/36; the first, <b>(h, ##u) → hu</b>, is merged. Corpus: (hu ##g, 10), (p ##u ##g, 5), (p ##u ##n, 12), (b ##u ##n, 4), (hu ##gs, 5).</li>
+<li>Next round: the slide says ("hu", "##g") and ("hu", "##gs") share the best score of 1/15 and merges <b>hug</b>.</li>
+</ol>
+<p class="note"><b>Careful check of step 5:</b> after step 4, freq(hu) = 15, freq(##g) = 10 + 5 = 15, freq(##gs) = 5. So score(hu, ##gs) = 5/(15×5) = 1/15, but score(hu, ##g) = 10/(15×15) = 2/45 ≈ 0.044, which is less than 1/21 ≈ 0.048 (the score of pairs like (p, ##u) = 17/(17×21)). Strictly by the formula the next merge is <b>hugs</b>. The slide copied this step from the Hugging Face course, which has this small slip. In an exam, show the formula and your arithmetic; that is what earns marks.</p></div>
+
+<h3>WordPiece tokenization: longest match first</h3>
+<p>WordPiece saves <b>only the final vocabulary</b>, not the merge rules. To tokenize a word, it finds the <b>longest subword from the beginning that is in the vocabulary</b>, splits there, and repeats on the rest (with ##).</p>
+<div class="work"><b>Using vocabulary [b, h, p, ##g, ##n, ##s, ##u, ##gs, hu, hug]</b>
+<ol>
+<li><b>"hugs"</b>: longest prefix in vocab is "hug" → [hug], rest "##s" is in vocab → <b>[hug, ##s]</b>.</li>
+<li><b>"bugs"</b>: longest prefix is "b" → rest "##ugs"; longest prefix of that in vocab is "##u" → rest "##gs" is in vocab → <b>[b, ##u, ##gs]</b>.</li>
+<li>If at some point no subword matches (e.g. "mug", since "m" is not in vocab), the <b>whole word</b> becomes [UNK].</li>
+</ol></div>
+
+<h2 id="l4-uni">8. Unigram tokenization (T5, SentencePiece)</h2>
+<p>Used in <b>SentencePiece</b>, the tokenizer for ALBERT, T5, mBART, Big Bird, XLNet.</p>
+<div class="callout"><b>Key contrast:</b> BPE and WordPiece are <b>bottom-up</b> (start with characters and merge). Unigram is <b>top-down</b>: start with a <b>huge</b> vocabulary and <b>remove</b> tokens until the desired size is reached.</div>
+<p><b>Intuition:</b> each subword has a probability (play 0.40, ing 0.30, pl 0.05, ay 0.02, p/l/a/y 0.01). The word "playing" can be split many ways (play + ing, pl + ay + ing, p + l + a + y + ing). The tokenizer picks the segmentation with the <b>highest overall probability</b>, which is the product of its token probabilities.</p>
+<h3>The three phases</h3>
+<ol>
+  <li><b>Start with a large vocabulary:</b> all possible substrings from the training data (with a frequency cutoff): l, o, w, e, s, t, lo, low, est, er, new, wide, ...</li>
+  <li><b>Assign probabilities</b> estimated from the corpus (e.g. low 0.25, est 0.20, er 0.10, l 0.02, o 0.02, w 0.02).</li>
+  <li><b>Iterative pruning:</b> for each token, temporarily remove it, re-tokenize the corpus, and compute the <b>loss</b> (how much worse the model explains the data). If the loss is small, remove it permanently; if large, keep it. Repeat until the target size (e.g. 32,000).</li>
+</ol>
+<div class="work"><b>Worked example: "lowest"</b>
+<ol><li>Option 1: low + est → P = 0.25 × 0.20 = <b>0.05</b></li><li>Option 2: l + o + w + est → P = 0.02 × 0.02 × 0.02 × 0.20 = 0.0000016</li><li>0.05 is far larger → choose <b>low + est</b>.</li></ol></div>
+<div class="work"><b>Worked example (slides): "pug" on the hug corpus</b>
+<ol>
+<li>All substrings and their frequencies: h 15, u 36, g 20, hu 15, ug 20, p 17, pu 17, n 16, un 16, b 4, bu 4, s 5, hug 15, gs 5, ugs 5. <b>Total = 210</b>. So P(token) = freq / 210.</li>
+<li>P([p, u, g]) = 17/210 × 36/210 × 20/210 ≈ 0.00132</li>
+<li>P([pu, g]) = 17/210 × 20/210 ≈ 0.00771 and P([p, ug]) = 17/210 × 20/210 ≈ 0.00771</li>
+<li>The two-token splits win (tie); the 3-token split loses.</li>
+</ol>
+<p class="note">Your slide prints 0.000389 and 0.0022676; those numbers use 5 instead of 17 for "p" (another slip copied from the Hugging Face course). The conclusion is the same: fewer, more frequent tokens give a higher probability.</p></div>
+<p><b>EM algorithm</b> (Expectation-Maximization) trains Unigram: <b>E-step</b> estimates how often each token is used; <b>M-step</b> updates token probabilities; then <b>prune</b> low-contribution tokens. Since a word can be segmented many ways, the <b>Viterbi algorithm</b> (a dynamic-programming method) finds the most probable segmentation efficiently.</p>
+
+<h2 id="l4-cmp">9. Comparing BPE, WordPiece and Unigram</h2>
+<div class="tbl"><table class="mini"><thead><tr><th>Feature</th><th>BPE</th><th>WordPiece</th><th>Unigram</th></tr></thead><tbody>
+<tr><td>Vocabulary creation</td><td>Merge frequent pairs</td><td>Merge highest-scoring pairs</td><td>Start large, prune</td></tr>
+<tr><td>Training</td><td>Greedy merging</td><td>Likelihood-based merging</td><td>EM optimization</td></tr>
+<tr><td>Segmentation</td><td>Deterministic (apply rules)</td><td>Longest-match-first</td><td>Probabilistic (best probability)</td></tr>
+<tr><td>Used in</td><td>GPT-2, RoBERTa</td><td>BERT</td><td>SentencePiece, T5</td></tr>
+<tr><td>Unknown words</td><td>Good</td><td>Can produce [UNK]</td><td>Very good</td></tr>
+<tr><td>Stores</td><td>Vocabulary + merge rules</td><td>Vocabulary only</td><td>Vocabulary + probabilities</td></tr>
+</tbody></table></div>
+<p>Slide examples: "unhappiness" → BPE [un, happiness] or [un, happi, ness]; WordPiece [un, ##happiness] or [un, ##happi, ##ness]; Unigram [un, happiness] or possibly [unhappiness]. Rare "bioengineering" → BPE [bi, oen, gin, eer, ing]; WordPiece [bio, ##engine, ##ering]; Unigram [bio, engineering] or [bio, engineer, ing].</p>
+
+<h2 id="l4-practice">Practice numericals</h2>
+<div class="work"><b>Practice 1: BPE</b>
+Corpus: ("ab", 5), ("abc", 3), ("bc", 4). No end marker. Learn 3 merges, then tokenize "cab" and "abcc".
+<details class="ans"><summary>Show solution</summary><div>
+<ol>
+<li>Split: (a b, 5), (a b c, 3), (b c, 4). Pairs: a-b = 5 + 3 = <b>8</b>; b-c = 3 + 4 = 7. Merge 1: <b>(a, b) → ab</b>.</li>
+<li>Now (ab, 5), (ab c, 3), (b c, 4). Pairs: ab-c = 3; b-c = <b>4</b>. Merge 2: <b>(b, c) → bc</b>.</li>
+<li>Now (ab, 5), (ab c, 3), (bc, 4). Only pair: ab-c = 3. Merge 3: <b>(ab, c) → abc</b>.</li>
+<li>"cab": c a b → rule 1 → [c, ab]. Rules 2, 3 don't apply. Answer <b>[c, ab]</b>.</li>
+<li>"abcc": a b c c → rule 1 → ab c c → rule 2 (b,c): no "b" left alone → rule 3 → abc c. Answer <b>[abc, c]</b>. Notice rule order matters.</li>
+</ol></div></details></div>
+<div class="work"><b>Practice 2: WordPiece score</b>
+Pair X appears 6 times; its parts appear 10 and 12 times. Pair Y appears 20 times; its parts appear 40 and 50 times. Which merges first?
+<details class="ans"><summary>Show solution</summary><div>score(X) = 6/(10×12) = 0.05. score(Y) = 20/(40×50) = 0.01. <b>X merges first</b>, even though Y is more frequent.</div></details></div>
+<div class="work"><b>Practice 3: Unigram</b>
+P(un) = 0.1, P(happy) = 0.05, P(u) = 0.02, P(n) = 0.02, P(hap) = 0.01, P(py) = 0.01. Best segmentation of "unhappy"?
+<details class="ans"><summary>Show solution</summary><div>un + happy = 0.1 × 0.05 = <b>0.005</b>; u + n + happy = 0.02 × 0.02 × 0.05 = 0.00002; un + hap + py = 0.1 × 0.01 × 0.01 = 0.00001. Choose <b>[un, happy]</b>.</div></details></div>
+
+<div class="q"><b>Q1.</b> Which tokenizer starts with a large vocabulary and prunes it?
+<ol><li>BPE</li><li>WordPiece</li><li>Unigram</li><li>Word tokenizer</li></ol><details><summary>Answer</summary>C (top-down).</details></div>
+<div class="q"><b>Q2.</b> GPT-2 marks spaces with:
+<ol><li>##</li><li>Ġ</li><li>▁</li><li>&lt;/w&gt;</li></ol><details><summary>Answer</summary>B. T5 uses ▁; BERT uses ## for word-internal pieces.</details></div>
+<div class="q"><b>Q3.</b> The main advantage of character tokenization is:
+<ol><li>Short sequences</li><li>Meaningful tokens</li><li>No unknown words</li><li>Large vocabulary</li></ol><details><summary>Answer</summary>C (and a small vocabulary).</details></div>
+<div class="q"><b>Q4.</b> WordPiece, unlike BPE, saves:
+<ol><li>Merge rules only</li><li>The final vocabulary only</li><li>Probabilities</li><li>Nothing</li></ol><details><summary>Answer</summary>B. It then tokenizes by longest-match-first.</details></div>
+<div class="q"><b>Q5.</b> T5's tokenizer splits on:
+<ol><li>Whitespace and punctuation</li><li>Only whitespace</li><li>Only punctuation</li><li>Characters</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q6.</b> Which algorithm is used to find the most probable Unigram segmentation?
+<ol><li>Rocchio</li><li>Viterbi</li><li>Porter</li><li>Greedy merge</li></ol><details><summary>Answer</summary>B.</details></div>
+
+<h2 id="l4-traps">MCQ traps and quick facts</h2>
+<ul class="trap">
+  <li>"Creating vocabulary is the ultimate goal of tokenization."</li>
+  <li>Typical subword vocabulary: <b>30,000 to 50,000</b>.</li>
+  <li>BPE: GPT, GPT-2, RoBERTa, BART, DeBERTa. WordPiece: BERT, DistilBERT, MobileBERT, Funnel, MPNET. Unigram/SentencePiece: ALBERT, T5, mBART, Big Bird, XLNet.</li>
+  <li>BPE = frequency, greedy, bottom-up. WordPiece = likelihood score, bottom-up. Unigram = probabilistic, top-down, EM + Viterbi.</li>
+  <li>BPE applies merge rules <b>in the order learned</b>. WordPiece uses <b>longest match first</b>.</li>
+  <li>WordPiece can produce [UNK] for a whole word; Unigram handles unknown words "very good".</li>
+  <li>Pipeline order: normalization → pre-tokenization → model → postprocessor.</li>
+  <li>UNK trick: keep top-K frequent words, replace rare ones by UNK in training.</li>
+</ul>
+
+</template>
+<template id="t-l5">
+<div class="inmin"><b class="l">This lecture in one minute</b>
+Scanning all documents for every query is too slow, so we build an <b>index</b> in advance. The first idea, a giant 0/1 table of terms × documents (the <b>incidence matrix</b>), lets us answer Boolean queries with bitwise AND/OR/NOT, but it is far too big and mostly zeros. So we store only the 1s: for each term, a sorted list of document IDs. That is the <b>inverted index</b>. Before indexing, text goes through <b>preprocessing</b>: tokenization, normalization, case folding, stopword removal, stemming or lemmatization. Queries like "Brutus AND Caesar" are answered by <b>intersecting</b> posting lists.</div>
+
+<h2 id="l5-q">1. The kind of query we want to answer</h2>
+<ul class="clean">
+  <li>Which plays of Shakespeare contain the words <b>Brutus AND Caesar but NOT Calpurnia</b>?</li>
+  <li>Which web pages contain <b>Gautam and Gambhir NOT Cricket</b>?</li>
+</ul>
+<p><b>Naive solution:</b> search all documents containing Gautam and Gambhir using <span class="mono">grep</span> (a Unix command that scans text for a pattern) or Python's <span class="mono">re.search(pattern, text)</span>, then remove those containing "cricket". This <b>scanning</b> approach is slow for a large corpus and awkward for complex queries: Scan Document 1, Scan Document 2, ... Scan Document 100 Billion.</p>
+<p><b>Index rationale:</b> to avoid linearly scanning the texts for each query, <b>index the documents in advance</b>. Like a book index: "Information Retrieval → Page 145".</p>
+
+<h2 id="l5-mat">2. Term-document incidence matrix</h2>
+<p>Rows are <b>terms</b> (words), columns are <b>documents</b> (plays). A cell is <b>1</b> if the play contains the word, else <b>0</b>.</p>
+<div class="tbl"><table class="mini"><thead><tr><th>term</th><th>Antony &amp; Cleopatra</th><th>Julius Caesar</th><th>The Tempest</th><th>Hamlet</th><th>Othello</th><th>Macbeth</th></tr></thead><tbody>
+<tr><td>Antony</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><td>Brutus</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr><td>Caesar</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>Calpurnia</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>Cleopatra</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>mercy</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>worser</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr></tbody></table></div>
+<p>Each term's row is a 0/1 <b>incidence vector</b> (a list of bits, one per document).</p>
+<div class="work"><b>Worked example: Brutus AND Caesar AND NOT Calpurnia</b>
+<ol>
+<li>Brutus = <span class="bits">110100</span></li>
+<li>Caesar = <span class="bits">110111</span></li>
+<li>Calpurnia = <span class="bits">010000</span>. "NOT" means <b>complement</b> (flip every bit): <span class="bits">101111</span></li>
+<li>Bitwise AND (result bit is 1 only where all three are 1): <span class="bits">110100</span> AND <span class="bits">110111</span> AND <span class="bits">101111</span> = <span class="bits"><b>100100</b></span></li>
+<li>Positions 1 and 4 → <b>Antony and Cleopatra</b> and <b>Hamlet</b>.</li>
+</ol></div>
+<h3>Boolean retrieval model</h3>
+<p>A model where any query is a <b>Boolean expression</b> of terms combined with <b>AND, OR, NOT</b>. It views each document as just a <b>set of words</b> (no counts, no order). A document either matches or it does not.</p>
+
+<h2 id="l5-big">3. Why the matrix doesn't scale</h2>
+<div class="work"><b>Size calculation from the slides</b>
+<ol>
+<li>N = 1 million documents, each about 1,000 words → 1 billion word occurrences.</li>
+<li>Average 6 bytes per word (including spaces and punctuation) → <b>6 GB</b> of text.</li>
+<li>Suppose M = 500K (500,000) distinct terms.</li>
+<li>Matrix size = 500,000 × 1,000,000 = 5 × 10<sup>11</sup> = <b>half a trillion</b> 0s and 1s.</li>
+<li>But there can be <b>no more than one billion 1s</b> (each of the 10<sup>9</sup> word occurrences can create at most one 1). So at least 99.8% of the cells are 0.</li>
+</ol>
+The matrix is <b>extremely sparse</b> (mostly zeros). Better: <b>record only the positions of the 1s</b>.</div>
+<p><b>Ad hoc retrieval</b> is the most standard IR task: the system must provide documents from the collection that are relevant to an <b>arbitrary</b> user information need (any new query, made up on the spot).</p>
+
+<h2 id="l5-inv">4. The inverted index</h2>
+<p>An <b>inverted index</b> maps each <b>term → the documents that contain it</b>. For each term t we store a list of all documents containing t, each identified by a <b>docID</b> (document serial number). Normally a book or file goes <i>document → terms</i>; we store <i>term → documents</i>, which is why it is called <b>inverted</b>.</p>
+<div class="tbl"><table class="mini"><thead><tr><th>Dictionary</th><th>Postings (sorted docIDs)</th></tr></thead><tbody>
+<tr><td>Brutus</td><td class="mono">1 → 2 → 4 → 11 → 31 → 45 → 173 → 174</td></tr>
+<tr><td>Caesar</td><td class="mono">1 → 2 → 4 → 5 → 6 → 16 → 57 → 132 → ...</td></tr>
+<tr><td>Calpurnia</td><td class="mono">2 → 31 → 54 → 101</td></tr></tbody></table></div>
+<dl class="sym">
+  <dt>Dictionary</dt><dd>the list of all terms (also called vocabulary or lexicon).</dd>
+  <dt>Posting</dt><dd>one item in the list, recording that a term appeared in a document (a docID).</dd>
+  <dt>Postings list</dt><dd>(or inverted list) the whole list of docIDs for one term.</dd>
+  <dt>Postings</dt><dd>all postings lists taken together.</dd>
+</dl>
+<div class="analogy"><b>Analogy</b>A class teacher's register lists each student and the days present (document → terms). An inverted index is like keeping, for each <i>day</i>, the list of students present (term → documents). If someone asks "who was present on both Monday and Friday?", you just compare two short lists.</div>
+
+<h3>Building the inverted index: steps</h3>
+<ol>
+  <li><b>Collect</b> the documents to be indexed: "Friends, Romans, countrymen." "So let it be with Caesar" ...</li>
+  <li><b>Tokenize</b> the text into tokens: Friends | Romans | countrymen | So ...</li>
+  <li>Do <b>linguistic preprocessing</b> to get normalized tokens (the indexing terms): friend | roman | countryman | so ...</li>
+  <li><b>Index</b>: create the inverted index of dictionary and postings.</li>
+</ol>
+<div class="work"><b>Indexer steps on two documents (slides)</b>
+Doc 1: "I did enact Julius Caesar: I was killed i' the Capitol; Brutus killed me." Doc 2: "So let it be with Caesar. The noble Brutus hath told you Caesar was ambitious."
+<ol>
+<li>Make a list of (term, docID) pairs in text order: (I,1) (did,1) (enact,1) (julius,1) (caesar,1) ... (so,2) (let,2) ... (caesar,2) (was,2) (ambitious,2).</li>
+<li><b>Sort</b> by term, then by docID. This is the core indexing step.</li>
+<li><b>Merge</b> multiple entries of the same term in the same document.</li>
+<li><b>Split</b> into dictionary and postings, and add the <b>document frequency</b> (df: number of documents containing the term) to each dictionary entry.</li>
+</ol>
+Part of the result:
+<div class="tbl"><table class="mini"><thead><tr><th>term</th><th>df</th><th>postings</th></tr></thead><tbody>
+<tr><td>ambitious</td><td>1</td><td>2</td></tr><tr><td>brutus</td><td>2</td><td>1 → 2</td></tr><tr><td>caesar</td><td>2</td><td>1 → 2</td></tr><tr><td>capitol</td><td>1</td><td>1</td></tr><tr><td>killed</td><td>1</td><td>1</td></tr><tr><td>noble</td><td>1</td><td>2</td></tr><tr><td>was</td><td>2</td><td>1 → 2</td></tr></tbody></table></div>
+("killed" appears twice in Doc 1 but is one posting; "caesar" appears twice in Doc 2, still one posting.)</div>
+
+<h2 id="l5-pre">5. Text preprocessing pipeline</h2>
+<div class="flow"><span>Raw documents</span><i>→</i><span>Tokenization</span><i>→</i><span>Normalization</span><i>→</i><span>Stopword removal</span><i>→</i><span>Stemming / Lemmatization</span><i>→</i><span>Normalized terms</span><i>→</i><span>Index construction</span></div>
+<ul class="clean">
+  <li><b>Tokenization:</b> cut character sequence into word tokens (deal with "John's", "state-of-the-art").</li>
+  <li><b>Normalization:</b> map text and query terms to the same form (U.S.A. and USA should match).</li>
+  <li><b>Stemming:</b> different forms of a root should match (authorize, authorization).</li>
+  <li><b>Stopwords:</b> we may omit very common words (the, a, to, of), or not.</li>
+</ul>
+<p class="note">Important: the <b>query goes through exactly the same steps</b> as the documents, otherwise "Running" in a query would never match "run" in the index.</p>
+
+<h3 id="l5-tok">Tokenization</h3>
+<p>Tokenization splits text into tokens. Input "Friends, Romans and Countrymen" → tokens Friends, Romans, Countrymen. A <b>token</b> is an instance of a sequence of characters, and each token is a candidate for an index entry. Issues:</p>
+<ul class="clean">
+  <li><b>Apostrophes:</b> "Finland's capital" → Finland AND s? Finlands? Finland's?</li>
+  <li><b>Hyphens:</b> "Hewlett-Packard" as two tokens? Typical solution: break up hyphenated sequences. But "co-education"? "lowercase", "lower-case", "lower case"? It can help to let the user type possible hyphens.</li>
+  <li><b>Multi-word names:</b> "New York": one token or two? How do you decide?</li>
+  <li><b>French:</b> "L'ensemble": one token or two? L? L'? Le?</li>
+  <li><b>German noun compounds</b> are not split: "Lebensversicherungsgesellschaftsangestellter" = "life insurance company employee". A <b>compound splitter</b> can give a <b>15% performance boost</b> for German.</li>
+  <li><b>Chinese and Japanese</b> have no spaces between words, and a unique tokenization is not always guaranteed.</li>
+  <li><b>Arabic / Hebrew</b> are written right to left, but numbers left to right (the slide's sentence: "India gained independence in 1947 after 200 years of British occupation").</li>
+</ul>
+
+<h3 id="l5-stop">Stopwords</h3>
+<p><b>Stopwords</b> are common words of little value: the, a, and, to, be. With a <b>stop list</b>, you exclude the commonest words from the dictionary entirely.</p>
+<ul class="clean">
+  <li><b>Why remove:</b> little semantic content (meaning); there are a lot of them (<b>~30% of postings come from the top 30 words</b>); smaller index, faster retrieval, less storage.</li>
+  <li><b>But the trend is away from removing them</b>, because you need them for: phrase queries ("King of Denmark"), song and book titles ("Let it be", "To be or not to be"), and relational queries ("flights <b>to</b> London" vs "flights <b>from</b> London").</li>
+</ul>
+
+<h3 id="l5-norm">Normalization and case folding</h3>
+<p>We "normalize" words in both the indexed text and the query into the same form. The result is <b>terms</b>: a term is a normalized word type, an entry in the IR system's dictionary. We define <b>equivalence classes</b> (groups treated as the same), for example by:</p>
+<ul class="clean"><li>deleting periods: U.S.A. → USA</li><li>deleting hyphens: anti-discriminatory → antidiscriminatory</li></ul>
+<p><b>Case folding</b> (upper to lower): reduce all letters to lowercase. Exceptions: upper case mid-sentence can carry meaning, such as <b>General Motors</b>, <b>Fed</b> (US Federal Reserve) vs fed, <b>SAIL</b> vs sail. Still, it is often best to lowercase everything, because users type lowercase regardless of correct capitalization.</p>
+
+<h3 id="l5-stem">Stemming</h3>
+<p><b>Stemming</b> reduces terms to their "roots" before indexing by <b>crude affix chopping</b> (an affix is a prefix or suffix). It is language dependent. Example: automate(s), automatic, automation → <b>automat</b>.</p>
+<div class="tbl"><table class="mini"><thead><tr><th>Original</th><th>Stem (Porter)</th></tr></thead><tbody><tr><td>studies</td><td>studi</td></tr><tr><td>studying</td><td>studi</td></tr><tr><td>studied</td><td>studi</td></tr><tr><td>retrieval</td><td>retriev</td></tr></tbody></table></div>
+<p>Algorithms: <b>Porter</b> (most common for English), <b>Snowball</b>; the slide also compares <b>Lovins</b> and <b>Paice</b> stemmers on a sample text (Lovins and Paice are more aggressive, chopping more).</p>
+<ul class="clean">
+  <li>English: <b>very mixed results</b>. Helps <b>recall</b> for some queries but harms <b>precision</b> on others. Example: "operative (dentistry)" → <b>oper</b>, which now matches "operation", "operating", etc.</li>
+  <li>Definitely useful for Spanish, German, Finnish: <b>30% performance gains for Finnish</b>.</li>
+  <li>Reduces vocabulary size. Produces <b>non-dictionary words</b> (studi, automat).</li>
+</ul>
+<p class="note"><b>Recall</b> = how many of the relevant documents you found; <b>precision</b> = how many of what you found are relevant (fully explained in Lecture 8).</p>
+
+<h3 id="l5-lem">Lemmatization</h3>
+<p><b>Lemmatization</b> reduces inflectional/variant forms to the <b>base dictionary form</b>, the <b>lemma</b> (the headword used in dictionaries for all forms: "run" for runs, ran, running). It is more complex and does "proper" reduction.</p>
+<ul class="clean"><li>am, are, is → <b>be</b></li><li>car, cars, car's, cars' → <b>car</b></li><li>"the boy's cars are different colors" → "the boy car be different color"</li></ul>
+<div class="tbl"><table class="mini"><thead><tr><th>Stemming</th><th>Lemmatization</th></tr></thead><tbody>
+<tr><td>Rule-based (chops suffixes)</td><td>Linguistically informed (uses dictionary and grammar)</td></tr>
+<tr><td>Faster</td><td>Slower</td></tr>
+<tr><td>Produces stems (may not be real words)</td><td>Produces valid words</td></tr>
+<tr><td>Less accurate</td><td>More accurate</td></tr></tbody></table></div>
+<div class="analogy"><b>Analogy</b>Stemming is a barber with a fixed rule: "cut 3 cm off everyone". Fast, but sometimes ugly (studi). Lemmatization is a careful stylist who looks up what each person should look like (study). Slower, but correct. Note "ran → run" needs lemmatization; no suffix-chopping rule can get it.</div>
+
+<h2 id="l5-merge">6. Processing a query: intersecting posting lists</h2>
+<p>For <b>Brutus AND Caesar</b>: locate Brutus in the dictionary and retrieve its postings; locate Caesar and retrieve its postings; then <b>merge</b> (intersect) the two sorted lists.</p>
+<div class="formula">INTERSECT(p1, p2)
+1  answer ← ⟨ ⟩
+2  while p1 ≠ NIL and p2 ≠ NIL
+3    do if docID(p1) = docID(p2)
+4         then ADD(answer, docID(p1))
+5              p1 ← next(p1)
+6              p2 ← next(p2)
+7         else if docID(p1) &lt; docID(p2)
+8                then p1 ← next(p1)
+9                else p2 ← next(p2)
+10 return answer</div>
+<dl class="sym"><dt>p1, p2</dt><dd>pointers (fingers) to the current position in each list.</dd><dt>NIL</dt><dd>end of the list (nothing left).</dd><dt>next(p)</dt><dd>move the pointer one step forward.</dd></dl>
+<p><b>Idea:</b> both lists are sorted, so walk them side by side. If equal, keep it and move both. Otherwise move the pointer on the <b>smaller</b> docID (it can never match anything later in the other list).</p>
+<div class="work"><b>Trace: Brutus [1, 2, 4, 11, 31, 45, 173, 174] AND Caesar [1, 2, 4, 5, 6, 16, 57, 132]</b>
+<div class="tbl"><table class="mini"><thead><tr><th>p1</th><th>p2</th><th>action</th><th>answer</th></tr></thead><tbody>
+<tr><td>1</td><td>1</td><td>equal: add, move both</td><td>1</td></tr>
+<tr><td>2</td><td>2</td><td>equal: add, move both</td><td>1, 2</td></tr>
+<tr><td>4</td><td>4</td><td>equal: add, move both</td><td>1, 2, 4</td></tr>
+<tr><td>11</td><td>5</td><td>5 &lt; 11: move p2</td><td></td></tr>
+<tr><td>11</td><td>6</td><td>move p2</td><td></td></tr>
+<tr><td>11</td><td>16</td><td>11 &lt; 16: move p1</td><td></td></tr>
+<tr><td>31</td><td>16</td><td>move p2</td><td></td></tr>
+<tr><td>31</td><td>57</td><td>move p1</td><td></td></tr>
+<tr><td>45</td><td>57</td><td>move p1</td><td></td></tr>
+<tr><td>173</td><td>57</td><td>move p2</td><td></td></tr>
+<tr><td>173</td><td>132</td><td>move p2 → end of Caesar</td><td>stop</td></tr></tbody></table></div>
+Answer: <b>{1, 2, 4}</b>. Time is proportional to <b>x + y</b> (the two list lengths), written <b>O(x + y)</b>, because each step moves at least one pointer forward. This only works because postings are <b>sorted by docID</b>.</div>
+
+<h2 id="l5-sum">7. Summary (from the slides)</h2>
+<ul class="clean">
+  <li>Search engines cannot scan all documents for every query.</li>
+  <li>An inverted index maps terms to documents; its two main parts are the <b>dictionary</b> and the <b>posting lists</b>.</li>
+  <li>Posting lists store the documents containing a term.</li>
+  <li>Index construction involves preprocessing, dictionary creation, posting list generation.</li>
+  <li>Queries are answered efficiently using posting lists.</li>
+</ul>
+
+<h2 id="l5-practice">Practice numericals</h2>
+<div class="work"><b>Practice 1: incidence vectors</b>
+Using the matrix above, answer (a) Brutus AND NOT Caesar (b) Caesar AND mercy (c) Calpurnia OR Cleopatra.
+<details class="ans"><summary>Show solution</summary><div>
+(a) Brutus 110100; NOT Caesar = complement of 110111 = 001000; AND = <b>000000</b> → no play.<br>
+(b) Caesar 110111 AND mercy 101111 = <b>100111</b> → Antony &amp; Cleopatra, Hamlet, Othello, Macbeth.<br>
+(c) Calpurnia 010000 OR Cleopatra 100000 = <b>110000</b> → Antony &amp; Cleopatra, Julius Caesar.</div></details></div>
+<div class="work"><b>Practice 2: posting intersection</b>
+p1 = [2, 5, 8, 13, 21], p2 = [1, 2, 3, 8, 13, 34]. Find p1 AND p2 and count comparisons.
+<details class="ans"><summary>Show solution</summary><div>
+(2,1) move p2 · (2,2) add 2 · (5,3) move p2 · (5,8) move p1 · (8,8) add 8 · (13,13) add 13 · (21,34) move p1 → p1 ends.<br>
+Answer <b>{2, 8, 13}</b> after <b>7 comparisons</b>.</div></details></div>
+<div class="work"><b>Practice 3: sparsity</b>
+A collection has 200,000 documents of 500 words each and 100,000 distinct terms. How many cells does the incidence matrix have, and at most how many 1s?
+<details class="ans"><summary>Show solution</summary><div>Cells = 100,000 × 200,000 = 2 × 10<sup>10</sup>. Max 1s = 200,000 × 500 = 10<sup>8</sup>. So at most 0.5% of cells are 1; at least 99.5% are 0.</div></details></div>
+
+<div class="q"><b>Q1.</b> Why are postings kept sorted by docID?
+<ol><li>To save space</li><li>So that lists can be intersected in linear time</li><li>To rank documents</li><li>To remove stopwords</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q2.</b> "am, are, is → be" is an example of:
+<ol><li>Stemming</li><li>Lemmatization</li><li>Case folding</li><li>Stopword removal</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q3.</b> Stemming in English generally:
+<ol><li>Improves precision always</li><li>Helps recall for some queries but harms precision for others</li><li>Has no effect</li><li>Produces only valid dictionary words</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q4.</b> The top 30 words account for roughly what share of postings?
+<ol><li>3%</li><li>10%</li><li>30%</li><li>70%</li></ol><details><summary>Answer</summary>C.</details></div>
+<div class="q"><b>Q5.</b> Which query type suffers most if stopwords are removed?
+<ol><li>Single rare word</li><li>Phrase queries like "To be or not to be"</li><li>Numeric queries</li><li>Navigational queries like "gmail"</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q6.</b> In the Boolean retrieval model a document is viewed as:
+<ol><li>A ranked list</li><li>A set of words</li><li>A sequence of words</li><li>A probability distribution</li></ol><details><summary>Answer</summary>B.</details></div>
+
+<h2 id="l5-traps">MCQ traps and quick facts</h2>
+<ul class="trap">
+  <li>Inverted index = <b>term → documents</b>. Two parts: <b>dictionary</b> + <b>postings</b>.</li>
+  <li>Incidence matrix for 1M docs × 500K terms = <b>half a trillion</b> cells, <b>≤ 1 billion 1s</b>, 6 GB of text.</li>
+  <li>The core indexing step is <b>sort</b> (by term, then docID). Document frequency is added to the dictionary.</li>
+  <li>German compound splitter: <b>15%</b> boost. Stemming in Finnish: <b>30%</b> gain.</li>
+  <li>Stemming: rule-based, faster, non-words, less accurate. Lemmatization: linguistic, slower, real words, more accurate.</li>
+  <li>Porter and Snowball are <b>stemmers</b>, not lemmatizers.</li>
+  <li>Intersection cost <b>O(x + y)</b>; requires sorted postings.</li>
+  <li>Ad hoc retrieval = arbitrary information need on a fixed collection; the most standard IR task.</li>
+</ul>
+
+</template>
+<template id="t-l6">
+<div class="inmin"><b class="l">This lecture in one minute</b>
+The Boolean model only says match / no match, so it can't rank and gives too many or zero results. <b>Ranked retrieval</b> gives every document a score. The first scorer, <b>Jaccard</b>, just measures word-set overlap. Better: weight each word by <b>tf</b> (how often it appears in this document, dampened by a log) times <b>idf</b> (how rare it is across the collection). Put these TF-IDF weights into vectors, one dimension per word, and compare query and document by the <b>angle</b> between them: <b>cosine similarity</b>. This is the <b>Vector Space Model</b>. Expect a TF-IDF + cosine numerical.</div>
+
+<h2 id="l6-models">1. What is an IR model?</h2>
+<p>Three families: <b>Boolean</b> models (set theoretic), <b>Vector space</b> models (statistical / algebraic, including <b>Latent Semantic Indexing</b>), and <b>Probabilistic</b> models (Lecture 10).</p>
+<p>A <b>retrieval model</b> specifies: (1) the <b>document representation</b>, (2) the <b>query representation</b>, (3) the <b>retrieval function</b> (how to score a document for a query). It determines a notion of relevance, which can be <b>binary</b> (match/no match) or <b>continuous</b> (a score, i.e. ranked retrieval).</p>
+<p><b>Preprocessing recap:</b> strip unwanted characters/markup (HTML tags, punctuation, numbers); break into tokens on whitespace; stem tokens to roots (computational → comput); remove common stopwords; detect common phrases (possibly with a domain dictionary); build the inverted index.</p>
+
+<h2 id="l6-bool">2. The Boolean model and its problems</h2>
+<p>A document is a <b>set of keywords</b>. Queries are Boolean expressions with AND, OR, NOT (Brutus AND Caesar but NOT Calpurnia). Output: relevant or not. <b>No partial matches, no ranking.</b></p>
+<p>But users expect: most relevant document first, second most relevant next, and so on.</p>
+<ul class="clean">
+  <li><b>Very rigid:</b> AND means <i>all</i>, OR means <i>any</i>.</li>
+  <li>Difficult to express complex requests.</li>
+  <li>Difficult to <b>control the number</b> of documents retrieved: all matches are returned.</li>
+  <li>Difficult to <b>rank</b>: all matches logically satisfy the query equally.</li>
+  <li>Difficult to do <b>relevance feedback</b> (how to change a Boolean query if the user marks a result good or bad?).</li>
+</ul>
+<div class="callout"><b>Feast or famine:</b> Boolean queries give too few (0) or too many (thousands) results. "Tennis Ball" → 200,000 hits. "Tennis Ball Gandhinagar" → 0 hits. <b>AND gives too few; OR gives too many.</b> It takes skill to write a query that returns a manageable number.</div>
+<p>Boolean search is fine for <b>expert users</b> with precise needs and for <b>applications</b> (programs can consume thousands of results). It is bad for most users, who can't or won't write Boolean queries and don't want to wade through thousands of results, especially in web search.</p>
+
+<h2 id="l6-rank">3. Ranked retrieval</h2>
+<p>Instead of a set of matching documents, the system returns an <b>ordering</b> of the (top) documents for the query. Queries are <b>free text</b>: just words in human language, no operators.</p>
+<p><b>Statistical retrieval:</b> retrieval based on <b>similarity</b> between query and documents; output ranked by similarity; similarity is based on how often keywords occur in the query and document. Automatic relevance feedback is possible: relevant documents "added" to the query, irrelevant ones "subtracted" (Lecture 7).</p>
+<p>We assign each document a <b>score</b>, say in [0, 1], measuring how well document and query "match": Score(D, Q). Then sort: D2 0.95, D1 0.82, D3 0.74.</p>
+
+<h2 id="l6-jac">4. Measure 1: Jaccard coefficient</h2>
+<div class="formula">jaccard(A, B) = |A ∩ B| / |A ∪ B|</div>
+<dl class="sym"><dt>A, B</dt><dd>the sets of distinct words in the query and the document.</dd><dt>A ∩ B</dt><dd>intersection: words in both.</dd><dt>A ∪ B</dt><dd>union: words in either (count each once).</dd><dt>| |</dt><dd>"size of", number of elements.</dd></dl>
+<p>Properties: jaccard(A, A) = 1; jaccard(A, B) = 0 if they share nothing; A and B need not be the same size; the value is always between 0 and 1.</p>
+<div class="work"><b>Worked example (slides)</b>
+Query: "ides of march". Doc 1: "caesar died in march". Doc 2: "the long march".
+<ol>
+<li>Q = {ides, of, march}. D1 = {caesar, died, in, march}. D2 = {the, long, march}.</li>
+<li>Q ∩ D1 = {march} → 1. Q ∪ D1 = {ides, of, march, caesar, died, in} → 6. <b>Jaccard = 1/6 ≈ 0.167</b>.</li>
+<li>Q ∩ D2 = {march} → 1. Q ∪ D2 = {ides, of, march, the, long} → 5. <b>Jaccard = 1/5 = 0.2</b>.</li>
+<li>D2 ranks above D1, only because it is shorter.</li>
+</ol></div>
+<p><b>Why Jaccard is not enough</b> (this motivates everything next): it ignores how many times a word appears (term frequency), it treats rare words and common words the same, and it is distorted by document length.</p>
+
+<h2 id="l6-tf">5. Term frequency (tf)</h2>
+<p>We want: if the query term is absent, score 0; the more often it appears, the higher the score. <b>Motivation:</b> query "machine learning"; Doc A "machine learning machine learning", Doc B "machine learning". A seems more focused on the topic.</p>
+<p>From the binary incidence matrix (0/1) we move to a <b>count matrix</b>: each cell holds the number of occurrences. Each document becomes a count vector (a column), in ℕ<sup>|V|</sup> (|V| whole numbers).</p>
+<div class="tbl"><table class="mini"><thead><tr><th></th><th>Antony &amp; Cleopatra</th><th>Julius Caesar</th><th>Tempest</th><th>Hamlet</th><th>Othello</th><th>Macbeth</th></tr></thead><tbody>
+<tr><td>Antony</td><td>157</td><td>73</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Brutus</td><td>4</td><td>157</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>Caesar</td><td>232</td><td>227</td><td>0</td><td>2</td><td>1</td><td>1</td></tr><tr><td>Calpurnia</td><td>0</td><td>10</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Cleopatra</td><td>57</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>mercy</td><td>2</td><td>0</td><td>3</td><td>5</td><td>5</td><td>1</td></tr><tr><td>worser</td><td>2</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr></tbody></table></div>
+<h3>Bag of words (BoW)</h3>
+<p>A document is a <b>bag of words</b>: unordered words with frequencies. A "bag" is a set that allows repeats. Word order is lost: "John is quicker than Mary" and "Mary is quicker than John" have the <b>same vector</b>. Queries can be weighted, Q = &lt;database 0.5; text 0.8; information 0.2&gt;, or unweighted, Q = &lt;database; text; information&gt;, with no Boolean conditions.</p>
+<div class="formula">tf(t, d) = f(t, d) = number of times term t occurs in document d</div>
+<p>Note: in IR, "frequency" means <b>count</b>. Intuition: higher tf → more important term in that document.</p>
+<p><b>Problem with raw tf:</b> a document with 10 occurrences is more relevant than one with 1 occurrence, <b>but not 10 times more relevant</b>. Relevance does not grow in proportion to tf.</p>
+
+<h3>Log-frequency weighting</h3>
+<div class="formula">w(t,d) = 1 + log₁₀ tf(t,d)   if tf > 0
+w(t,d) = 0                    otherwise</div>
+<p>tf 0 → 0, 1 → 1, 2 → 1.3, 10 → 2, 1000 → 4. The log grows slowly, so 1000 occurrences are worth only 4 times one occurrence.</p>
+<div class="formula">Score(q, d) = Σ over t in both q and d of (1 + log₁₀ tf(t,d))</div>
+<p>Σ means "add up". The score is 0 if no query term appears in the document.</p>
+<div class="analogy"><b>Analogy</b>A friend who says "this movie is good" once vs ten times. Ten times means they liked it more, but not ten times more. The log captures this "diminishing returns".</div>
+
+<h2 id="l6-idf">6. Document frequency and IDF</h2>
+<p><b>Rare terms are more informative</b> than frequent ones (recall stopwords). A query term that is rare in the collection (FabiFlu, arachnocentric) is a strong signal: a document containing it is very likely relevant. We want high weights for rare terms.</p>
+<p><b>Document frequency df(t)</b> = number of documents that contain t.</p>
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+<div class="tbl"><table class="mini"><thead><tr><th>Doc</th><th>Content</th></tr></thead><tbody><tr><td>D1</td><td>machine learning</td></tr><tr><td>D2</td><td>machine learning</td></tr><tr><td>D3</td><td>machine learning</td></tr><tr><td>D4</td><td>deep learning</td></tr></tbody></table></div>
+<div class="tbl"><table class="mini"><thead><tr><th>Term</th><th>DF</th></tr></thead><tbody><tr><td>machine</td><td>3</td></tr><tr><td>learning</td><td>4</td></tr><tr><td>deep</td><td>1</td></tr></tbody></table></div></div>
+<p>"learning" is in every document, so it cannot help distinguish them. In research papers, words like paper, research, study appear everywhere and have little <b>discriminatory power</b> (ability to tell documents apart). That is the motivation for IDF.</p>
+<h3>Collection frequency vs document frequency</h3>
+<p><b>Collection frequency cf(t)</b> = total occurrences of t in the whole collection. <b>Document frequency df(t)</b> = number of documents containing t.</p>
+<div class="tbl"><table class="mini"><thead><tr><th>Word</th><th>Collection frequency</th><th>Document frequency</th></tr></thead><tbody><tr><td>insurance</td><td>10,440</td><td>3,997</td></tr><tr><td>try</td><td>10,422</td><td>8,760</td></tr></tbody></table></div>
+<p>Almost the same cf, but "insurance" is concentrated in fewer documents (when a document is about insurance, it says it many times), so it is <b>more informative</b> than "try". Important terms occur frequently in a document but rarely in the collection. This is why IR uses <b>df, not cf</b>.</p>
+<div class="formula">idf(t) = log₁₀ ( N / df(t) )</div>
+<dl class="sym"><dt>N</dt><dd>total number of documents.</dd><dt>df(t)</dt><dd>documents containing t (always ≤ N).</dd><dt>log</dt><dd>dampens the effect; base 10 here.</dd></dl>
+<div class="tbl"><table class="mini"><thead><tr><th>term</th><th>df</th><th>idf (N = 1,000,000)</th></tr></thead><tbody><tr><td>Brutus</td><td>1</td><td>log(10⁶) = 6</td></tr><tr><td>Caesar</td><td>100</td><td>4</td></tr><tr><td>Monday</td><td>1,000</td><td>3</td></tr><tr><td>fly</td><td>10,000</td><td>2</td></tr><tr><td>on</td><td>100,000</td><td>1</td></tr><tr><td>the</td><td>1,000,000</td><td>0</td></tr></tbody></table></div>
+<ul class="clean">
+  <li>Rare terms are more informative. There is <b>one idf value per term</b> in a collection.</li>
+  <li><span class="mark">IDF has no effect on ranking for one-term queries</span> (like "iPhone"): every document's score is multiplied by the same number. IDF affects ranking only for queries with <b>at least two terms</b>.</li>
+  <li>For "capricious person", IDF makes occurrences of <b>capricious</b> count much more than occurrences of <b>person</b>.</li>
+</ul>
+
+<h2 id="l6-tfidf">7. TF-IDF weighting</h2>
+<p>TF alone is insufficient (common words win); IDF alone is insufficient (ignores how much a document talks about the word). <b>Combine both</b>: the tf-idf weight of a term is the <b>product</b> of its tf weight and its idf weight.</p>
+<div class="formula">w(t,d) = (1 + log₁₀ tf(t,d)) × log₁₀ ( N / df(t) )</div>
+<ul class="clean">
+  <li>The best-known weighting scheme in IR. The "-" in tf-idf is a <b>hyphen, not a minus</b>. Also written tf.idf, tf × idf.</li>
+  <li>Increases with the number of occurrences <b>within</b> a document; increases with the <b>rarity</b> of the term in the collection. High TF + High IDF = important term.</li>
+</ul>
+<div class="formula">Score(q, d) = Σ over t in q ∩ d of tf-idf(t, d)</div>
+<p>Many variants exist: how tf is computed (with or without logs), and whether query terms are weighted too.</p>
+<p>After weighting, the matrix becomes real numbers (Antony in Antony &amp; Cleopatra 5.25, Brutus in Julius Caesar 6.1, Caesar 8.59 ...): each document is a vector of tf-idf weights in ℝ<sup>|V|</sup>.</p>
+<h3>Variants (tables on the slides)</h3>
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+<div class="tbl"><table class="mini"><thead><tr><th>TF scheme</th><th>weight</th></tr></thead><tbody><tr><td>binary</td><td>0, 1</td></tr><tr><td>raw count</td><td>f(t,d)</td></tr><tr><td>term frequency</td><td>f(t,d) / Σ f(t′,d)</td></tr><tr><td>log normalization</td><td>log(1 + f(t,d))</td></tr><tr><td>double normalization 0.5</td><td>0.5 + 0.5 · f / max f</td></tr><tr><td>double normalization K</td><td>K + (1 − K) · f / max f</td></tr></tbody></table></div>
+<div class="tbl"><table class="mini"><thead><tr><th>IDF scheme</th><th>weight (n<sub>t</sub> = df)</th></tr></thead><tbody><tr><td>unary</td><td>1</td></tr><tr><td>inverse document frequency</td><td>log (N / n<sub>t</sub>)</td></tr><tr><td>idf smooth</td><td>log (1 + N / n<sub>t</sub>)</td></tr><tr><td>idf max</td><td>log (max n<sub>t′</sub> / (1 + n<sub>t</sub>))</td></tr><tr><td>probabilistic idf</td><td>log ((N − n<sub>t</sub>) / n<sub>t</sub>)</td></tr></tbody></table></div></div>
+<p><b>Max-tf normalization:</b> tf<sub>ij</sub> = f<sub>ij</sub> / max<sub>i</sub> f<sub>ij</sub>, i.e. divide by the count of the most common term in the document, so the top term gets tf = 1.</p>
+
+<div class="work"><b>Worked example (slides): max-tf normalization with log₂ idf</b>
+A document has terms A (3 times), B (2), C (1). Collection N = 10,000; df: A 50, B 1300, C 250.
+<ol>
+<li>max f = 3, so tf: A = 3/3 = 1; B = 2/3; C = 1/3.</li>
+<li>idf: A = log₂(10000/50) = log₂ 200 = 7.6; B = log₂(10000/1300) = log₂ 7.69 = 2.9; C = log₂(10000/250) = log₂ 40 = 5.3.</li>
+<li>tf-idf: A = 1 × 7.6 = <b>7.6</b>; B = 0.667 × 2.94 = <b>2.0</b>; C = 0.333 × 5.32 = <b>1.8</b>.</li>
+</ol>
+Calculator tip: log₂ x = log₁₀ x / log₁₀ 2 = log₁₀ x / 0.301.</div>
+
+<h2 id="l6-vsm">8. The Vector Space Model (VSM)</h2>
+<p>We have a <b>|V|-dimensional vector space</b>: <b>terms are the axes</b>, documents are points or vectors. Very high-dimensional (tens of millions of dimensions for web search) and very <b>sparse</b> (most entries 0).</p>
+<ul class="clean">
+  <li>Assume t distinct terms remain after preprocessing (the index terms / vocabulary). These "orthogonal" (independent, at right angles) terms form the space; dimensionality = t = |vocabulary|.</li>
+  <li>Each term i in document or query j gets a real-valued weight <b>w<sub>ij</sub></b>.</li>
+  <li>Documents and queries are t-dimensional vectors: <b>d<sub>j</sub> = (w<sub>1j</sub>, w<sub>2j</sub>, ..., w<sub>tj</sub>)</b>.</li>
+  <li>A collection of n documents forms a <b>Document Term Matrix (DTM)</b>: rows D<sub>1</sub>..D<sub>n</sub>, columns T<sub>1</sub>..T<sub>t</sub>, entry = weight (0 means the term is absent or insignificant).</li>
+  <li>The <b>query vector</b> is treated like a document and also tf-idf weighted (or the user supplies weights).</li>
+</ul>
+<div class="callout"><b>Key idea 1:</b> represent queries as vectors in the same space. <b>Key idea 2:</b> rank documents by their <b>proximity</b> to the query. Proximity = similarity of vectors ≈ inverse of distance.</div>
+<p>A <b>similarity measure</b> is a function computing how similar two vectors are. With it we can rank documents in order of presumed relevance, and set a <b>threshold</b> to control the size of the retrieved set.</p>
+<div class="analogy"><b>Analogy</b>Imagine a map where "east" means "talks about cricket" and "north" means "talks about politics". Every document is an arrow on this map. Your query is also an arrow. The best documents are the arrows pointing in the same direction as yours.</div>
+
+<h2 id="l6-cos">9. Why angle (cosine), not distance</h2>
+<p>First idea: <b>Euclidean distance</b> (straight-line distance between arrow tips). It is a bad idea, because it is large for vectors of different <b>lengths</b>. In the GOSSIP/JEALOUS figure, q and d<sub>2</sub> point in nearly the same direction, but d<sub>2</sub> is long, so its tip is far from q's.</p>
+<p><b>Thought experiment:</b> take document d and append it to itself to get d′. Semantically d and d′ have the same content, but the Euclidean distance between them can be large. The <b>angle between them is 0</b>: maximal similarity. <b>So rank documents by angle with the query.</b></p>
+<p>Ranking by angle and ranking by cosine are <b>equivalent</b>, because cosine is a <b>monotonically decreasing</b> function on [0°, 180°]: as the angle grows, the cosine always shrinks (cos 0° = 1, cos 90° = 0). The best document has the <b>smallest angle</b>, which is the <b>largest cosine</b>. So in practice we sort documents by <b>decreasing cosine</b> (biggest first).</p>
+<p class="note">Your slide phrases the equivalence as "decreasing order of the angle" ≡ "increasing order of cosine". Those two statements are indeed the same ordering (just read from the other end). If an MCQ asks which order puts the most similar document first, the answer is increasing angle / decreasing cosine.</p>
+<h3>Length normalization</h3>
+<div class="formula">‖x‖₂ = √( Σ xᵢ² )</div>
+<p>Dividing a vector by its L<sub>2</sub> norm (its length) makes it a <b>unit vector</b> (length 1, on the surface of the unit hypersphere). After this, d and d′ have <b>identical vectors</b>, so long and short documents have comparable weights.</p>
+<h3>Cosine similarity</h3>
+<div class="formula">cos(q, d) = (q · d) / (|q| |d|) = Σ qᵢ dᵢ / ( √(Σ qᵢ²) × √(Σ dᵢ²) )</div>
+<dl class="sym"><dt>qᵢ</dt><dd>tf-idf weight of term i in the query.</dd><dt>dᵢ</dt><dd>tf-idf weight of term i in the document.</dd><dt>q · d</dt><dd>dot product: multiply matching weights and add.</dd><dt>|q|, |d|</dt><dd>lengths (L<sub>2</sub> norms).</dd></dl>
+<p>For <b>length-normalized</b> vectors, cosine is simply the dot product: cos(q, d) = q · d = Σ qᵢ dᵢ. Values range 0 to 1 for non-negative weights: 1 = same direction, 0 = no shared terms.</p>
+
+<div class="work"><b>Worked example (slides): three novels</b>
+How similar are Sense and Sensibility (SaS), Pride and Prejudice (PaP), Wuthering Heights (WH)? Term counts (no idf, to keep it simple):
+<div class="tbl"><table class="mini"><thead><tr><th>term</th><th>SaS</th><th>PaP</th><th>WH</th></tr></thead><tbody><tr><td>affection</td><td>115</td><td>58</td><td>20</td></tr><tr><td>jealous</td><td>10</td><td>7</td><td>11</td></tr><tr><td>gossip</td><td>2</td><td>0</td><td>6</td></tr><tr><td>wuthering</td><td>0</td><td>0</td><td>38</td></tr></tbody></table></div>
+<ol>
+<li><b>Log-frequency weights</b> 1 + log₁₀ tf: SaS (3.06, 2.00, 1.30, 0); PaP (2.76, 1.85, 0, 0); WH (2.30, 2.04, 1.78, 2.58).</li>
+<li><b>Lengths</b>: |SaS| = √(3.06² + 2² + 1.30²) = √15.05 = 3.88; |PaP| = √(2.76² + 1.85²) = 3.32; |WH| = √19.28 = 4.39.</li>
+<li><b>Normalize</b> (divide by length): SaS (0.789, 0.515, 0.335, 0); PaP (0.832, 0.555, 0, 0); WH (0.524, 0.465, 0.405, 0.588).</li>
+<li>cos(SaS, PaP) = 0.789×0.832 + 0.515×0.555 + 0.335×0 + 0×0 ≈ <b>0.94</b></li>
+<li>cos(SaS, WH) = 0.789×0.524 + 0.515×0.465 + 0.335×0.405 + 0 ≈ <b>0.79</b></li>
+<li>cos(PaP, WH) = 0.832×0.524 + 0.555×0.465 ≈ <b>0.69</b></li>
+</ol>
+SaS and PaP (both by Jane Austen) are most similar. Unnormalized dot products were 12.1, 13.4, 10.1, which rank them differently: length matters.</div>
+
+<h2 id="l6-ip">10. Inner product (dot product) as similarity</h2>
+<div class="formula">sim(dⱼ, q) = dⱼ · q = Σᵢ wᵢⱼ × wᵢq</div>
+<ul class="clean">
+  <li>For <b>binary</b> vectors, the inner product = number of matched query terms in the document (size of the intersection).</li>
+  <li>For <b>weighted</b> vectors, it is the sum of products of the weights of matched terms.</li>
+  <li><b>Properties:</b> unbounded (no maximum); <b>favors long documents</b> with many unique terms; measures how many terms matched but not how many did <i>not</i> match.</li>
+</ul>
+<div class="work"><b>Worked example (slides)</b>
+<b>Binary</b>, vocabulary (retrieval, database, architecture, computer, text, management, information): D = (1,1,1,0,1,1,0), Q = (1,0,1,0,0,1,1). Matches at retrieval, architecture, management → sim = <b>3</b>.<br><br>
+<b>Weighted</b>: D1 = 2T1 + 3T2 + 5T3, D2 = 3T1 + 7T2 + 1T3, Q = 0T1 + 0T2 + 2T3.
+<ol>
+<li>Inner product: D1·Q = 2×0 + 3×0 + 5×2 = <b>10</b>; D2·Q = 3×0 + 7×0 + 1×2 = <b>2</b>.</li>
+<li>Lengths: |D1| = √(4+9+25) = √38 = 6.16; |D2| = √(9+49+1) = √59 = 7.68; |Q| = √4 = 2.</li>
+<li>Cosine: D1 = 10 / (6.16 × 2) = <b>0.81</b>; D2 = 2 / (7.68 × 2) = <b>0.13</b>.</li>
+<li>D1 is about <b>6 times</b> better than D2 by cosine, but only <b>5 times</b> better by inner product.</li>
+</ol></div>
+
+<h2 id="l6-algo">11. The VSM algorithm, pros and cons</h2>
+<ol>
+  <li>Convert all documents in collection D to tf-idf weighted vectors d<sub>j</sub> over vocabulary V.</li>
+  <li>Convert the query to a tf-idf weighted vector q.</li>
+  <li>For each d<sub>j</sub>: compute score s<sub>j</sub> = cosSim(d<sub>j</sub>, q).</li>
+  <li>Sort documents by decreasing score; present the top ones.</li>
+</ol>
+<p><b>Time complexity O(|V| · |D|)</b>: bad for large V and D. With |V| = 10,000 and |D| = 100,000, that is 1,000,000,000 operations. (In practice the inverted index means we only touch documents containing query terms.)</p>
+<p><b>Strengths:</b> simple, mathematically based; uses both <b>local</b> (tf) and <b>global</b> (idf) frequencies; provides <b>partial matching</b> and ranked results; works well in practice despite weaknesses; allows efficient implementation for large collections.</p>
+<p><b>Problems:</b></p>
+<ul class="clean">
+  <li>Missing <b>semantic</b> information (word sense, meaning).</li>
+  <li>Missing <b>syntactic</b> information (phrase structure, word order, proximity).</li>
+  <li>Assumes <b>term independence</b> (ignores synonymy: car and automobile are unrelated axes).</li>
+  <li>Lacks the <b>control of a Boolean model</b> (can't require a term). For "A B", it may prefer a document with lots of A and no B over one containing both A and B less frequently.</li>
+</ul>
+
+<h2 id="l6-practice">Practice numericals</h2>
+<div class="work"><b>Practice 1: Jaccard</b>
+Query "information retrieval system". Doc: "retrieval of information from a large system". Score?
+<details class="ans"><summary>Show solution</summary><div>Q = {information, retrieval, system}; D = {retrieval, of, information, from, a, large, system}. ∩ = 3; ∪ = 7. Jaccard = <b>3/7 ≈ 0.43</b>.</div></details></div>
+<div class="work"><b>Practice 2: full TF-IDF + cosine (exam style)</b>
+N = 1000 documents. df: car = 100, insurance = 10, best = 500. Query "best car insurance" (each tf = 1). Doc1: car 3, insurance 2, best 0. Doc2: car 1, insurance 0, best 4. Use w = (1 + log₁₀ tf) × log₁₀(N/df) for both query and documents. Rank by cosine.
+<details class="ans"><summary>Show solution</summary><div>
+<ol>
+<li>idf: car = log₁₀(1000/100) = 1; insurance = log₁₀(100) = 2; best = log₁₀(2) = 0.301.</li>
+<li>Query weights (tf = 1 → tf part = 1): car 1, insurance 2, best 0.301.</li>
+<li>Doc1: car (1 + log 3 = 1.477) × 1 = 1.477; insurance (1 + log 2 = 1.301) × 2 = 2.602; best 0.</li>
+<li>Doc2: car 1 × 1 = 1; insurance 0; best (1 + log 4 = 1.602) × 0.301 = 0.482.</li>
+<li>|q| = √(1² + 2² + 0.301²) = √5.091 = 2.256. |D1| = √(1.477² + 2.602²) = √8.952 = 2.992. |D2| = √(1² + 0.482²) = √1.232 = 1.110.</li>
+<li>q·D1 = 1×1.477 + 2×2.602 + 0 = 6.681 → cos = 6.681 / (2.256 × 2.992) = <b>0.99</b>.</li>
+<li>q·D2 = 1×1 + 0 + 0.301×0.482 = 1.145 → cos = 1.145 / (2.256 × 1.110) = <b>0.46</b>.</li>
+<li>Ranking: <b>Doc1 &gt; Doc2</b>. Doc2 mentions "best" 4 times, but "best" is common (low idf), and it lacks the rare word "insurance".</li>
+</ol></div></details></div>
+<div class="work"><b>Practice 3: log-frequency score</b>
+Query "deep learning". Doc has deep 10 times, learning 100 times. Score with Σ(1 + log₁₀ tf)?
+<details class="ans"><summary>Show solution</summary><div>(1 + 1) + (1 + 2) = <b>5</b>.</div></details></div>
+
+<div class="q"><b>Q1.</b> IDF of a term that appears in every document is:
+<ol><li>1</li><li>0</li><li>N</li><li>undefined</li></ol><details><summary>Answer</summary>B. log(N/N) = log 1 = 0.</details></div>
+<div class="q"><b>Q2.</b> For the single-term query "iPhone", IDF:
+<ol><li>Changes the ranking a lot</li><li>Has no effect on the ranking</li><li>Reverses the ranking</li><li>Makes all scores 0</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q3.</b> Why is Euclidean distance a bad similarity for documents?
+<ol><li>It is slow</li><li>It is large for vectors of different lengths even with the same content</li><li>It can be negative</li><li>It ignores idf</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q4.</b> Which is TRUE about the inner product as a similarity?
+<ol><li>Always between 0 and 1</li><li>Favors long documents</li><li>Penalizes unmatched terms</li><li>Same as Jaccard</li></ol><details><summary>Answer</summary>B. It is unbounded and does not count mismatches.</details></div>
+<div class="q"><b>Q5.</b> "insurance" is more informative than "try" because:
+<ol><li>higher collection frequency</li><li>lower document frequency for similar collection frequency</li><li>it is longer</li><li>it is a noun</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q6.</b> Latent Semantic Indexing belongs to which family?
+<ol><li>Boolean</li><li>Vector space</li><li>Probabilistic</li><li>Language model</li></ol><details><summary>Answer</summary>B.</details></div>
+
+<h2 id="l6-traps">MCQ traps and quick facts</h2>
+<ul class="trap">
+  <li>Boolean: AND too few, OR too many. "Tennis Ball" 200,000 vs "Tennis Ball Gandhinagar" 0.</li>
+  <li>Jaccard ignores tf and rarity, and favors short documents.</li>
+  <li>1 + log₁₀ tf: 1→1, 2→1.3, 10→2, 1000→4. tf = 0 gives 0 (not 1).</li>
+  <li>idf = log₁₀(N/df): N = 1M → Brutus 6, Caesar 4, Monday 3, fly 2, on 1, the 0.</li>
+  <li>IR uses <b>df</b> (not cf) for idf. One idf per term.</li>
+  <li>"tf-idf": the dash is a hyphen. Weight rises with tf and with rarity.</li>
+  <li>Cosine is monotonically <b>decreasing</b> on [0°, 180°]; normalized vectors → cosine = dot product.</li>
+  <li>d appended to itself: Euclidean distance large, angle 0.</li>
+  <li>D1 vs D2 example: cosine 0.81 vs 0.13 (6×), inner product 10 vs 2 (5×).</li>
+  <li>VSM cost O(|V|·|D|); weaknesses: no semantics, no word order, term independence, no Boolean control.</li>
+  <li>Check the log base: this lecture uses log₁₀ for idf, but the A(3)B(2)C(1) example uses log₂.</li>
+</ul>
+
+</template>
+<template id="t-l7">
+<div class="inmin"><b class="l">This lecture in one minute</b>
+Users and authors often use different words for the same thing (<b>vocabulary mismatch</b>), and a 2 to 3 word query is a noisy guess of what the user wants. Two fixes. <b>Relevance feedback</b>: look at the first results, mark which are good or bad (by a human, by assumption, or from clicks), and move the query vector toward the good ones and away from the bad ones; this is <b>Rocchio's algorithm</b>, a very likely numerical. <b>Query expansion</b>: add related words (synonyms from a thesaurus like WordNet, or words that co-occur in the corpus, computed with C = A·Aᵀ). Pseudo feedback can cause <b>query drift</b>.</div>
+
+<h2 id="l7-mis">1. The core problem: vocabulary mismatch</h2>
+<p>Recall the VSM: documents and queries are vectors with one dimension per vocabulary term, searching depends on matching keywords, and ranking = sort by similarity to the query vector. So if the query and the document share no words, the score is 0.</p>
+<ul class="clean">
+  <li>Users and document authors use <b>different words for the same concept</b>. Query "cheap laptops for students"; relevant document "affordable notebooks for college". TF-IDF + VSM will likely miss it: zero overlap on cheap/affordable and laptops/notebooks.</li>
+  <li>How many ways can you search for "car"? automobile, vehicle, sedan, auto, motorcar...</li>
+  <li>Users don't know the "right" terms (<b>synonymy</b>: different words, same meaning), and the words they use may be <b>ambiguous</b> (<b>polysemy</b>: one word, several meanings).</li>
+  <li>Example "jaguar speed": relevant documents might say "top speed", "acceleration", "0 to 60 mph", or might be about the animal, not the car.</li>
+  <li>A single TF-IDF vector from 2 to 3 user words is a very <b>noisy point estimate</b> of what the user wants.</li>
+</ul>
+<h3>The gap between user intent and query</h3>
+<ul class="clean">
+  <li><b>Under-specification:</b> query too broad → too many results.</li>
+  <li><b>Over-specification:</b> query too narrow → misses relevant documents.</li>
+  <li><b>Domain ignorance:</b> the user doesn't know the technical terminology.</li>
+</ul>
+<p><b>Orthogonality of dimensions:</b> in the VSM every word is its own independent axis, so related words are treated as completely unrelated → poor retrieval. This is made worse by <b>short queries</b> and <b>large, heterogeneous</b> (mixed-topic) collections.</p>
+<p><b>Query refinement:</b> the same concept is referred to with different words (<b>synonymy</b>), which hurts <b>recall</b>. You'd want "aircraft" to match "plane" (but only the airplane sense, not a woodworking plane), and "thermodynamics" to match "heat" in the right discussions. Users often fix this themselves by manually refining the query.</p>
+<p><b>Solution:</b> expand the query by adding related words/phrases. <b>Issues:</b> which terms to add, and what weights to give them. Which queries benefit? Fairly <b>focused</b> ones (not broad/exploratory) and long-standing, "serious" searches.</p>
+<div class="analogy"><b>Analogy</b>You ask a shopkeeper for "specs". He only stocks items labelled "eyeglasses", so he says "we don't have that". A smarter shopkeeper either asks you a follow-up and learns from your reaction (feedback) or already knows specs = spectacles = eyeglasses (expansion).</div>
+
+<h2 id="l7-rf">2. Relevance feedback: the idea</h2>
+<div class="flow"><span>Query</span><i>→</i><span>Results</span><i>→</i><span>User judgment</span><i>→</i><span>Modified query</span><i>→</i><span>Better results</span></div>
+<p>This retrieval cycle is the loop relevance feedback exploits. <b>Relevance feedback</b> = using information about which documents are relevant to improve the query representation, and so the retrieval performance.</p>
+<div class="callout"><b>Key insight (VSM view):</b> the query is a vector in term space; relevant documents <b>cluster</b> together; non-relevant documents form a different cluster. So <b>move the query vector toward the relevant documents and away from the non-relevant ones</b>.</div>
+<h3>Two classes of methods</h3>
+<div class="tbl"><table class="mini"><thead><tr><th>Global methods</th><th>Local methods</th></tr></thead><tbody>
+<tr><td>Expand/reformulate query terms <b>independent of the query and its results</b>, so that changed wording matches semantically similar terms.</td><td>Adjust the query <b>relative to the documents that initially appear to match it</b>.</td></tr>
+<tr><td>Query expansion with a thesaurus or <b>WordNet</b>; spelling correction.</td><td><b>Explicit</b> relevance feedback; <b>pseudo</b> (blind) relevance feedback; <b>indirect</b> (implicit) relevance feedback.</td></tr></tbody></table></div>
+<p>The query is not ground truth; it is the user's first guess. Treat the first retrieval round as a <b>probe</b> and use the results to refine the guess.</p>
+<div class="tbl"><table class="mini"><thead><tr><th>Technique</th><th>Human effort</th><th>Feedback comes from</th></tr></thead><tbody>
+<tr><td>Relevance Feedback (RF)</td><td>User marks docs relevant / non-relevant</td><td>Real user judgments</td></tr>
+<tr><td>Pseudo-Relevance Feedback (PRF)</td><td>None</td><td>Assumed from top-ranked docs</td></tr>
+<tr><td>Query Expansion (QE)</td><td>None (usually)</td><td>Thesaurus / corpus statistics, not tied to a query's retrieved set</td></tr></tbody></table></div>
+<h3>Explicit relevance feedback, step by step</h3>
+<ol>
+  <li>The user issues a short, simple query.</li>
+  <li>The system returns an initial set of results.</li>
+  <li>The user marks some returned documents as relevant or non-relevant.</li>
+  <li>The system computes a better representation of the information need from the feedback.</li>
+  <li>The system displays a revised set of results.</li>
+</ol>
+<p>The <b>cluster hypothesis</b>: "closely associated documents tend to be relevant to the same requests." Relevant documents bunch together in vector space; nudging the query toward that bunch retrieves more from it next time. The system "learns" a better query: <b>emphasize</b> words more frequent in relevant than non-relevant documents; <b>de-emphasize</b> words more frequent in non-relevant documents.</p>
+
+<h2 id="l7-roc">3. Rocchio's algorithm</h2>
+<p><b>Principle:</b> maximize the difference between the average similarity to relevant documents and the average similarity to non-relevant documents. Rocchio (1971) formalized feedback for the VSM.</p>
+<dl class="sym">
+  <dt>q₀</dt><dd>original query vector.</dd>
+  <dt>D<sub>r</sub></dt><dd>set of document vectors known (or assumed) relevant.</dd>
+  <dt>D<sub>nr</sub></dt><dd>set of document vectors known (or assumed) non-relevant.</dd>
+  <dt>|D<sub>r</sub>|, |D<sub>nr</sub>|</dt><dd>their sizes (cardinalities = how many documents).</dd>
+</dl>
+<p><b>Theoretical optimal query</b> (if we knew all relevant docs): difference of the two centroids,</p>
+<div class="formula">C = (1/N_rel) Σ_{Dᵢ∈Rel} Dᵢ  −  (1/N_nonrel) Σ_{Dᵢ∈NRel} Dᵢ</div>
+<p><b>In practice</b> (the formula to use in the exam):</p>
+<div class="formula">q_new = α · q₀  +  β · (1/|D_r|) Σ_{d ∈ D_r} d  −  γ · (1/|D_nr|) Σ_{d ∈ D_nr} d</div>
+<dl class="sym">
+  <dt>(1/|D_r|) Σ d</dt><dd>the <b>centroid</b> (average vector) of the relevant docs: add them and divide by how many.</dd>
+  <dt>α</dt><dd>how much to trust the <b>original query</b>.</dd>
+  <dt>β</dt><dd>how much to move <b>toward</b> the relevant centroid.</dd>
+  <dt>γ</dt><dd>how much to move <b>away from</b> the non-relevant centroid.</dd>
+</dl>
+<div class="callout"><b>Standard values:</b> α = 1.0, β = 0.75, γ = 0.15. After computing, <b>negative weights are set to 0</b> ("from the final query, drop terms that have negative weights").</div>
+<div class="analogy"><b>Analogy</b>You are standing in a crowded hall (the query zone). Your friends (relevant docs, green dots) are in one corner, strangers (non-relevant, red crosses) in another. Rocchio says: keep most of your current spot (α), take a big step toward your friends' average position (β), and a small step away from the strangers' average position (γ).</div>
+<h3>Rocchio issues</h3>
+<ul class="clean">
+  <li><b>Choosing α, β, γ:</b> use higher β, γ if many documents are judged. <span class="mark">Positive feedback is much more valuable than negative feedback</span>, so most systems set <b>γ &lt; β</b>. Reasonable: α = 1, β = 0.75, γ = 0.15.</li>
+  <li><b>What counts as non-relevant?</b> Only documents the user marked non-relevant (too little information)? All documents not known relevant (then completely unrelated documents distort term weights: for "What disk drive should I buy for my Mac?", is "computer" really a good keyword?) Better: use non-relevant documents <b>within a query zone</b> (the neighbourhood of the query).</li>
+  <li><b>Which terms, how many?</b> Rank terms by the number of relevant documents they occur in; add <b>50 to 100 terms</b>.</li>
+  <li><b>Outcome:</b> relevance feedback can improve both recall and precision; in practice it is most useful for increasing <b>recall</b>.</li>
+</ul>
+
+<div class="work"><b>Worked example 1 (slides): 6 terms</b>
+<div class="tbl"><table class="mini"><thead><tr><th></th><th>t1</th><th>t2</th><th>t3</th><th>t4</th><th>t5</th><th>t6</th><th>weight</th><th>weighted</th></tr></thead><tbody>
+<tr><td>Original query</td><td>0</td><td>4</td><td>0</td><td>8</td><td>0</td><td>0</td><td>α = 1</td><td>0, 4, 0, 8, 0, 0</td></tr>
+<tr><td>Positive feedback</td><td>2</td><td>4</td><td>8</td><td>0</td><td>0</td><td>2</td><td>β = 0.5</td><td>1, 2, 4, 0, 0, 1</td></tr>
+<tr><td>Negative feedback</td><td>8</td><td>0</td><td>4</td><td>4</td><td>0</td><td>16</td><td>γ = 0.25</td><td>2, 0, 1, 1, 0, 4</td></tr>
+<tr class="hlrow"><td>New query = α·q + β·pos − γ·neg</td><td>−1</td><td>6</td><td>3</td><td>7</td><td>0</td><td>−3</td><td></td><td>clip → 0, 6, 3, 7, 0, 0</td></tr></tbody></table></div>
+Check t1: 0 + 1 − 2 = −1. t6: 0 + 1 − 4 = −3. Negative weights are dropped (set to 0). Final query <b>(0, 6, 3, 7, 0, 0)</b>: t3 entered the query because relevant documents use it a lot.</div>
+
+<div class="work"><b>Worked example 2 (slides): full numerical</b>
+Vocabulary: {information, retrieval, search, engine, ranking}.
+<div class="tbl"><table class="mini"><thead><tr><th>Doc</th><th>information</th><th>retrieval</th><th>search</th><th>engine</th><th>ranking</th></tr></thead><tbody>
+<tr><td>D1</td><td>0.90</td><td>0.85</td><td>0.20</td><td>0.10</td><td>0.05</td></tr><tr><td>D2</td><td>0.80</td><td>0.90</td><td>0.30</td><td>0.15</td><td>0.10</td></tr><tr><td>D3</td><td>0.10</td><td>0.05</td><td>0.85</td><td>0.90</td><td>0.20</td></tr><tr><td>D4</td><td>0.15</td><td>0.10</td><td>0.80</td><td>0.85</td><td>0.25</td></tr></tbody></table></div>
+Query q₀ "information retrieval" = [1, 1, 0, 0, 0]. Relevant: D1, D2. Non-relevant: D3, D4. α = 1.0, β = 0.75, γ = 0.25.
+<ol>
+<li><b>Relevant centroid</b> c<sub>r</sub> = (D1 + D2)/2 = [1.70, 1.75, 0.50, 0.25, 0.15]/2 = <b>[0.850, 0.875, 0.250, 0.125, 0.075]</b>.</li>
+<li><b>Non-relevant centroid</b> c<sub>nr</sub> = (D3 + D4)/2 = [0.25, 0.15, 1.65, 1.75, 0.45]/2 = <b>[0.125, 0.075, 0.825, 0.875, 0.225]</b>.</li>
+<li>β·c<sub>r</sub> = 0.75 × c<sub>r</sub> = [0.638, 0.656, 0.188, 0.094, 0.056]. γ·c<sub>nr</sub> = 0.25 × c<sub>nr</sub> = [0.031, 0.019, 0.206, 0.219, 0.056].</li>
+<li>q<sub>m</sub> = α·q₀ + β·c<sub>r</sub> − γ·c<sub>nr</sub>:
+<br>information = 1 + 0.638 − 0.031 = <b>1.607</b>
+<br>retrieval = 1 + 0.656 − 0.019 = <b>1.637</b>
+<br>search = 0 + 0.188 − 0.206 = <b>−0.018</b>
+<br>engine = 0 + 0.094 − 0.219 = <b>−0.125</b>
+<br>ranking = 0 + 0.056 − 0.056 = <b>0.000</b></li>
+<li><b>Negative weights:</b> "search" and "engine" are negative: the query is being <b>pushed away</b> from documents containing these terms, because they appear mostly in non-relevant docs (D3, D4). Clip to 0: <b>q<sub>eff</sub> = [1.607, 1.637, 0, 0, 0]</b>.</li>
+<li><b>Cosine with D1, original query:</b> |D1| = √(0.81 + 0.7225 + 0.04 + 0.01 + 0.0025) = √1.585 = 1.259. |q₀| = √2 = 1.414. q₀·D1 = 0.90 + 0.85 = 1.750. sim = 1.750/(1.414 × 1.259) = <b>0.983</b>.</li>
+<li><b>Cosine with D1, new query:</b> |q<sub>eff</sub>| = √(1.607² + 1.637²) = √5.262 = 2.294. q<sub>eff</sub>·D1 = 1.607×0.90 + 1.637×0.85 = 1.446 + 1.391 = 2.837. sim = 2.837/(2.294 × 1.259) = <b>0.982</b>.</li>
+</ol>
+In this tiny example D1 was already a near-perfect match, so its score barely changes. The real effect of Rocchio shows up when the new terms (and pushed-away terms) change which documents come first, especially relevant documents that used different words from the original query.</div>
+
+<h2 id="l7-prf">4. Pseudo (blind) relevance feedback</h2>
+<ul class="clean">
+  <li>No user feedback: <b>assume the top-ranked documents are relevant</b> (optionally use low-ranked ones as the query zone for non-relevant), then run Rocchio-style feedback automatically.</li>
+  <li><b>Danger:</b> if the initial retrieval is poor, feedback makes it worse. Example: "What is the economic impact of recycling tires?" gets <b>hijacked</b> by documents about plastics and recycling in general.</li>
+  <li>Most groups at TREC found pseudo feedback <b>useful on average</b> (roughly a 5 to 10% MAP gain). Suggestion: find ways to improve the first-pass retrieval.</li>
+</ul>
+<h3>Topic drift (query drift)</h3>
+<p>If the first pass is poor (ambiguous query, small collection, mixed results such as "jaguar" returning both cars and animals), the top-k "pseudo-relevant" set is <b>contaminated</b>. PRF then <b>amplifies the wrong signal</b> and shifts the query toward the wrong topic instead of sharpening it.</p>
+<div class="analogy"><b>Analogy</b>Asking for directions and blindly following the first stranger who points. If he pointed wrong, every next step takes you further from where you wanted to go.</div>
+
+<h2 id="l7-imp">5. Indirect (implicit) relevance feedback</h2>
+<ul class="clean">
+  <li>Use <b>indirect evidence</b> (behaviour) instead of explicit judgments.</li>
+  <li><span class="mark">Less reliable than explicit feedback, but more useful than pseudo feedback</span> (which has no evidence of user judgment at all).</li>
+  <li>Users rarely give explicit feedback, but implicit feedback is easy to collect in huge amounts on a high-volume system like a web search engine.</li>
+  <li><b>DirectHit</b> introduced ranking higher the documents users chose to look at more often: <b>clicks</b> are assumed to indicate relevance. This assumes the result <b>summaries (snippets)</b> shown are indicative of relevance, since users click based on them.</li>
+</ul>
+
+<h2 id="l7-qe">6. Query expansion</h2>
+<p><b>Query expansion (QE)</b> reformulates the query to improve retrieval, by adding words or phrases. In QE, users give additional input on query words (possibly suggesting additional terms); it is used to retrieve additional documents. Some search engines suggest related queries and the user picks one.</p>
+<h3>Two types</h3>
+<ul class="clean">
+  <li><b>Manual / thesaurus-based:</b> use a controlled vocabulary or hand-built thesaurus (WordNet for general English, <b>MeSH</b> for biomedical text) to add synonyms, hypernyms/hyponyms or related terms. car → automobile, vehicle, sedan.</li>
+  <li><b>Automatic global analysis</b> (thesaurus generation): computed <b>once, offline, over the whole collection</b>, not tied to any query, from term <b>co-occurrence</b> statistics.</li>
+</ul>
+<h3>WordNet</h3>
+<p>An electronic dictionary + thesaurus: a large <b>lexical database</b> of words, their <b>senses</b> (meanings) and semantic relations, divided into nouns, verbs, adjectives, adverbs. Groups of synonyms are called <b>synsets</b>. Expansion: {q1, ..., qk} → {q1, ..., qk, q′1, ..., q′k′}.</p>
+<dl class="sym">
+  <dt>Hypernym</dt><dd>a word whose meaning includes others: "flower" is a hypernym of daisy and rose (a broader term). Synsets form a hypernym <b>tree</b>; the closer two synsets are in the tree, the more similar.</dd>
+  <dt>Hyponym</dt><dd>the opposite: rose is a hyponym of flower (a narrower term).</dd>
+  <dt>Holonym</dt><dd>a term for a <b>whole</b>, of which another term names a part: shirt (whole) has sleeve, collar, button.</dd>
+  <dt>Meronym</dt><dd>the <b>part</b>: sleeve is a meronym of shirt.</dd>
+</dl>
+<div class="tbl"><table class="mini"><thead><tr><th>Holonym (whole)</th><th>Meronyms (parts)</th></tr></thead><tbody><tr><td>shirt</td><td>sleeve, collar, button</td></tr><tr><td>face</td><td>eye, nose, chin, mouth, jaw</td></tr><tr><td>head</td><td>face, hair, ears</td></tr><tr><td>body</td><td>head, trunk, legs, arms</td></tr></tbody></table></div>
+<div class="analogy"><b>Memory trick</b>hyPER = suPER (bigger category). HOLOnym = WHOLE. MERonym = part (think "mere part").</div>
+
+<h2 id="l7-auto">7. Automatic thesaurus generation</h2>
+<p>Instead of an expensive hand-made thesaurus, generate one by analyzing the collection. Two approaches:</p>
+<ul class="clean">
+  <li><b>Word co-occurrence:</b> words appearing together in a document or paragraph are likely related in meaning.</li>
+  <li><b>Shallow grammatical analysis:</b> use grammatical relations; things that are grown, cooked, eaten and digested are likely food items.</li>
+</ul>
+<p><b>Simplest co-occurrence thesaurus (term-term similarity):</b> start from a term-document matrix <b>A</b> (rows = terms, columns = documents, cell = weighted count w<sub>t,d</sub>, ideally with length-normalized rows). Compute</p>
+<div class="formula">C = A · Aᵀ</div>
+<dl class="sym"><dt>Aᵀ</dt><dd>the transpose of A (rows become columns).</dd><dt>C<sub>u,v</sub></dt><dd>similarity score between terms u and v = dot product of their rows = how much they appear in the same documents.</dd></dl>
+<div class="work"><b>Worked example (slides): apple, banana, orange</b>
+A (rows apple, banana, orange; columns Doc1, Doc2, Doc3) = [[2, 1, 0], [1, 2, 0], [0, 0, 3]].
+<ol>
+<li>C<sub>apple,apple</sub> = 2×2 + 1×1 + 0×0 = 5</li>
+<li>C<sub>apple,banana</sub> = 2×1 + 1×2 + 0×0 = <b>4</b></li>
+<li>C<sub>apple,orange</sub> = 2×0 + 1×0 + 0×3 = <b>0</b></li>
+<li>C<sub>banana,banana</sub> = 1 + 4 + 0 = 5; C<sub>banana,orange</sub> = 0; C<sub>orange,orange</sub> = 9.</li>
+<li>C = [[5, 4, 0], [4, 5, 0], [0, 0, 9]].</li>
+</ol>
+Apple and banana appear together in Doc 1 and Doc 2, so they share context: high similarity 4. Orange only appears in Doc 3, never with apple: similarity 0. The diagonal is each term with itself (ignore it). So a query "apple" could be expanded with "banana".</div>
+<p>The slide also shows a real auto-generated thesaurus (e.g. absolutely → absurd, whatsoever, totally, exactly; pathogens → toxins, bacteria, organisms). Notice it mixes good and odd neighbours: co-occurrence is not the same as synonymy.</p>
+
+<h2 id="l7-local">8. Automatic local analysis (query-dependent)</h2>
+<ul class="clean">
+  <li>Compute term associations only from the <b>top-ranked documents for this specific query</b>. Essentially "PRF, but choosing expansion terms by co-occurrence with the query terms in the pseudo-relevant set" instead of a full Rocchio vector move.</li>
+  <li><b>Local Context Analysis (LCA)</b> and <b>Local Feedback</b>: rank candidate terms by how strongly and consistently they co-occur with <b>all</b> query terms in the top-k passages; add the top few with reduced weight.</li>
+  <li>Generally <b>outperforms global analysis</b> because it is context-sensitive: it disambiguates "jaguar" automatically. If the top docs are about cars, it surfaces engine, speed, model, not cat or predator.</li>
+</ul>
+<p><b>Notes:</b> expansion terms are almost always added with <b>lower weight</b> than the original terms (trust the user's words more). Cap the number of expansion terms (e.g. top 10 to 30) to avoid <b>query dilution</b> / topic drift (turning a focused query into a bag of loosely related words).</p>
+<p><b>Current state of the art:</b> <b>embedding-based expansion</b> (word2vec, GloVe, BERT: find nearest-neighbour terms in a dense vector space) and <b>query rewriting with LLMs</b> (an LLM rewrites/expands the query, optionally using top passages; a modern form of local analysis, heavily used in RAG pipelines).</p>
+
+<h2 id="l7-sum">9. Summary tables</h2>
+<div class="tbl"><table class="mini"><thead><tr><th>Technique</th><th>Human in loop?</th><th>Uses which documents</th><th>Main risk</th><th>Typical benefit</th></tr></thead><tbody>
+<tr><td>Relevance feedback (Rocchio)</td><td>Yes</td><td>User-judged relevant + non-relevant</td><td>User effort; can still drift</td><td>Large precision/recall gain if the user cooperates</td></tr>
+<tr><td>Pseudo-relevance feedback</td><td>No</td><td>Assumed top-k from first pass</td><td>Query drift; amplifies bad first pass</td><td>Reliable average gain (~5 to 10% MAP), automatic</td></tr>
+<tr><td>Thesaurus-based QE</td><td>No (built offline by humans)</td><td>External knowledge source</td><td>Domain mismatch, sense ambiguity</td><td>Good precision on covered terms</td></tr>
+<tr><td>Global analysis QE</td><td>No</td><td>Whole corpus statistics</td><td>Not query-context-sensitive</td><td>Cheap, stable, weaker gains</td></tr>
+<tr><td>Local analysis QE</td><td>No</td><td>Top-k from first pass (like PRF)</td><td>Same as PRF</td><td>Context-sensitive, usually best automatic method</td></tr></tbody></table></div>
+<ul class="clean">
+  <li>The query is a <b>hypothesis</b>, not ground truth; retrieval can be iterative.</li>
+  <li>Rocchio = move toward the relevant centroid, away from the non-relevant centroid; <b>β &gt; γ</b> because positive evidence is more trustworthy.</li>
+  <li>PRF gets Rocchio's benefit without a human, at the cost of drift risk: it bets that the top of a decent ranking is enriched with relevant terms.</li>
+  <li>All these techniques trade a little <b>precision risk</b> for a (usually larger) <b>recall</b>/robustness gain.</li>
+</ul>
+
+<h2 id="l7-practice">Practice numericals</h2>
+<div class="work"><b>Practice 1: Rocchio</b>
+q₀ = [1, 0, 1, 0]. Relevant: D1 = [2, 1, 0, 0], D2 = [0, 1, 2, 0]. Non-relevant: D3 = [0, 0, 1, 3]. α = 1, β = 0.75, γ = 0.25. Find the new query.
+<details class="ans"><summary>Show solution</summary><div>
+<ol>
+<li>c<sub>r</sub> = (D1 + D2)/2 = [2, 2, 2, 0]/2 = [1, 1, 1, 0]. c<sub>nr</sub> = D3 = [0, 0, 1, 3].</li>
+<li>β·c<sub>r</sub> = [0.75, 0.75, 0.75, 0]. γ·c<sub>nr</sub> = [0, 0, 0.25, 0.75].</li>
+<li>q = [1 + 0.75 − 0, 0 + 0.75 − 0, 1 + 0.75 − 0.25, 0 + 0 − 0.75] = [1.75, 0.75, 1.5, −0.75].</li>
+<li>Clip negatives: <b>q<sub>new</sub> = [1.75, 0.75, 1.5, 0]</b>. Term 2 entered the query; term 4 is pushed out.</li>
+</ol></div></details></div>
+<div class="work"><b>Practice 2: Rocchio with standard values</b>
+q₀ = [0, 2, 0], one relevant doc [3, 1, 0], one non-relevant doc [0, 1, 4]. α = 1, β = 0.75, γ = 0.15.
+<details class="ans"><summary>Show solution</summary><div>
+t1 = 0 + 0.75×3 − 0.15×0 = 2.25; t2 = 2 + 0.75×1 − 0.15×1 = 2.6; t3 = 0 + 0 − 0.15×4 = −0.6 → 0. <b>q<sub>new</sub> = [2.25, 2.6, 0]</b>.</div></details></div>
+<div class="work"><b>Practice 3: C = A·Aᵀ</b>
+Terms x, y, z over 3 docs: x = [1, 0, 2], y = [1, 1, 0], z = [0, 3, 1]. Which term is most similar to z?
+<details class="ans"><summary>Show solution</summary><div>C<sub>xz</sub> = 1×0 + 0×3 + 2×1 = 2. C<sub>yz</sub> = 1×0 + 1×3 + 0×1 = 3. C<sub>xy</sub> = 1. So <b>y</b> is most similar to z (score 3).</div></details></div>
+
+<div class="q"><b>Q1.</b> In Rocchio, why is γ usually smaller than β?
+<ol><li>Negative documents are rarer</li><li>Positive feedback is more valuable than negative feedback</li><li>To keep weights positive</li><li>Because α = 1</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q2.</b> Pseudo relevance feedback assumes:
+<ol><li>The user marks documents</li><li>Top-ranked documents are relevant</li><li>Clicks show relevance</li><li>A thesaurus is available</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q3.</b> Ranking by reliability: explicit, implicit, pseudo feedback.
+<ol><li>pseudo &gt; implicit &gt; explicit</li><li>explicit &gt; implicit &gt; pseudo</li><li>implicit &gt; explicit &gt; pseudo</li><li>all equal</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q4.</b> "flower" with respect to "rose" is a:
+<ol><li>Hyponym</li><li>Hypernym</li><li>Holonym</li><li>Meronym</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q5.</b> Thesaurus-based expansion and spelling correction are examples of:
+<ol><li>Local methods</li><li>Global methods</li><li>Pseudo feedback</li><li>Implicit feedback</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q6.</b> Relevance feedback is in practice most useful for improving:
+<ol><li>Precision</li><li>Recall</li><li>Speed</li><li>Index size</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q7.</b> Which issue is a direct risk of pseudo relevance feedback?
+<ol><li>Topic (query) drift</li><li>Too much user effort</li><li>Index corruption</li><li>Stemming errors</li></ol><details><summary>Answer</summary>A.</details></div>
+
+<h2 id="l7-traps">MCQ traps and quick facts</h2>
+<ul class="trap">
+  <li>Synonymy hurts <b>recall</b>; polysemy (ambiguity) hurts <b>precision</b>.</li>
+  <li>Global = independent of the query's results (thesaurus, WordNet, spelling). Local = based on the retrieved documents (explicit RF, pseudo RF, implicit RF).</li>
+  <li>Rocchio: q<sub>new</sub> = α q₀ + β·centroid(rel) − γ·centroid(nonrel). Standard <b>α = 1, β = 0.75, γ = 0.15</b>. Drop negative weights.</li>
+  <li>Add <b>50 to 100</b> terms in Rocchio; cap expansion at <b>10 to 30</b> terms in QE; expansion terms get <b>lower weight</b>.</li>
+  <li>Use non-relevant documents within the <b>query zone</b>.</li>
+  <li>Implicit feedback: less reliable than explicit, more useful than pseudo. DirectHit used clicks.</li>
+  <li>PRF: ~5 to 10% MAP gain on average at TREC; risk = query drift (recycling tires, jaguar).</li>
+  <li>MeSH = biomedical thesaurus; WordNet = general English, organized in synsets.</li>
+  <li>Automatic thesaurus: <b>C = A·Aᵀ</b>; C<sub>u,v</sub> = similarity of terms u and v.</li>
+  <li>Local analysis usually beats global analysis because it is context-sensitive.</li>
+</ul>
+
+</template>
+<script>
+const LECS = [
+ {id:"l1", n:"L1-2", ready:1, title:"Introduction to IR (Lectures 1 and 2)", file:"01_Introduction To IR.pptx.pdf", slides:43, mcq:"m", num:"l", time:"30 min",
+  topics:["why naive search fails","IR definition","applications","data vs information","structured / semi / unstructured","IR vs databases","history (Salton)","terminology","IR system parts","relevance","IR tasks"],
+  covers:"Why scanning every page is impossible (3.17 years), the definition of IR, where IR is used (web, e-commerce, digital libraries, RAG), data vs information, structured, semi-structured and unstructured data, IR vs database systems, the 'data is the new oil' idea, history (Salton at Cornell, Boolean and vector models), basic terms (query, document, corpus, corpora, TREC), components of an IR system, what relevance includes, and related tasks like classification, clustering, information extraction, question answering and summarization.",
+  nums:["Naive scan time: pages × time per page (100 billion × 1 ms ≈ 3.17 years)"]},
+ {id:"l3", n:"L3", ready:1, title:"Information need, query, corpora, relevance", file:"Lec-3-Query-relevance-corpora.pdf", slides:39, mcq:"h", num:"l", time:"30 min",
+  topics:["info need ≠ query","ambiguous queries","navigational / informational / transactional","good vs bad query","corpus vs collection","benchmark corpora","binary vs graded relevance","multidimensional relevance","vocabulary mismatch"],
+  covers:"The gap between what the user wants and what they type, why queries are imperfect (too short, ambiguous, incomplete), the three query types with examples, good vs bad queries, documents, corpus vs document collection (static vs dynamic), why benchmark corpora matter (fair comparison, reproducibility), popular benchmarks (TREC, Robust04, MS MARCO, BEIR, Natural Questions, Cranfield), binary vs graded relevance, the modern multidimensional view (recency, credibility, popularity...), and that relevance changes with context.",
+  nums:["None directly. Pure MCQ material: classify a query's type, binary vs graded relevance."]},
+ {id:"l4", n:"L4", ready:1, title:"Tokenization methods", file:"Lec-4-Types of tokenizer.pptx.pdf", slides:50, mcq:"h", num:"m", time:"1 h 15 min",
+  topics:["word / char / subword","OOV and UNK","NLTK tokenizers","tokenizer pipeline","GPT Ġ and T5 ▁","BPE","WordPiece ##","Unigram (top-down)","comparison"],
+  covers:"Tokens and vocabulary, word vs character vs subword tokenization with pros and cons, the out-of-vocabulary (OOV) problem and the UNK trick, NLTK tokenizers, the pipeline (normalization, pre-tokenization, model, post-processing), how GPT-2 and T5 mark spaces, Byte Pair Encoding learning and tokenizing (two full worked examples), WordPiece and its likelihood score with ## prefixes and longest-match tokenizing, the Unigram tokenizer (starts big and prunes, EM, Viterbi), and the BPE vs WordPiece vs Unigram table.",
+  nums:["BPE: run merges on a word-frequency list, then tokenize new words","WordPiece: pair score = freq(pair) / (freq(a) × freq(b))","Unigram: probability of each segmentation, pick the highest"]},
+ {id:"l5", n:"L5", ready:1, title:"Inverted index and text preprocessing", file:"lec-5-inverted Index-text precessing.pdf", slides:36, mcq:"h", num:"m", time:"1 h",
+  topics:["grep is slow","term-document incidence matrix","Boolean bit vectors","sparsity","ad hoc retrieval","inverted index","dictionary + postings","build steps","tokenization issues","stopwords","normalization","case folding","stemming","lemmatization","posting intersection"],
+  covers:"Why scanning (grep) is slow, the term-document incidence matrix, answering Brutus AND Caesar AND NOT Calpurnia with 0/1 vectors, why that matrix is too big and sparse, ad hoc retrieval, the inverted index (dictionary and posting lists), the build steps (tokenize, normalize, sort, group, add document frequency), tokenization headaches (Finland's, Hewlett-Packard, New York, French, German compounds, Chinese, Arabic), stopwords and why the trend is away from removing them, normalization and lowercasing, stemming (Porter) vs lemmatization, and the merge algorithm that intersects two posting lists.",
+  nums:["Boolean query with incidence vectors (110100 AND 110111 AND 101111 = 100100)","Intersect two posting lists step by step","Matrix size: 500K terms × 1M docs = half a trillion cells"]},
+ {id:"l6", n:"L6", ready:1, title:"IR models: Boolean and Vector Space", file:"Lec-6-IR-Models.pdf", slides:64, mcq:"h", num:"h", time:"2 h",
+  topics:["types of models","Boolean model + problems","ranked retrieval","Jaccard","tf","log-tf","df and idf","cf vs df","tf-idf","bag of words","vector space","Euclidean is bad","cosine","length normalization","inner product","VSM pros / cons"],
+  covers:"What an IR model specifies, the Boolean model and its problems (too few or too many results, no ranking), ranked retrieval with scores, the Jaccard coefficient, term frequency and log-frequency weighting, document frequency and IDF (log10 N/df), collection vs document frequency, TF-IDF and its variants, bag of words, documents and queries as vectors, why Euclidean distance fails and the angle (cosine) works, length normalization, inner product, the 3-documents example (Sense and Sensibility, Pride and Prejudice, Wuthering Heights), the VSM algorithm and its cost, strengths and weaknesses.",
+  nums:["Jaccard score of query vs document","Log-tf weight and score = Σ(1 + log tf)","IDF and TF-IDF weights (incl. the A(3) B(2) C(1) example)","Inner product and cosine similarity (D1 = 2T1+3T2+5T3 example)","Length-normalize vectors, then cosine = dot product"]},
+ {id:"l7", n:"L7", ready:1, title:"Relevance feedback and query expansion", file:"Lec-7 Relevance Feedback and Query Expansion-revised.pdf", slides:59, mcq:"h", num:"h", time:"1 h 30 min",
+  topics:["vocabulary mismatch","synonymy / polysemy","global vs local methods","explicit feedback","Rocchio α β γ","query zone","pseudo feedback","query drift","implicit feedback","query expansion","WordNet","hypernym / holonym","C = A·Aᵀ","local analysis","LLM rewriting"],
+  covers:"Why one short query is a noisy guess, the vocabulary mismatch problem, global methods (thesaurus, WordNet, spelling) vs local methods (feedback on retrieved documents), the relevance feedback loop and the cluster hypothesis, Rocchio's algorithm with α, β, γ and the standard values, a full numerical worked example with negative weights clipped to 0, pseudo (blind) relevance feedback and topic drift, implicit feedback from clicks, query expansion (thesaurus, WordNet relations, automatic thesaurus from co-occurrence C = A·Aᵀ, local context analysis) and modern embedding / LLM based expansion.",
+  nums:["Rocchio: q_new = α·q0 + β·(centroid of relevant) − γ·(centroid of non-relevant), clip negatives","Cosine of a document with the original vs new query","Term-term similarity matrix C = A·Aᵀ"]},
+ {id:"l8", n:"L8", title:"IR evaluation I", file:"Lec-8 IR System Evaluation-I.pdf", slides:58, mcq:"h", num:"h", time:"2 h",
+  topics:["why evaluate","ground truth","Cranfield paradigm + assumptions","pooling","Cranfield vs user-centred","TREC topics","precision","recall","F1 / Fβ","harmonic mean","accuracy","P@K","average precision","P-R curve","interpolated precision","11-point AP","MAP"],
+  covers:"Why we evaluate, gold standard and binary vs graded relevance, the Cranfield paradigm (documents, queries, relevance judgments, metrics) and its assumptions, pooling to avoid judging millions of documents, Cranfield vs user-centred evaluation, TREC and a sample TREC topic, the confusion table (tp, fp, fn, tn), precision, recall, F measure with α and β, why the harmonic mean, accuracy, metrics for ranked lists: precision@K, average precision, precision-recall curves, interpolated precision, 11-point interpolated average precision and Mean Average Precision with worked examples.",
+  nums:["Precision, recall, accuracy from the contingency table","F1 and Fβ","Precision@K","Average precision (divide by total relevant, unretrieved count as 0)","Interpolated precision and 11-point average","MAP over several queries"]},
+ {id:"l9", n:"L9", title:"IR evaluation II", file:"Lec-9 IR Evaluation-II.pdf", slides:32, mcq:"m", num:"h", time:"1 h 15 min",
+  topics:["set vs ranked metrics recap","why 11-point","R-precision","P@5 / P@10","precision- vs recall-critical tasks","MRR","CG","DCG","nDCG","pooling details","bpref"],
+  covers:"Recap of set-based and ranked metrics, why averaging across queries needs special care, R-precision, P@5 and P@10, when precision matters more (web search) and when recall matters more (patent search), Mean Reciprocal Rank with the cat / torus / virus example, graded relevance with Cumulative Gain, Discounted Cumulative Gain and normalized DCG (full 10-rank worked table, nDCG = 0.833), how pooling works in TREC, and bpref, a metric that stays reliable when relevance judgments are incomplete.",
+  nums:["MRR = average of 1 / rank of first correct answer","DCG = Σ rel_i / log2(i+1), IDCG from the ideal order, nDCG = DCG / IDCG","P@5, P@10, R-precision from a ranked list","bpref from judged relevant and non-relevant ranks"]},
+ {id:"l10", n:"L10", title:"Probabilistic IR: BIM and BM25", file:"Lec-10 Probabilistic Information Retrieval-ver2.pdf", slides:67, mcq:"h", num:"h", time:"2 h 30 min",
+  topics:["why probability","VSM vs probabilistic","chain rule","Bayes rule","odds","Probability Ranking Principle","Binary Independence Model","p_t and u_t","c_t log odds","RSV","+0.5 smoothing","u_t ≈ df/N gives idf","BM25","k1 and b","saturation","length normalization","VSM vs BM25 flip"],
+  covers:"Why IR is about uncertainty, probability basics (joint, conditional, chain rule with the 4 aces example, Bayes' rule, odds), the Probability Ranking Principle, the Binary Independence Model and its step-by-step derivation to the Retrieval Status Value, term weight c_t as a log odds ratio, estimating it from a contingency table, avoiding zeros with +0.5, how assuming p_t = 0.5 and u_t ≈ df/N turns BIM into IDF, then Okapi BM25: term frequency saturation (k1), document length normalization (b), typical values, a full worked BM25 calculation, and an example where VSM and BM25 rank two documents in opposite order.",
+  nums:["Chain rule probability (4 aces = 4/52 × 3/51 × 2/50 × 1/49)","BIM term weight c_t from the s, S, df, N contingency table (with +0.5)","BM25 contribution of one term (N=1,000,000, df=1000, tf=4, Ld=300, Lavg=200, k1=1.5, b=0.75 → 11.40)","VSM score vs BM25 score for two documents (ranking flips)"]},
+ {id:"l11", n:"L11", title:"Language modeling: N-grams", file:"Lec-11 Language modeling N-grams.pptx.pdf", slides:59, mcq:"h", num:"h", time:"1 h 30 min",
+  topics:["what an LM does","chain rule","Markov assumption","unigram / bigram / n-gram","MLE estimate","<s> and </s>","Berkeley restaurant counts","log space","extrinsic vs intrinsic","perplexity","branching factor","zeros","add-1 Laplace","reconstituted counts","backoff","interpolation λ","held-out data","<UNK>","stupid backoff"],
+  covers:"What a language model is (probability of a sentence or of the next word) and where it is used, the chain rule, the Markov assumption, unigram, bigram and n-gram models, Maximum Likelihood Estimation of bigrams with sentence markers, the 'I am Sam' example, the Berkeley Restaurant count and probability tables, computing a sentence probability, working in log space, extrinsic vs intrinsic evaluation, perplexity and the branching-factor view (digits example, traffic light quiz), why unseen bigrams give zero probability, add-1 (Laplace) smoothing with reconstituted counts, backoff vs linear interpolation and tuning λ on held-out data, open vocabulary and <UNK>, and stupid backoff.",
+  nums:["Bigram MLE: P(w | prev) = c(prev, w) / c(prev)","Sentence probability as a product of bigrams","Perplexity = P(W)^(−1/N) (traffic light, random digits)","Add-1: (c + 1) / (c(prev) + V)","Linear interpolation with λ values"]},
+ {id:"l12", n:"L12", title:"Language models for IR", file:"Lec-12 Lanaguage Mode for -IR.pdf", slides:39, mcq:"m", num:"h", time:"1 h 30 min",
+  topics:["story so far","generative view","document as a language model","query likelihood P(q|d)","multinomial distribution","P(d|q) ∝ P(q|d)·P(d)","zero problem","Laplace","Jelinek-Mercer λ","Bayesian / Dirichlet μ","worked examples","LM vs tf-idf / BIM"],
+  covers:"The recap (VSM, BIM, BM25), the new idea: treat each document as a little machine that generates words and rank documents by how likely they are to have generated the query, unigram document models, the multinomial distribution (coin, dice and election examples), the query likelihood model and why P(q) and P(d) can be dropped, the zero-probability problem, smoothing with Laplace, Jelinek-Mercer (mix document and collection with λ), Bayesian and Dirichlet prior smoothing (μ), two worked examples (coronavirus documents, 'revenue down'), and how LM compares to TF-IDF and BIM.",
+  nums:["Query likelihood with MLE: product of tf/|d| for each query word","Jelinek-Mercer: Π [λ·P(t|d) + (1−λ)·P(t|C)]","Dirichlet: (c(w,d) + μ·P(w|C)) / (|d| + μ)","Multinomial probability (election: 6!/(1!2!3!) × 0.2 × 0.3² × 0.5³ = 0.135)"]},
+ {id:"l13", n:"L13", title:"Text classification and Naive Bayes", file:"Lec-13 naivebayes and Text classification .pptx.pdf", slides:68, mcq:"h", num:"h", time:"1 h 30 min",
+  topics:["standing queries / routing","binary / multi-class / multi-label","applications","rules vs supervised ML","bag of words","Bayes rule","MAP class","independence assumptions","multinomial NB","parameter estimation","add-1 smoothing","unknown words","stopwords","log space = linear classifier","NB as a language model","Bernoulli NB","spam features"],
+  covers:"From ad hoc search to standing queries (filtering), text classification tasks (spam, authorship, gender, sentiment, topic), hand-written rules vs supervised learning, the bag of words representation, Bayes' rule for documents and classes, picking the most likely class (MAP), the two Naive Bayes assumptions, multinomial Naive Bayes, learning priors and word probabilities with add-1 smoothing, ignoring unknown words, stopwords, log space and why NB is a linear classifier, each class as a unigram language model, the full Chinese / Tokyo / Japan worked example, a sentiment example, the weather table, the Bernoulli model (gives a different answer on the same data), the training and testing algorithms, spam filter features, and why Naive Bayes is a strong baseline.",
+  nums:["Multinomial NB: P(c) × Π P(w|c) with (count + 1) / (total words in c + |V|)","Bernoulli NB: P(t|c) = (docs with t + 1) / (docs in c + 2), includes absent terms as (1 − P)","Sentiment example with add-1 smoothing","Weather / play table (frequency → likelihood)"]}
+];
+
+const LV = {h:["h","high"], m:["m","medium"], l:["l","low"]};
+
+const GLOSS = [
+ ["The basic world of IR", [
+  ["Information need","What the person truly wants to know, in their head, before they type anything.","You want to know why your head hurts after coffee. That wish is the need."],
+  ["Query","The words the person actually types into the search box. An imperfect attempt to express the need.","Need: learn ML from scratch. Query: \"machine learning for beginners\"."],
+  ["Document","One unit that can be retrieved and shown as a result.","A web page, research paper, email, tweet, product description."],
+  ["Collection / Corpus","The full set of documents the system searches. 'Corpus' usually means a fixed, curated set used for research; plural is 'corpora'.","All of Wikipedia; the Reuters news corpus."],
+  ["Benchmark corpus","A standard test set: documents + queries + correct answers, so everyone compares systems on the same data.","TREC, MS MARCO, BEIR, the Cranfield collection."],
+  ["Relevance","How useful a document is for the user's information need. Subjective: depends on topic, freshness, trust and the user's level.","For \"COVID treatment guidelines\", yesterday's WHO page beats a 5-year-old blog."],
+  ["Binary vs graded relevance","Binary: relevant (1) or not (0). Graded: levels like 0, 1, 2, 3 (not, marginal, relevant, highly relevant).","A movie rating of thumbs up/down vs 0 to 3 stars."],
+  ["Ranking","Ordering the results from most to least relevant. IR is about ranking, not just finding.","Google's page 1 vs page 10."],
+  ["Structured data","Data in fixed rows and columns with a fixed schema.","An Excel sheet or SQL table of students and marks."],
+  ["Semi-structured data","Data with tags or keys but no fixed table shape. It describes itself.","JSON, XML, CSV files, a tweet's JSON."],
+  ["Unstructured data","Free-form content with no row/column shape. Most of what IR searches.","Plain text, images, audio, video."],
+  ["Ad hoc retrieval","The standard IR task: any user, any new query, search a fixed collection.","Typing a fresh question into Google."],
+  ["Navigational / informational / transactional query","Go to one site / learn something / do something (buy, download, book).","\"gmail\" / \"how does PageRank work\" / \"buy iPhone 17\"."]
+ ]],
+ ["Preparing text", [
+  ["Token","One small piece cut out of text. Can be a word, a character, or part of a word.","\"Friends, Romans\" gives tokens Friends | Romans."],
+  ["Tokenization","Cutting text into tokens.","Like cutting a long sentence-strip into word-cards."],
+  ["Vocabulary (V)","The set of all distinct tokens the system knows. |V| means its size.","If the corpus has 30,000 distinct words, |V| = 30,000."],
+  ["OOV / UNK","Out-of-vocabulary: a word seen at test time that was never in training. Often replaced by a special token [UNK].","A brand-new slang word your model never saw."],
+  ["Subword","A piece bigger than a character but smaller than a word.","\"lower\" → low + er; \"playing\" → play + ##ing."],
+  ["BPE / WordPiece / Unigram","Three ways to learn subwords. BPE merges the most frequent pair (GPT). WordPiece merges the pair with best likelihood score (BERT). Unigram starts big and removes tokens (T5).","Building a phrasebook: add the most common combos first."],
+  ["Normalization","Making different spellings of the same thing identical.","U.S.A. and USA both become USA."],
+  ["Case folding","Converting everything to lowercase.","\"Apple\" and \"apple\" become \"apple\" (careful: Apple Inc vs fruit)."],
+  ["Stopwords","Very common words with little meaning, sometimes removed.","the, a, of, to. But \"To be or not to be\" is all stopwords."],
+  ["Stemming","Chopping word endings with crude rules to reach a root, which may not be a real word.","studies, studying, studied → studi (Porter stemmer)."],
+  ["Lemmatization","Reducing a word to its proper dictionary form using grammar knowledge.","am, are, is → be; cars → car."],
+  ["Term","A normalized token that becomes an entry in the index dictionary.","After processing, \"Running\" might be stored as the term \"run\"."]
+ ]],
+ ["Indexing", [
+  ["Index","A prepared lookup structure so we don't scan every document per query.","The index at the back of a textbook: \"Retrieval → page 145\"."],
+  ["Term-document incidence matrix","A big table: rows are terms, columns are documents, cell is 1 if the term appears, else 0.","An attendance register: names × days, tick if present."],
+  ["Sparse","Mostly zeros. The incidence matrix is extremely sparse, so storing it fully wastes space.","500K × 1M = half a trillion cells but under one billion 1s."],
+  ["Inverted index","For each term, store the list of documents containing it (term → documents instead of document → terms).","Brutus → 1, 2, 4, 11, 31, 45, 173, 174."],
+  ["Dictionary","The list of all terms in the inverted index (left side).","The bold words in a book's back index."],
+  ["Posting / posting list","A posting is one docID entry. The posting list is all docIDs for one term, kept sorted.","Caesar → [1, 2, 4, 5, 6, 16, 57, 132]."],
+  ["docID","A serial number given to each document.","Doc 1, Doc 2, ..."],
+  ["Boolean retrieval","Queries with AND, OR, NOT. A document either matches or not, no ranking.","Brutus AND Caesar AND NOT Calpurnia."]
+ ]],
+ ["Scoring and ranking", [
+  ["Term frequency tf(t,d)","How many times term t appears in document d. In IR, 'frequency' means count.","\"cricket\" appears 5 times in a match report: tf = 5."],
+  ["Document frequency df(t)","In how many documents the term appears (at least once).","\"the\" is in all 1M docs: df = 1,000,000."],
+  ["Collection frequency cf(t)","Total number of times the term appears in the whole collection.","insurance: cf 10,440 but df only 3,997 (it bunches up)."],
+  ["IDF","Inverse document frequency: log(N / df). High for rare words, 0 for words in every document.","With N = 1M: Brutus (df 1) → 6, the (df 1M) → 0."],
+  ["TF-IDF","Weight = tf part × idf part. High when a word is frequent in this document but rare overall.","\"BM25\" appearing 10 times in one paper and rarely elsewhere."],
+  ["Bag of words","Represent a document by word counts only, ignoring order.","A shopping bag of words: you know what is inside, not the sentence."],
+  ["Vector / vector space","A list of numbers, one per vocabulary word. Documents and queries become arrows in a space with |V| directions.","doc = (affection 115, jealous 10, gossip 2)."],
+  ["Cosine similarity","How similar two vectors are by the angle between them: 1 = same direction, 0 = nothing shared. Ignores length.","Two essays on the same topic, one twice as long, still score high."],
+  ["Jaccard coefficient","Overlap of two word sets: |A ∩ B| / |A ∪ B|.","Query {ides, of, march} vs doc {the, long, march}: 1/5."],
+  ["Length normalization","Dividing a vector by its length so long and short documents compare fairly.","A doc copied twice gets the same normalized vector."],
+  ["Inner product / dot product","Multiply matching entries and add them up.","(2,3,5)·(0,0,2) = 10."]
+ ]],
+ ["Probability words", [
+  ["Probability P(A)","A number from 0 to 1 for how likely something is.","P(head) on a fair coin = 0.5."],
+  ["Conditional probability P(A|B)","Probability of A when we already know B happened.","P(rain | dark clouds) is higher than P(rain)."],
+  ["Chain rule","A joint probability equals a product of conditional ones: P(A,B,C) = P(A)·P(B|A)·P(C|A,B).","Probability of drawing 4 aces in a row."],
+  ["Bayes' rule","Flip a conditional: P(A|B) = P(B|A)·P(A) / P(B).","From P(symptom | disease) get P(disease | symptom)."],
+  ["Prior / posterior / likelihood","Prior: belief before evidence. Likelihood: how well evidence fits. Posterior: updated belief after evidence.","Prior 1% have flu; you sneeze; posterior goes up."],
+  ["Odds","P(event) / P(not event).","P = 0.75 gives odds 3 (3 to 1)."],
+  ["Independence assumption","Pretending events don't affect each other, to make math simple.","Treating \"New\" and \"York\" as unrelated words."],
+  ["Maximum Likelihood Estimate (MLE)","Estimate a probability by simple counting: count / total.","\"bagel\" 400 times in 1M words → 0.0004."],
+  ["Smoothing","Moving a little probability to unseen events so nothing is exactly zero.","Add-1: pretend you saw every word one extra time."],
+  ["Language model (LM)","A model that gives a probability to a word sequence or to the next word.","Phone keyboard predicting your next word."],
+  ["N-gram / unigram / bigram","A sequence of N words. Unigram = 1 word, bigram = 2, trigram = 3.","\"I want\" is a bigram."],
+  ["Markov assumption","The next word depends only on the last few words, not the whole history.","Guess the next word from just the previous one."],
+  ["Perplexity","How 'confused' a language model is on test text. Lower is better. Like the number of equally likely choices at each step.","Random digits: perplexity 10."],
+  ["Multinomial distribution","Probability of getting given counts of each outcome over n tries of a k-sided die.","3 ones, 2 threes, 5 sixes in 10 rolls."],
+  ["PRP","Probability Ranking Principle: rank documents by decreasing probability of relevance and you get the best possible effectiveness.","Show the most-likely-useful document first."],
+  ["BIM","Binary Independence Model: documents as 0/1 word vectors, words independent; rank by odds of relevance.","Only asks 'is the word there?', never 'how many times?'."],
+  ["BM25","Okapi Best Match 25: BIM plus term-frequency saturation (k1) and document length normalization (b). Default ranking in Lucene/Elasticsearch for years.","Mentioning \"cricket\" 50 times ≠ 50× more relevant."],
+  ["Query likelihood","Rank a document by P(query | document's language model).","Which author's notebook would most likely contain these exact words?"]
+ ]],
+ ["Improving the query", [
+  ["Vocabulary mismatch","User and author use different words for the same thing.","Query \"cheap laptops\", page says \"affordable notebooks\"."],
+  ["Synonymy / polysemy","Synonymy: different words, same meaning (car, automobile). Polysemy: one word, many meanings (jaguar, java).","\"python\" the snake or the language."],
+  ["Relevance feedback","User marks some results relevant / not relevant, system rewrites the query and searches again.","Swiping right/left to train a recommender."],
+  ["Rocchio algorithm","Move the query vector towards the average of relevant docs and away from the average of non-relevant docs, using weights α, β, γ.","Walking towards where your friends are standing."],
+  ["Centroid","The average vector of a group of documents.","Average of D1 and D2 = (D1 + D2) / 2."],
+  ["Pseudo (blind) relevance feedback","Assume the top-k results are relevant without asking the user.","Trusting the first page of Google blindly."],
+  ["Query drift / topic drift","Feedback pulls the query towards the wrong topic when early results were bad.","\"jaguar\" drifting from cars to animals."],
+  ["Implicit feedback","Inferring relevance from behaviour like clicks.","Results people click more get ranked higher."],
+  ["Query expansion","Adding related words to the query.","car → car, automobile, vehicle, sedan."],
+  ["Thesaurus / WordNet","A dictionary of words and their relations (synonyms, broader terms).","WordNet: flower is a hypernym of rose."],
+  ["Hypernym / holonym / meronym","Hypernym: broader word (flower for rose). Holonym: the whole (shirt). Meronym: the part (sleeve).","face is the holonym of eye; eye is a meronym of face."]
+ ]],
+ ["Evaluation", [
+  ["Ground truth / qrels","The correct answers: human judgments of which documents are relevant for each query.","Answer key for an exam."],
+  ["Cranfield paradigm","Classic lab method to evaluate IR: fixed documents + fixed queries + relevance judgments + a metric.","Every student writes the same paper, graded with the same key."],
+  ["TREC","Text REtrieval Conference by NIST (USA). Yearly shared tasks with large test collections.","An annual Olympics for search engines."],
+  ["Pooling","Judge only the union of the top-N results from many systems, instead of every document.","Only checking answers the finalists gave."],
+  ["tp / fp / fn / tn","True positive: relevant & retrieved. False positive: retrieved but junk. False negative: relevant but missed. True negative: junk & not retrieved.","A fishing net: fish caught, boots caught, fish escaped, boots left."],
+  ["Precision","Of what I retrieved, what fraction is relevant? tp / (tp + fp).","Caught 10 things, 8 were fish: P = 0.8."],
+  ["Recall","Of all relevant documents, what fraction did I retrieve? tp / (tp + fn).","Lake had 20 fish, you caught 8: R = 0.4."],
+  ["F1 / F-measure","Harmonic mean of precision and recall: 2PR / (P + R). Punishes imbalance.","P = 1.0, R = 0.1 gives F1 = 0.18, not 0.55."],
+  ["Precision@K","Precision counting only the top K results.","4 relevant in top 5: P@5 = 0.8."],
+  ["Average Precision (AP)","Average of the precision values at each rank where a relevant document appears (missed relevant docs count as 0).","Rewards putting relevant docs early."],
+  ["MAP","Mean of AP over all queries. One number for the whole system.","Your average across all subjects."],
+  ["Interpolated precision","At recall level r, take the best precision at any recall ≥ r. Makes the P-R curve a staircase.","11-point: recall 0.0, 0.1, ..., 1.0."],
+  ["MRR","Mean Reciprocal Rank: average of 1 / (rank of first correct answer).","First correct at rank 3 → 1/3."],
+  ["DCG / nDCG","Discounted Cumulative Gain: add graded relevance, dividing by log2(rank+1) so lower ranks count less. nDCG = DCG / ideal DCG (0 to 1).","A highly relevant result at rank 1 is worth more than at rank 8."],
+  ["bpref","Binary preference: checks whether judged relevant docs are ranked above judged non-relevant ones. Robust when judgments are incomplete.","Grades only on questions that were actually marked."]
+ ]],
+ ["Classification", [
+  ["Text classification","Assign a document to one of a fixed set of classes.","Spam or not spam."],
+  ["Binary / multi-class / multi-label","Two classes / one of many classes / possibly several labels at once.","Spam? / which sport? / all topics of a news article."],
+  ["Standing query (routing, filtering)","A query that keeps running as new documents arrive.","A Google Alert for \"Information Retrieval jobs\"."],
+  ["Supervised learning","Learn a classifier from examples that already have correct labels.","Training on 1000 emails already marked spam / not spam."],
+  ["Naive Bayes","A classifier using Bayes' rule plus the 'naive' assumption that words are independent given the class.","Each class is a bag of words with its own word probabilities."],
+  ["Multinomial vs Bernoulli NB","Multinomial uses how many times each word appears. Bernoulli only uses present/absent, and also counts absent words.","Bernoulli = BIM for classes."],
+  ["MAP class (c_MAP)","Maximum a posteriori: the class with the highest posterior probability. Not to be confused with MAP the metric!","argmax over classes of P(c) × Π P(w|c)."],
+  ["argmax","\"The argument that gives the maximum\": which option scores highest, not the score itself.","argmax of {c: 0.0003, j: 0.0001} is c."]
+ ]]
+];
+
+const PLAN = [
+ ["Session 1","Tonight · ~2.5 h","L1-2 + L3 (1 h together, quick, definitions), then L4 tokenizers (1 h 15, do the BPE example by hand). If energy remains, start L5."],
+ ["Sleep","~7 h","Sleep is part of the plan. You remember tonight's material better after a proper night of sleep.",1],
+ ["Session 2","Morning · ~3 h","L5 inverted index (1 h), then L6 Boolean, TF-IDF and cosine (2 h). These are the base of everything after."],
+ ["Session 3","Late morning · ~3.5 h","L7 Rocchio (1 h 30), then L8 evaluation I (2 h). Lots of numericals here: do every one."],
+ ["Break","Lunch · 45 min","Walk away from the screen.",1],
+ ["Session 4","Afternoon · ~3.75 h","L9 evaluation II (1 h 15), then L10 BIM and BM25 (2 h 30). The heaviest lecture; go slow."],
+ ["Break","Snack · 20 min","",1],
+ ["Session 5","Evening · ~3 h","L11 n-grams (1 h 30), then L12 LM for IR (1 h 30). L12 reuses L11, so do them back to back."],
+ ["Break","Dinner · 45 min","",1],
+ ["Session 6","Night · ~3 h","L13 Naive Bayes (1 h 30). Then revision: redo one numerical of every 'high' type from the table above without notes, and skim all MCQ trap lists (1 h 30)."],
+ ["Before the exam","Morning · 30 min","Formula sheet only. No new topics."]
+];
+
+/* ---------- render ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function getDone(){ try{ return JSON.parse(localStorage.getItem("irwr-done")||"{}") }catch(e){ return {} } }
+function setDone(d){ try{ localStorage.setItem("irwr-done",JSON.stringify(d)) }catch(e){} }
+
+function renderIndex(){
+  const done = getDone();
+  const html = LECS.map(L=>`
+    <a class="entry" href="#${L.id}">
+      <div class="term">${L.n}<small>${L.slides} slides</small></div>
+      <div><h3>${esc(L.title)}</h3>
+        <div class="postings">${L.topics.slice(0,8).map(t=>`<span>${esc(t)}</span>`).join("<i>→</i>")}${L.topics.length>8?`<i>→</i><span>+${L.topics.length-8} more</span>`:""}</div></div>
+      <div class="side">
+        ${L.num!=="l"?`<span class="chip num">numericals: ${LV[L.num][1]}</span>`:`<span class="chip mcq">mostly MCQ</span>`}
+        <span class="chip ${done[L.id]||L.ready?"ready":"wait"}">${done[L.id]?"done ✓":(L.ready?"explained":"explanation: next")}</span>
+      </div>
+    </a>`).join("");
+  $("#index").insertAdjacentHTML("beforeend", html);
+  const c = LECS.filter(L=>done[L.id]).length;
+  $("#progress").textContent = c+" / "+LECS.length;
+}
+
+function renderGlossary(){
+  $("#glossary").innerHTML = GLOSS.map(([grp,items])=>`
+    <div class="gl-group"><h3>${esc(grp)}</h3><dl class="gl">
+      ${items.map(([t,d,e])=>`<div class="g"><dt>${esc(t)}</dt><dd>${esc(d)}</dd>${e?`<dd class="ex">${esc(e)}</dd>`:""}</div>`).join("")}
+    </dl></div>`).join("");
+}
+
+function renderMap(){
+  $("#maprows").innerHTML = LECS.map(L=>`<tr>
+    <td><a href="#${L.id}"><b>${L.n}</b></a><br>${esc(L.title)}</td>
+    <td>${esc(L.topics.join(", "))}</td>
+    <td><span class="lvl ${LV[L.mcq][0]}">${LV[L.mcq][1]}</span></td>
+    <td><span class="lvl ${LV[L.num][0]}">${LV[L.num][1]}</span></td>
+    <td class="n">${L.time}</td></tr>`).join("");
+}
+
+const NUMS = [
+ ["TF-IDF weights + cosine similarity","L6","Weight each term (tf × idf), build vectors, divide by length, take dot product. Rank documents.","h"],
+ ["Precision, recall, F1 (and Fβ, accuracy)","L8","Fill the tp / fp / fn / tn table, then plug into the formulas.","h"],
+ ["Average Precision and MAP","L8","Precision at each relevant hit, divide by total relevant (missed = 0), then average over queries.","h"],
+ ["DCG and nDCG","L9","rel / log2(rank+1) per rank, sum; repeat for ideal order; divide.","h"],
+ ["Rocchio relevance feedback","L7","Centroids of relevant and non-relevant docs, combine with α, β, γ, set negative weights to 0.","h"],
+ ["BM25 score","L10","IDF-like part × saturated tf part with length normalization, summed over query terms.","h"],
+ ["Bigram probabilities and perplexity","L11","Count pairs ÷ count of previous word; multiply along a sentence; perplexity = P^(−1/N).","h"],
+ ["Query likelihood with smoothing","L12","For each query word: λ·(tf/|d|) + (1−λ)·(cf/|C|), multiply, compare documents.","h"],
+ ["Multinomial Naive Bayes","L13","Priors from doc counts, word probabilities with add-1, multiply for each class, pick the larger.","h"],
+ ["BPE merge steps","L4","Count adjacent pairs weighted by word frequency, merge the top pair, repeat; then tokenize a new word.","h"],
+ ["11-point interpolated precision","L8 / L9","Interpolate (max precision at recall ≥ r) at r = 0, 0.1, ..., 1.0 and average.","m"],
+ ["Precision@K and R-precision","L8 / L9","Count relevant in the top K (or top |Rel|).","m"],
+ ["MRR","L9","1 / rank of first correct answer for each query, then average.","m"],
+ ["Jaccard coefficient","L6","Size of shared word set ÷ size of combined word set.","m"],
+ ["BIM term weight c_t","L10","Log odds ratio from the relevant / non-relevant contingency table, with +0.5.","m"],
+ ["Add-1 (Laplace) smoothed bigrams","L11","(count + 1) / (count of previous word + V).","m"],
+ ["Dirichlet smoothing","L12","(tf + μ·P(w|C)) / (|d| + μ).","m"],
+ ["Bernoulli Naive Bayes","L13","(docs containing word + 1) / (docs in class + 2); absent words contribute (1 − P).","m"],
+ ["WordPiece pair score / Unigram segmentation","L4","freq(pair) / (freq(a) × freq(b)); or product of token probabilities per split.","m"],
+ ["Term-term similarity C = A·Aᵀ","L7","Matrix multiply a small term-document matrix by its transpose.","m"],
+ ["Boolean query and posting-list intersection","L5","AND / NOT on 0/1 vectors; walk two sorted lists with two pointers.","m"],
+ ["bpref","L9","For each relevant doc retrieved: 1 − (judged non-relevant ranked above it ÷ min(|R|, judged non-relevant retrieved)); sum and divide by |R|.","l"],
+ ["Chain rule / multinomial probability","L10 / L12","Product of conditionals; n! / (x1!...xk!) × Π p^x.","l"],
+ ["Naive search time","L1","Number of pages × time per page, convert to years.","l"]
+];
+function renderNums(){
+  $("#numrows").innerHTML = NUMS.map(([a,b,c,d])=>`<tr><td><b>${esc(a)}</b></td><td class="n">${b}</td><td>${esc(c)}</td><td><span class="lvl ${LV[d][0]}">${LV[d][1]}</span></td></tr>`).join("");
+}
+
+function renderPlan(){
+  $("#planrows").innerHTML = PLAN.map(([a,b,c,rest])=>`<div class="blk${rest?" rest":""}"><div class="t"><b>${esc(a)}</b>${esc(b)}</div><div>${esc(c)}</div></div>`).join("");
+}
+
+function renderLecPages(){
+  $("#lecpages").innerHTML = LECS.map((L,i)=>{
+    const prev = i===0?["#overview","Overview"]:["#"+LECS[i-1].id, LECS[i-1].n+" "+LECS[i-1].title];
+    const next = i===LECS.length-1?["#home","Back to index"]:["#"+LECS[i+1].id, LECS[i+1].n+" "+LECS[i+1].title];
+    return `<section class="view page" id="v-${L.id}" hidden>
+      <div class="lec-head">
+        <div class="eyebrow">${L.n} · ${esc(L.file)} · ${L.slides} slides</div>
+        <h1>${esc(L.title)}</h1>
+        <div class="meta"><span class="chip mcq">MCQ: ${LV[L.mcq][1]}</span><span class="chip num">numericals: ${LV[L.num][1]}</span><span class="chip wait">study time: ${L.time}</span></div>
+        <label class="done-toggle"><input type="checkbox" id="done-${L.id}" data-id="${L.id}"> I have finished this lecture</label>
+      </div>
+      <h2>What this PDF covers (quick map)</h2>
+      <p class="prose">${esc(L.covers)}</p>
+      <h2>Topics in order</h2>
+      <div class="postings" style="font-size:.82rem;margin-top:10px">${L.topics.map(t=>`<span>${esc(t)}</span>`).join("<i>→</i>")}</div>
+      <h2>Numericals from this lecture</h2>
+      <ul class="clean prose">${L.nums.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>
+      ${(document.getElementById("t-"+L.id)||{}).innerHTML ? `<div class="lx">${document.getElementById("t-"+L.id).innerHTML}</div>` : `<div class="pending"><h3>Full explanation coming next</h3>
+        <p>This page will get the complete from-zero explanation of every slide: simple definitions, real-life analogies, every formula explained symbol by symbol, the slide's worked numericals solved step by step, extra practice questions, and a list of MCQ traps.</p>
+        <p class="eyebrow">Tell me in chat: "do ${L.n}" (or several at once).</p></div>`}
+      <div class="pager"><a href="${prev[0]}">← ${esc(prev[1])}</a><a href="${next[0]}">${esc(next[1])} →</a></div>
+    </section>`;
+  }).join("");
+  const done = getDone();
+  document.querySelectorAll(".done-toggle input").forEach(cb=>{
+    cb.checked = !!done[cb.dataset.id];
+    cb.addEventListener("change",()=>{ const d=getDone(); d[cb.dataset.id]=cb.checked; setDone(d); refreshIndex(); });
+  });
+}
+function refreshIndex(){
+  document.querySelectorAll("#index .entry:not(.featured)").forEach(e=>e.remove());
+  renderIndex();
+}
+
+/* ---------- routing ---------- */
+const SUB = {numericals:"overview", plan:"overview", "ov-what":"overview","ov-story":"overview","ov-words":"overview","ov-map":"overview","ov-threads":"overview"};
+function route(){
+  const h = (location.hash||"#home").slice(1) || "home";
+  const view = SUB[h] || h;
+  const target = document.getElementById("v-"+view) ? view : "home";
+  document.querySelectorAll(".view").forEach(v=>v.hidden = v.id!=="v-"+target);
+  if(SUB[h]){ const el=document.getElementById(h); if(el) el.scrollIntoView(); }
+  else window.scrollTo(0,0);
+}
+renderIndex(); renderGlossary(); renderMap(); renderNums(); renderPlan(); renderLecPages();
+window.addEventListener("hashchange", route); route();
+</script>
