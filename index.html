@@ -231,9 +231,9 @@ ul.clean li{margin:.25em 0}
     <p class="lede">Everything in your 13 lecture PDFs, explained from zero. Start with the Overview, then open one lecture at a time. Every lecture page has its full explanation, solved slide numericals, practice questions and MCQ traps.</p>
     <div class="facts">
       <div class="fact"><b>MCQs + 5</b><span>numericals in the paper</span></div>
-      <div class="fact"><b>13 PDFs</b><span>673 slides, all read</span></div>
-      <div class="fact"><b>~19.5 h</b><span>of focused study planned</span></div>
-      <div class="fact"><b id="progress">0 / 13</b><span>lectures marked done</span></div>
+      <div class="fact"><b>14 PDFs</b><span>740 slides, all read</span></div>
+      <div class="fact"><b>~21 h</b><span>of focused study planned</span></div>
+      <div class="fact"><b id="progress">0 / 14</b><span>lectures marked done</span></div>
     </div>
   </div>
 
@@ -241,7 +241,7 @@ ul.clean li{margin:.25em 0}
     <a class="entry featured fx-entry" href="#formulas">
       <div class="term">FX<small>exam morning</small></div>
       <div><h3>Formula sheet: every formula with a solved example</h3>
-        <div class="postings"><span>lookup table</span><i>→</i><span>log values</span><i>→</i><span>L1 to L14 formulas</span><i>→</i><span>symbols explained</span><i>→</i><span>solved numericals</span></div></div>
+        <div class="postings"><span>lookup table</span><i>→</i><span>log values</span><i>→</i><span>L1 to L15 formulas</span><i>→</i><span>symbols explained</span><i>→</i><span>solved numericals</span></div></div>
       <div class="side"><span class="chip num">numericals</span><span class="chip ready">ready</span></div>
     </a>
     <a class="entry featured" href="#overview">
@@ -285,7 +285,7 @@ ul.clean li{margin:.25em 0}
 
   <!-- 2 -->
   <h2 id="ov-story">2. The story of the course</h2>
-  <p class="prose">The 13 PDFs are not 13 random topics. They are one pipeline, in the same order a real search engine works. Keep this picture in your head.</p>
+  <p class="prose">The 14 PDFs are not 14 random topics. They are one pipeline, in the same order a real search engine works. Keep this picture in your head.</p>
   <div class="story">
     <div class="stage"><div class="step">stage 1 · the problem</div><h3>What does the user want?</h3>
       <p>Information need vs query, types of queries, documents, corpora, and what "relevant" even means.</p>
@@ -311,12 +311,15 @@ ul.clean li{margin:.25em 0}
     <div class="stage"><div class="step">stage 8 · the web</div><h3>Search the whole web</h3>
       <p>Crawl billions of pages by following links, and rank them by importance from the link graph, not just text (PageRank, HITS).</p>
       <div class="ls"><a href="#l14">L14 Web search</a></div></div>
+    <div class="stage"><div class="step">stage 9 · organise without labels</div><h3>Group similar documents</h3>
+      <p>No labels this time: let the data form its own groups (K-means, hierarchical), to browse results by topic.</p>
+      <div class="ls"><a href="#l15">L15 Clustering</a></div></div>
   </div>
   <div class="callout"><b>One sentence summary of the course:</b> turn text into tokens, index them, score every document against the query with some formula, optionally improve the query using feedback, and measure how good the ranking is.</div>
 
   <!-- 3 -->
   <h2 id="ov-words">3. Glossary: every word you will meet</h2>
-  <p class="prose">Every important word from all 13 PDFs, in plain English, with an everyday example. Do not memorise this now. Read it once so no word in the lectures feels foreign; come back whenever a word confuses you.</p>
+  <p class="prose">Every important word from all 14 PDFs (L15 terms are explained on its page), in plain English, with an everyday example. Do not memorise this now. Read it once so no word in the lectures feels foreign; come back whenever a word confuses you.</p>
   <div id="glossary"></div>
 
   <!-- 4 -->
@@ -364,7 +367,7 @@ ul.clean li{margin:.25em 0}
 <!-- ================= LECTURE PAGES (generated) ================= -->
 <div id="lecpages"></div>
 <section class="view page fxv" id="v-formulas" hidden>
-<div class="eyebrow">FX · Formula sheet · L1 to L14</div>
+<div class="eyebrow">FX · Formula sheet · L1 to L15</div>
 <h1>Every formula, with a solved example</h1>
 <p class="lede">This page has every formula you can be asked to calculate with, lecture by lecture. Each card gives you: what the formula is for, the formula itself, what every symbol means, the steps to calculate, and a solved example. No long theory. Read it top to bottom once, then use the lookup table below during revision.</p>
 
@@ -424,6 +427,9 @@ If a log is involved and the question does not say the base, write "using log ba
 <tr><td>row-stochastic matrix, market share, "steady state"</td><td><a href="#f-markov">Markov chain steady state</a></td><td>L14</td></tr>
 <tr><td>"number of paths of length k"</td><td><a href="#f-paths">Paths with Aᵏ</a></td><td>L14</td></tr>
 <tr><td>hubs and authorities</td><td><a href="#f-hits">HITS</a></td><td>L14</td></tr>
+<tr><td>points with coordinates, "distance", Manhattan, Hamming</td><td><a href="#f-dist">Distance measures</a></td><td>L15</td></tr>
+<tr><td>K, seeds / initial centroids, "K-means", "RSS", "inertia"</td><td><a href="#f-kmeans">K-means</a></td><td>L15</td></tr>
+<tr><td>"hierarchical", "agglomerative", "dendrogram", single / complete linkage</td><td><a href="#f-hac">Hierarchical clustering</a></td><td>L15</td></tr>
 </tbody></table></div>
 
 <h2 id="fx-logs">Log values you will need</h2>
@@ -438,7 +444,7 @@ If a log is involved and the question does not say the base, write "using log ba
 <p class="prose">Useful rules: <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord mathnormal">ab</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mord">/</span><span class="mord mathnormal">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">a</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9386em;vertical-align:-0.2441em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">100</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9386em;vertical-align:-0.2441em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1000</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span>.</p>
 
 <nav class="toc fxnav" aria-label="Lectures on this page">
-<a href="#fx-l1">L1</a><a href="#fx-l4">L4</a><a href="#fx-l5">L5</a><a href="#fx-l6">L6</a><a href="#fx-l7">L7</a><a href="#fx-l8">L8</a><a href="#fx-l9">L9</a><a href="#fx-l10">L10</a><a href="#fx-l11">L11</a><a href="#fx-l12">L12</a><a href="#fx-l13">L13</a><a href="#fx-l14">L14</a>
+<a href="#fx-l1">L1</a><a href="#fx-l4">L4</a><a href="#fx-l5">L5</a><a href="#fx-l6">L6</a><a href="#fx-l7">L7</a><a href="#fx-l8">L8</a><a href="#fx-l9">L9</a><a href="#fx-l10">L10</a><a href="#fx-l11">L11</a><a href="#fx-l12">L12</a><a href="#fx-l13">L13</a><a href="#fx-l14">L14</a><a href="#fx-l15">L15</a>
 </nav>
 <p class="prose muted">L2 and L3 have no formulas (L2 is part of the L1-2 PDF; L3 is about queries, corpora and relevance).</p>
 
@@ -1861,6 +1867,144 @@ c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></spa
 </ol>
 <p class="res">X is the best authority, H2 the best hub.</p></div>
 <p class="trap">PageRank: one score, query-independent. HITS: two scores, computed on pages related to the query. The slides only define HITS; the update rule is textbook material.</p>
+</article>
+
+<h2 id="fx-l15">L15 · Text clustering: K-means and hierarchical</h2>
+
+<div class="callout"><b>Two-line background for L15:</b> clustering groups documents without any labels (unsupervised). K-means keeps K centres and moves them to the middle of their points; hierarchical clustering keeps merging the two closest groups into a tree (dendrogram).</div>
+
+<article class="fx" id="f-dist">
+<div class="hd"><span class="tag">L15</span><h3>Distance measures (Euclidean, Manhattan, Minkowski, Hamming)</h3></div>
+<p class="use"><b>Use when:</b> any clustering numerical. Default is Euclidean unless the question says otherwise.</p>
+<div class="fm"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">Euc</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.3415em;vertical-align:-1.2777em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.0639em;"><span class="svg-align" style="top:-5.3015em;"><span class="pstrut" style="height:5.3015em;"></span><span class="mord" style="padding-left:1.056em;"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-4.0239em;"><span class="pstrut" style="height:5.3015em;"></span><span class="hide-tail" style="min-width:0.742em;height:3.3815em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="3.3815em" viewBox="0 0 400000 3381" preserveAspectRatio="xMinYMin slice"><path d="M702 80H40000040
+H742v3247l-4 4-4 4c-.667.7 -2 1.5-4 2.5s-4.167 1.833-6.5 2.5-5.5 1-9.5 1
+h-12l-28-84c-16.667-52-96.667 -294.333-240-727l-212 -643 -85 170
+c-4-3.333-8.333-7.667-13 -13l-13-13l77-155 77-156c66 199.333 139 419.667
+219 661 l218 661zM702 80H400000v40H742z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span></span></span></span></span>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">Man</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.1138em;vertical-align:-1.2777em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span></span>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.1138em;vertical-align:-1.2777em;"></span><span class="mord"><span class="delimsizing size2">(</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0779em;vertical-align:-0.65em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord">∣</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span></span></span></span></span><span class="mord"><span class="mord"><span class="delimsizing size2">)</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.4279em;"><span style="top:-3.6029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1/</span><span class="mord mathnormal mtight">p</span></span></span></span></span></span></span></span></span></span></span></span></span></div>
+<dl class="vars">
+<dt><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></dt><dd>the i-th coordinate (feature) of the two points.</dd>
+<dt><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></dt><dd>Minkowski order: p = 1 is Manhattan, p = 2 is Euclidean.</dd>
+<dt>Hamming</dt><dd>number of positions where two vectors differ.</dd>
+<dt>Cosine</dt><dd>similarity from L6; cosine distance = 1 − cosine similarity.</dd>
+</dl>
+<p class="idea"><b>Rules every distance obeys:</b> never negative (0 only from a point to itself), symmetric d(x, y) = d(y, x), triangle inequality d(x, z) ≤ d(x, y) + d(y, z).</p>
+<div class="ex"><b>Solved:</b> x = (1, 1), y = (5, 7).
+<p>Euclidean = √(4² + 6²) = √52 = <b>7.21</b>. Manhattan = 4 + 6 = <b>10</b>. Hamming(10110, 11100) = <b>2</b>.</p></div>
+</article>
+
+<article class="fx" id="f-kmeans">
+<div class="hd"><span class="tag">L15</span><h3>K-means: centroid, assignment, RSS</h3></div>
+<p class="use"><b>Use when:</b> points (or document vectors), K, and starting centroids are given.</p>
+<div class="fm"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">μ</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">ω</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.6646em;vertical-align:-1.3432em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.03588em;">ω</span><span class="mord">∣</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.8342em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="mord mathnormal mtight">x</span></span><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay mtight" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">ω</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.3432em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span></span></span></span></span>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">RSS</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.4717em;vertical-align:-1.4217em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.8342em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="mord mathnormal mtight">x</span></span><span style="top:-2.714em;"><span class="pstrut" style="height:2.714em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay mtight" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span><span class="mrel mtight">∈</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">ω</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0359em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4217em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.85em;"><span style="top:-2.85em;"><span class="pstrut" style="height:3.2em;"></span><span style="width:0.333em;height:1.200em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.333em" height="1.200em" viewBox="0 0 333 1200"><path d="M145 15 v585 v0 v585 c2.667,10,9.667,15,21,15
+c10,0,16.667,-5,20,-15 v-585 v0 v-585 c-2.667,-10,-9.667,-15,-21,-15
+c-10,0,-16.667,5,-20,15z M188 15 H145 v585 v0 v585 h43z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35em;"><span></span></span></span></span></span></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.404em;vertical-align:-0.35em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">μ</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">ω</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord"><span class="mord"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.85em;"><span style="top:-2.85em;"><span class="pstrut" style="height:3.2em;"></span><span style="width:0.333em;height:1.200em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.333em" height="1.200em" viewBox="0 0 333 1200"><path d="M145 15 v585 v0 v585 c2.667,10,9.667,15,21,15
+c10,0,16.667,-5,20,-15 v-585 v0 v-585 c-2.667,-10,-9.667,-15,-21,-15
+c-10,0,-16.667,5,-20,15z M188 15 H145 v585 v0 v585 h43z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35em;"><span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.054em;"><span style="top:-3.3029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:2em;"></span><span class="mord text"><span class="mord">RSS</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.1304em;vertical-align:-1.3021em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283em;"><span style="top:-1.8479em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.3021em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord text"><span class="mord">RSS</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div>
+<dl class="vars">
+<dt><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">ω</span></span></span></span></dt><dd>a cluster (set of points); <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.03588em;">ω</span><span class="mord">∣</span></span></span></span> = how many points it has.</dd>
+<dt><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">μ</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">ω</span><span class="mclose">)</span></span></span></span></dt><dd>centroid = average of each coordinate over the cluster.</dd>
+<dt>RSS</dt><dd>residual sum of squares (inertia): each point's <b>squared</b> distance to its own centroid, added up. K-means makes it as small as it can.</dd>
+</dl>
+<ol class="how">
+<li>Start with the K given centroids (seeds).</li>
+<li>For every point, compute its distance to each centroid; put it in the nearest one's cluster.</li>
+<li>Recompute each centroid as the mean of its cluster's points.</li>
+<li>Repeat 2 and 3 until no point changes cluster (or centroids stop moving, or max iterations).</li>
+</ol>
+<div class="ex"><b>Solved (slide):</b> objects 1 (1,1), 2 (1.5,2), 3 (3,4), 4 (5,7), 5 (3.5,5), 6 (4.5,5), 7 (3.5,4.5). K = 2, seeds object 1 and object 4.
+<ol>
+<li>Distances to (1,1) / (5,7): 1: 0/7.21, 2: 1.12/6.10, 3: 3.61/3.61 (tie → C1), 4: 7.21/0, 5: 4.72/2.50, 6: 5.31/2.06, 7: 4.30/2.92. So C1 = {1,2,3}, C2 = {4,5,6,7}.</li>
+<li>Centroids: c1 = (5.5/3, 7/3) = <b>(1.83, 2.33)</b>; c2 = (16.5/4, 21.5/4) = <b>(4.12, 5.38)</b>.</li>
+<li>Reassign: object 3 is now 2.04 from c1 and 1.78 from c2 → moves to C2. C1 = {1,2}, C2 = {3,4,5,6,7}.</li>
+<li>Centroids: c1 = <b>(1.25, 1.5)</b>; c2 = (19.5/5, 25.5/5) = <b>(3.9, 5.1)</b>.</li>
+<li>Reassign: nobody moves → stop.</li>
+</ol>
+<p class="res">Final clusters <b>{1, 2}</b> and <b>{3, 4, 5, 6, 7}</b>. RSS went from 11.23 to 8.53.</p></div>
+<div class="ex"><b>Solved (RSS):</b> cluster (2,2), (4,2), (3,5).
+<p>Centroid (3, 3). Squared distances 1 + 1 = 2, 1 + 1 = 2, 0 + 4 = 4. <b>RSS = 8</b>.</p></div>
+<p class="trap">RSS uses the <b>squared</b> distance (no square root). RSS always drops as K grows, so choose K at the <b>elbow</b> of the RSS vs K plot, not at the minimum.</p>
+</article>
+
+<article class="fx" id="f-hac">
+<div class="hd"><span class="tag">L15</span><h3>Hierarchical (agglomerative) clustering and linkage</h3></div>
+<p class="use"><b>Use when:</b> points are given and the question says hierarchical / agglomerative / dendrogram / single or complete linkage.</p>
+<div class="fm"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">single</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6382em;vertical-align:-0.8882em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-2.3479em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight">A</span><span class="mpunct mtight">,</span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mathnormal mtight">b</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">min</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8882em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span></span>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">complete</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6382em;vertical-align:-0.8882em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.4306em;"><span style="top:-2.3479em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight">A</span><span class="mpunct mtight">,</span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mathnormal mtight">b</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">max</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8882em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span></span>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">avg</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.6509em;vertical-align:-1.3295em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal">A</span><span class="mord">∣∣</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord">∣</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.8557em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight">A</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.3217em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.8479em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.3295em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span></span>
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">centroid</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">μ</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">μ</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div>
+<ol class="how">
+<li>Every point starts as its own cluster.</li>
+<li>Compute the distance between every pair of clusters (with the linkage the question says).</li>
+<li>Merge the closest pair. Update its centroid if using centroid linkage.</li>
+<li>Repeat until one cluster (or K clusters) remains. Draw the merges as a dendrogram.</li>
+</ol>
+<div class="ex"><b>Solved (slide, centroid linkage):</b> points (2,2), (3,4), (5,2), (4,8), (4,10), (6,8), (7,10), (9,3), (10,5), (11,4), (12,3), (12,6).
+<ol>
+<li>Closest: (11,4) and (12,3), distance √2 = 1.41 (tie with (10,5)–(11,4)). Merge → centroid <b>(11.5, 3.5)</b>.</li>
+<li>(4,8) + (4,10), distance 2 → centroid <b>(4, 9)</b>.</li>
+<li>(10,5) + (11.5, 3.5), distance 2.12 → centroid <b>(11, 4)</b>.</li>
+<li>At √5 = 2.24: (6,8) joins (4, 9); (2,2) + (3,4) → (2.5, 3); (9,3) joins (11, 4).</li>
+</ol></div>
+<div class="ex"><b>Solved (linkages):</b> A = {(0,0), (0,2)}, B = {(3,0), (5,0)}. Pair distances 3, 5, 3.61, 5.39.
+<p>Single = <b>3</b>. Complete = <b>5.39</b>. Average = 17/4 = <b>4.25</b>. Centroid: (0,1) to (4,0) = √17 = <b>4.12</b>.</p></div>
+<p class="trap">Agglomerative = bottom-up (merge). Divisive = top-down (split). Single linkage = min, complete = max.</p>
 </article>
 
 <div class="pager"><a href="#home">← Back to index</a><a href="#fx-lookup">↑ Lookup table</a></div>
@@ -4824,6 +4968,281 @@ P = [[0.9, 0.1], [0.5, 0.5]] (rows sum to 1). Find the stationary distribution.
 </ul>
 
 </template>
+<template id="t-l15">
+<div class="inmin"><b class="l">This lecture in one minute</b>
+<b>Clustering</b> = grouping documents so that documents in the same group are similar and documents in different groups are different. It is <b>unsupervised</b>: there are no labels and no training set (L13 classification had labels; clustering does not). Types: <b>flat</b> (just K groups) vs <b>hierarchical</b> (a tree of groups), and <b>hard</b> (each document in exactly one cluster, e.g. K-means) vs <b>soft</b> (a document belongs partly to several, e.g. LSI). In IR it rests on the <b>cluster hypothesis</b>: documents in the same cluster behave similarly with respect to relevance. Uses: search result clustering, <b>Scatter/Gather</b>, collection clustering. <b>K-means</b>: pick K centroids, assign every point to the nearest centroid, recompute each centroid as the mean, repeat; it minimizes <b>RSS</b>. Choose K with the <b>elbow method</b>. <b>Hierarchical agglomerative</b> clustering starts with every point alone and keeps merging the two closest clusters; the result is drawn as a <b>dendrogram</b>. "Closest" is defined by a <b>linkage</b>: single (min), complete (max), average, centroid. Expect a K-means or hierarchical numerical with Euclidean distance.</div>
+
+<h2 id="l15-what">1. What is text clustering?</h2>
+<ul class="clean">
+  <li><b>Text clustering</b> is the task of grouping a set of <b>unlabelled</b> texts so that texts in the same cluster are more similar to each other than to texts in other clusters.</li>
+  <li>The algorithm decides whether <b>natural groups</b> exist in the data. Nobody tells it what the groups are.</li>
+  <li>Goal in two lines: documents <b>inside</b> a cluster as similar as possible; documents in <b>different</b> clusters as dissimilar as possible.</li>
+  <li>It is the most common form of <b>unsupervised learning</b>: no labelled data, no training corpus.</li>
+</ul>
+<dl class="sym">
+  <dt>Cluster</dt><dd>a group of similar items.</dd>
+  <dt>Unlabelled</dt><dd>nobody has written the correct group next to each document.</dd>
+  <dt>Unsupervised learning</dt><dd>learning patterns from data without correct answers to copy from.</dd>
+</dl>
+<div class="analogy"><b>Analogy</b>You empty a box of mixed LEGO pieces on the floor and sort them into piles by shape and colour. Nobody gave you a list of piles; you invented them by looking at which pieces look alike. That is clustering. If someone had handed you labelled bins ("red bricks", "wheels") and you dropped each piece into its bin, that would be classification.</div>
+<p>The slide example (Yang and Tar 2018): "How old are you?" and "What is your age?" use different words but mean the same, so a good clustering puts them together; "How are you?" looks similar in words but means something different, so it belongs elsewhere. Good clustering is about <b>meaning</b>, not just shared words.</p>
+
+<h2 id="l15-types">2. Types of clustering</h2>
+<h3>Flat vs hierarchical</h3>
+<ul class="clean">
+  <li><b>Flat clustering</b> creates a flat set of clusters with no structure relating them to each other. Example: K-means gives K separate groups.</li>
+  <li><b>Hierarchical clustering</b> creates a <b>hierarchy</b> (tree) of clusters: big clusters contain smaller clusters. Example: agglomerative clustering, drawn as a dendrogram.</li>
+</ul>
+<h3>Hard vs soft</h3>
+<ul class="clean">
+  <li><b>Hard clustering</b>: each document is a member of <b>exactly one</b> cluster. Example: <b>K-means</b>.</li>
+  <li><b>Soft clustering</b>: a document's assignment is a <b>distribution</b> over all clusters; it has <b>fractional membership</b> in several (e.g. 70% sports, 30% politics). Example: <b>Latent Semantic Indexing (LSI)</b>, a form of dimensionality reduction.</li>
+</ul>
+<div class="analogy"><b>Analogy</b>Hard: every student sits in exactly one classroom. Soft: a student who is 60% in the coding club and 40% in the music club. A news article about a cricket player entering politics fits soft clustering better.</div>
+
+<h2 id="l15-ir">3. Clustering in Information Retrieval</h2>
+<div class="callout"><b>Cluster hypothesis:</b> documents in the same cluster behave similarly with respect to relevance to information needs. If one document from a cluster is relevant to a query, the other documents in that cluster are likely relevant too, because clustering puts together documents that share many terms.</div>
+<h3>Clustering vs classification</h3>
+<div class="tbl"><table class="mini"><thead><tr><th></th><th>Classification (L13)</th><th>Clustering (L15)</th></tr></thead><tbody>
+<tr><td>Labels available?</td><td>Yes (supervised)</td><td>No (unsupervised)</td></tr>
+<tr><td>Classes</td><td>Predefined, fixed set ℂ</td><td>Discovered from the data</td></tr>
+<tr><td>Goal</td><td>Learn γ: 𝕏 → ℂ to match known labels</td><td>Group similar documents; the structure is found, not given</td></tr>
+<tr><td>Evaluation</td><td>Compare predictions with ground-truth labels</td><td>Trickier: internal cluster quality, or external labels if available</td></tr>
+</tbody></table></div>
+<h3>Applications in IR (slide list)</h3>
+<ul class="clean">
+  <li><b>Search result clustering</b>: group the results of a query by theme. "jaguar" → car / animal / operating system clusters, so the user jumps to the meaning they wanted.</li>
+  <li><b>Scatter/Gather</b>: interactive browsing (next section).</li>
+  <li><b>Collection clustering</b>: organise a whole corpus (e.g. a digital library) into browsable topic groups without manual tagging.</li>
+  <li>Other real-world uses: <b>news aggregation</b> (Google News story clusters), <b>exploratory data analysis</b> (find latent themes before designing classes), <b>recommender systems</b> (cluster users or items).</li>
+</ul>
+
+<h2 id="l15-sg">4. Scatter/Gather</h2>
+<p><b>Scatter/Gather</b> is an <b>interactive</b> clustering technique: retrieved documents are <b>scattered</b> into topical clusters, the user <b>selects</b> a cluster, the system <b>gathers</b> the documents of that cluster, and the selected set can be <b>scattered again</b> into more specific clusters.</p>
+<div class="work"><b>Slide example: "machine learning in healthcare"</b>
+<ol>
+<li>The engine returns many documents. Instead of one long list, <b>scatter</b> them by topic: Diagnosis &amp; Prediction (30 docs), Medical Imaging (25), Patient Monitoring (20).</li>
+<li>Small version: D1 ML for cancer diagnosis, D2 neural networks for tumour detection → <b>Cancer Diagnosis</b>; D3 ML for medical images, D4 deep learning for X-rays → <b>Medical Imaging</b>; D5 ML for patient monitoring, D6 IoT patient monitoring → <b>Patient Monitoring</b>.</li>
+<li>The user is interested in Medical Imaging and selects it. The system <b>gathers</b> D3 and D4.</li>
+<li>That gathered set can be scattered again into finer sub-topics. Flow: collection → SCATTER → clusters A, B, C → user selects → GATHER → selected docs → SCATTER → more specific clusters.</li>
+</ol>
+Scatter is not random distribution: it partitions documents by similarity / topic.</div>
+<div class="analogy"><b>Analogy</b>A shop assistant spreads all the T-shirts on a table in piles by style (scatter). You point at "round neck" (select). They pick up that pile (gather) and spread it again by colour (scatter again).</div>
+
+<h2 id="l15-obj">5. The problem statement (objective function)</h2>
+<p>Hard flat clustering, formally. Given:</p>
+<ul class="clean">
+  <li>a set of documents D = {d₁, ..., d_N},</li>
+  <li>a desired number of clusters K,</li>
+  <li>an <b>objective function</b> that scores the quality of a clustering,</li>
+</ul>
+<p>compute an assignment <b>γ : D → {1, ..., K}</b> (each document gets a cluster number) that <b>minimizes</b> (or in some cases maximizes) the objective function. Usually γ must be <b>surjective</b>: no cluster is empty.</p>
+<dl class="sym">
+  <dt>γ (gamma)</dt><dd>the assignment function: γ(d) = the cluster of document d.</dd>
+  <dt>Objective function</dt><dd>a single number saying how good the grouping is (for K-means: RSS, smaller is better).</dd>
+  <dt>Surjective</dt><dd>"onto": every cluster number 1..K is used by at least one document.</dd>
+</dl>
+
+<h2 id="l15-steps">6. Text clustering steps</h2>
+<div class="flow"><span>Text pre-processing</span><span>Feature extraction</span><span>Distance measure</span><span>Clustering algorithm</span><span>Evaluation</span></div>
+<ul class="clean">
+  <li><b>Pre-processing</b>: tokenize, lowercase, remove stopwords, stem (L4, L5).</li>
+  <li><b>Feature extraction / text representation</b>: turn each text into numbers.
+    <ul class="clean"><li>Word n-grams / bag of words: <b>TF-IDF</b>, count vector, indicator (0/1).</li>
+    <li>Word embeddings: <b>Word2Vec</b>, <b>GloVe</b>.</li>
+    <li>Transformer language models: <b>BERT</b>, XLM-RoBERTa, GPT.</li></ul></li>
+  <li><b>Distance measure</b>: Euclidean, cosine, Minkowski, Manhattan, Hamming.</li>
+  <li><b>Clustering algorithm</b>: next section.</li>
+  <li><b>Evaluation</b>: how good are the clusters?</li>
+</ul>
+
+<h2 id="l15-dist">7. Distance measures</h2>
+<p>A <b>distance</b> must obey three rules:</p>
+<ol>
+  <li><b>Non-negative</b>: distances are ≥ 0, and only the distance from a point to itself is 0.</li>
+  <li><b>Symmetric</b>: d(x, y) = d(y, x).</li>
+  <li><b>Triangle inequality</b>: going x → y → z is never shorter than going x → z directly: d(x, z) ≤ d(x, y) + d(y, z).</li>
+</ol>
+<div class="formula">Euclidean:  d(x, y) = √( Σᵢ (xᵢ − yᵢ)² )
+Manhattan:  d(x, y) = Σᵢ |xᵢ − yᵢ|
+Minkowski:  d(x, y) = ( Σᵢ |xᵢ − yᵢ|ᵖ )^(1/p)     (p = 1 → Manhattan, p = 2 → Euclidean)
+Cosine similarity:  Σᵢ xᵢyᵢ / ( √Σxᵢ² · √Σyᵢ² )   (cosine distance = 1 − cosine similarity)
+Hamming:  number of positions where the two vectors differ</div>
+<p>The slide's "Any guess for distance metric?" shows the second formula: that is <b>cosine similarity</b> (L6). For text, cosine is often better than Euclidean because it ignores document length.</p>
+<div class="work"><b>Quick examples</b>
+x = (1, 1), y = (5, 7): Euclidean = √(16 + 36) = √52 = <b>7.21</b>; Manhattan = 4 + 6 = <b>10</b>.<br>
+Hamming between 10110 and 11100: positions 2 and 4 differ → <b>2</b>.</div>
+
+<h2 id="l15-algos">8. Families of clustering algorithms</h2>
+<div class="tbl"><table class="mini"><thead><tr><th>Family</th><th>Example</th><th>Idea in one line</th></tr></thead><tbody>
+<tr><td>Centroid-based</td><td>K-means</td><td>Each cluster is represented by its centre; points go to the nearest centre.</td></tr>
+<tr><td>Hierarchical</td><td>Agglomerative, Divisive</td><td>Build a tree by merging (bottom-up) or splitting (top-down).</td></tr>
+<tr><td>Density-based</td><td>DBSCAN</td><td>Clusters are dense regions; sparse points are noise.</td></tr>
+<tr><td>Distribution-based</td><td>Gaussian Mixture Model (GMM)</td><td>Each cluster is a probability distribution (soft).</td></tr>
+<tr><td>Neural network-based</td><td>Autoencoder, GANs</td><td>Learn a compact representation, then cluster.</td></tr>
+<tr><td>Topic model</td><td>LDA (Latent Dirichlet Allocation)</td><td>Each document is a mixture of topics (soft).</td></tr>
+<tr><td>Matrix factorization</td><td>LSA / LSI</td><td>Reduce dimensions; soft clustering.</td></tr>
+</tbody></table></div>
+<p class="note">The slide writes "Latent Dirichlet Algorithm"; the standard name is Latent Dirichlet <b>Allocation</b>.</p>
+
+<h2 id="l15-kmeans">9. K-means</h2>
+<ul class="clean">
+  <li>A <b>flat</b>, <b>hard</b>, <b>point-assignment</b> algorithm.</li>
+  <li>Assumes the number of clusters <b>K is known in advance</b> (it can be found by trial and error, e.g. the elbow method).</li>
+  <li><b>Objective:</b> minimize the average squared Euclidean distance of documents from their cluster centres.</li>
+</ul>
+<div class="formula">Centroid of cluster ω:   μ(ω) = (1/|ω|) Σ_{x ∈ ω} x        (the mean of its points)
+RSS of cluster k:        RSS_k = Σ_{x ∈ ω_k} |x − μ(ω_k)|²
+Total:                   RSS = Σ_{k=1..K} RSS_k</div>
+<dl class="sym">
+  <dt>ω (omega)</dt><dd>a cluster (a set of points). |ω| = number of points in it.</dd>
+  <dt>μ(ω) (mu)</dt><dd>centroid: average each coordinate over the cluster's points.</dd>
+  <dt>RSS</dt><dd>Residual Sum of Squares, also called <b>inertia</b>: for every point, the squared distance to its own centroid, all added up. Small RSS = tight clusters. K-means tries to make it small.</dd>
+</dl>
+<p>Euclidean distance is the normal choice when most features are numeric; Manhattan if most features are categorical (slide).</p>
+<h3>The algorithm</h3>
+<ol>
+  <li><b>Choose K.</b></li>
+  <li><b>Initialize</b>: pick K random data points as the starting centroids (seeds).</li>
+  <li><b>Assign</b>: put every point in the cluster of its nearest centroid.</li>
+  <li><b>Recompute</b>: each centroid = mean of the points now in its cluster.</li>
+  <li><b>Repeat 3 and 4</b> until a stopping criterion is met.</li>
+</ol>
+<p><b>Stopping criteria:</b> centroids no longer change; points stay in the same cluster; or a maximum number of iterations is reached.</p>
+<div class="formula">K-MEANS({x₁..x_N}, K)
+ (s₁..s_K) ← SELECTRANDOMSEEDS({x₁..x_N}, K)
+ for k ← 1 to K: μ_k ← s_k
+ while stopping criterion not met:
+    for k ← 1 to K: ω_k ← {}
+    for n ← 1 to N:
+        j ← argmin_j′ |μ_j′ − x_n|        (nearest centroid)
+        ω_j ← ω_j ∪ {x_n}                 (reassignment of vectors)
+    for k ← 1 to K:
+        μ_k ← (1/|ω_k|) Σ_{x ∈ ω_k} x      (recomputation of centroids)
+ return {μ₁..μ_K}</div>
+<div class="analogy"><b>Analogy</b>Placing 2 ice-cream stalls on a beach. Put them anywhere. Every swimmer walks to the nearest stall. Then each stall owner moves to the middle of their own customers. Customers again pick the nearest stall. After a few rounds nobody switches and the stalls stop moving: that is convergence.</div>
+
+<h3>Worked example (slides): 7 objects, K = 2</h3>
+<div class="tbl"><table class="mini"><thead><tr><th>Object</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody>
+<tr><td>f1</td><td>1</td><td>1.5</td><td>3</td><td>5</td><td>3.5</td><td>4.5</td><td>3.5</td></tr>
+<tr><td>f2</td><td>1</td><td>2</td><td>4</td><td>7</td><td>5</td><td>5</td><td>4.5</td></tr>
+</tbody></table></div>
+<div class="work"><b>Solution step by step</b>
+<ol>
+<li><b>Seeds:</b> the two points farthest apart, object 1 (1, 1) and object 4 (5, 7).</li>
+<li><b>Distances</b> (Euclidean) to (1, 1) and (5, 7): obj 1: 0 / 7.21; obj 2: 1.12 / 6.10; obj 3: 3.61 / 3.61 (tie, put in cluster 1); obj 4: 7.21 / 0; obj 5: 4.72 / 2.50; obj 6: 5.31 / 2.06; obj 7: 4.30 / 2.92.</li>
+<li><b>Clusters:</b> C1 = {1, 2, 3}, C2 = {4, 5, 6, 7}.</li>
+<li><b>New centroids:</b> c1 = ((1 + 1.5 + 3)/3, (1 + 2 + 4)/3) = <b>(1.83, 2.33)</b>; c2 = ((5 + 3.5 + 4.5 + 3.5)/4, (7 + 5 + 5 + 4.5)/4) = <b>(4.12, 5.38)</b>.</li>
+<li><b>Reassign</b> using these centroids: obj 1: 1.57 / 5.38; obj 2: 0.47 / 4.28; <b>obj 3: 2.04 / 1.78 → moves to C2</b>; obj 4: 5.64 / 1.84; obj 5: 3.15 / 0.73; obj 6: 3.78 / 0.54; obj 7: 2.74 / 1.08.</li>
+<li><b>Clusters:</b> C1 = {1, 2}, C2 = {3, 4, 5, 6, 7}. New centroids: c1 = ((1 + 1.5)/2, (1 + 2)/2) = <b>(1.25, 1.5)</b>; c2 = ((3 + 5 + 3.5 + 4.5 + 3.5)/5, (4 + 7 + 5 + 5 + 4.5)/5) = <b>(3.9, 5.1)</b>.</li>
+<li><b>Reassign again:</b> obj 1: 0.56 / 5.02; obj 2: 0.56 / 3.92; obj 3: 3.05 / 1.42; obj 4: 6.66 / 2.20; obj 5: 4.16 / 0.41; obj 6: 4.78 / 0.61; obj 7: 3.75 / 0.72. Nobody moves → <b>stop</b>.</li>
+</ol>
+<b>Final: C1 = {1, 2}, C2 = {3, 4, 5, 6, 7}</b>. RSS fell from 11.23 (after step 4) to 8.53 (final).</div>
+<p class="note">On slide 48 the heading shows the new centroids (1.25, 1.5) and (3.9, 5.1), but the table under it is the distances to the previous centroids (1.83, 2.33) and (4.12, 5.38). Read the table as step 5 above. Small differences in the second decimal (5.31 vs 5.32) are rounding.</p>
+
+<h3>Choosing K: the elbow method</h3>
+<ul class="clean">
+  <li>Run K-means for K = 1, 2, 3, ... and plot <b>RSS (inertia) vs K</b>.</li>
+  <li>RSS <b>always decreases</b> as K grows (more clusters = tighter fit; K = N gives RSS = 0). So "smallest RSS" is not the answer.</li>
+  <li>Pick the <b>elbow</b>: the K where the curve suddenly flattens, after which extra clusters give little improvement. On the slide's plot the drop is big from 2 to 4 and small after about 6.</li>
+</ul>
+
+<h2 id="l15-hier">10. Hierarchical clustering</h2>
+<ul class="clean">
+  <li>Finds successive clusters using previously established clusters.</li>
+  <li><b>Agglomerative ("bottom-up")</b>: start with every element as its own cluster, merge them into larger and larger clusters.</li>
+  <li><b>Divisive ("top-down")</b>: start with the whole set in one cluster, split it into smaller and smaller clusters.</li>
+</ul>
+<p>Before running agglomerative clustering you must decide: <b>how clusters are represented</b> (e.g. by centroid), <b>which two clusters to merge</b> (the closest, by some distance), and <b>when to stop</b> (e.g. when K clusters remain, or when the closest pair is too far apart).</p>
+<div class="formula">WHILE it is not time to stop DO
+    pick the best two clusters to merge;
+    combine those two clusters into one cluster;
+END;</div>
+
+<h3>Worked example (slides): 12 points, centroid distance</h3>
+<p>Points: (2,2), (3,4), (5,2), (4,8), (4,10), (6,8), (7,10), (9,3), (10,5), (11,4), (12,3), (12,6). Each starts as its own cluster and its own centroid. Distance between clusters = Euclidean distance between their centroids.</p>
+<div class="work"><b>Merges in order</b>
+<ol>
+<li>Closest pairs: (10,5)–(11,4) and (11,4)–(12,3), both √2 = 1.41. Merge <b>(11,4) + (12,3)</b> → centroid (11.5, 3.5).</li>
+<li>(4,8) + (4,10), distance 2 → centroid <b>(4, 9)</b>.</li>
+<li>(10,5) + cluster with centroid (11.5, 3.5), distance √(2.25 + 2.25) = 2.12 → cluster {(10,5), (11,4), (12,3)}, centroid <b>(11, 4)</b>.</li>
+<li>Three merges tie at √5 = 2.24: (6,8) joins the (4, 9) cluster → centroid (4.67, 8.67); (2,2) + (3,4) → centroid (2.5, 3); (9,3) joins the (11, 4) cluster → centroid (10.5, 3.75).</li>
+<li>Continue: (7,10) joins the top-left cluster (2.69), (5,2) joins {(2,2), (3,4)} (2.69), (12,6) joins the right cluster (2.70). Then the bottom-left and top-left groups merge, then everything merges into one.</li>
+</ol>
+The <b>dendrogram</b> (tree diagram) shows this: leaves are the points, each joint is a merge, and the height of a joint is how far apart the merged clusters were. Cutting the tree at some height gives a flat clustering.</div>
+<p class="note">Slide 60 labels the centroids (4.7, 8.7) and (10.5, 3.8); exactly they are (4.67, 8.67) and (10.5, 3.75).</p>
+<div class="analogy"><b>Analogy</b>A family tree read upward: siblings join into a family, families join into a clan, clans into a village. Agglomerative clustering builds the tree from the bottom; divisive starts from the village and splits.</div>
+
+<h2 id="l15-link">11. Distance between two clusters (linkage)</h2>
+<div class="tbl"><table class="mini"><thead><tr><th>Linkage</th><th>Distance between clusters A and B</th><th>Behaviour</th></tr></thead><tbody>
+<tr><td><b>Single</b></td><td>Shortest distance between a point of A and a point of B (min)</td><td>Can make long, thin "chains"</td></tr>
+<tr><td><b>Complete</b></td><td>Longest distance between a point of A and a point of B (max)</td><td>Compact, round clusters</td></tr>
+<tr><td><b>Average</b></td><td>Average distance over all pairs (one point from each)</td><td>In between</td></tr>
+<tr><td><b>Centroid</b></td><td>Distance between the two centroids (mean vectors)</td><td>Used in the 12-point example</td></tr>
+</tbody></table></div>
+<p>Two more cluster measures from the slide: <b>radius</b> = maximum distance from any point to the centroid; <b>diameter</b> = maximum distance between any two points of the cluster.</p>
+<div class="work"><b>Example</b> A = {(0,0), (0,2)}, B = {(3,0), (5,0)}.
+Pair distances: (0,0)–(3,0) = 3; (0,0)–(5,0) = 5; (0,2)–(3,0) = √13 = 3.61; (0,2)–(5,0) = √29 = 5.39.
+<b>Single = 3</b>. <b>Complete = 5.39</b>. <b>Average</b> = (3 + 5 + 3.61 + 5.39)/4 = <b>4.25</b>. <b>Centroid</b>: (0, 1) and (4, 0) → √(16 + 1) = <b>4.12</b>.</div>
+
+<h2 id="l15-chal">12. Challenges of text clustering</h2>
+<ol>
+  <li><b>High dimensionality</b>: one dimension per word, so vectors have tens of thousands of dimensions and distances become less meaningful.</li>
+  <li><b>Noise and outliers</b>: odd documents pull centroids away (K-means is sensitive to outliers).</li>
+  <li><b>Categorical data</b>: some features are categories, not numbers, so Euclidean distance does not fit.</li>
+  <li><b>Synonyms and polysemy</b>: "car" and "automobile" look different; "bank" has two meanings.</li>
+  <li><b>Large datasets</b>: millions of documents are costly to compare pairwise (hierarchical is at least O(N²)).</li>
+  <li><b>New words</b>: vocabulary keeps changing.</li>
+  <li><b>Scalability</b>: the method must keep working as data grows.</li>
+</ol>
+
+<h2 id="l15-practice">Practice numericals</h2>
+<div class="work"><b>Practice 1: one K-means round</b>
+Points A(1, 1), B(2, 1), C(4, 3), D(5, 4). K = 2, seeds A and C. Do one assignment and one centroid update.
+<details class="ans"><summary>Show solution</summary><div>Distances to A / C: A 0 / 3.61; B 1 / 2.83; C 3.61 / 0; D 5 / 1.41. Clusters {A, B} and {C, D}. New centroids (1.5, 1) and (4.5, 3.5). Reassigning changes nothing, so it has converged. RSS = 0.25 + 0.25 + 0.5 + 0.5 = <b>1.5</b>.</div></details></div>
+<div class="work"><b>Practice 2: RSS</b>
+A cluster has points (2, 2), (4, 2), (3, 5). Find its centroid and RSS.
+<details class="ans"><summary>Show solution</summary><div>Centroid = (9/3, 9/3) = (3, 3). Squared distances: (1 + 1) = 2, (1 + 1) = 2, (0 + 4) = 4. <b>RSS = 8</b>.</div></details></div>
+<div class="work"><b>Practice 3: agglomerative, single linkage</b>
+1-D points 1, 2, 4, 8, 9. Merge with single linkage until 2 clusters remain.
+<details class="ans"><summary>Show solution</summary><div>Smallest gaps: 1–2 (1) and 8–9 (1) → {1, 2}, {8, 9}. Next: {1, 2} to 4 = 2 → {1, 2, 4}. Two clusters left: <b>{1, 2, 4} and {8, 9}</b>.</div></details></div>
+
+<h2 id="l15-mcq">MCQs</h2>
+<div class="q"><b>Q1.</b> Clustering is an example of:
+<ol><li>Supervised learning</li><li>Unsupervised learning</li><li>Reinforcement learning</li><li>Relevance feedback</li></ol><details><summary>Answer</summary>B. No labels, no training corpus.</details></div>
+<div class="q"><b>Q2.</b> K-means is a:
+<ol><li>Soft, hierarchical algorithm</li><li>Hard, flat algorithm</li><li>Soft, flat algorithm</li><li>Hard, hierarchical algorithm</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q3.</b> Which is a soft clustering method according to the slides?
+<ol><li>K-means</li><li>Single linkage</li><li>Latent Semantic Indexing</li><li>DBSCAN</li></ol><details><summary>Answer</summary>C.</details></div>
+<div class="q"><b>Q4.</b> The cluster hypothesis says:
+<ol><li>Clusters must have equal size</li><li>Documents in the same cluster behave similarly with respect to relevance</li><li>Every document belongs to one cluster</li><li>K must be known in advance</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q5.</b> In the elbow method, RSS as K increases:
+<ol><li>Always increases</li><li>Always decreases</li><li>First increases then decreases</li><li>Stays constant</li></ol><details><summary>Answer</summary>B. You pick the K where the decrease flattens.</details></div>
+<div class="q"><b>Q6.</b> The distance between two clusters taken as the longest distance between their points is:
+<ol><li>Single linkage</li><li>Complete linkage</li><li>Average linkage</li><li>Centroid linkage</li></ol><details><summary>Answer</summary>B.</details></div>
+<div class="q"><b>Q7.</b> Agglomerative clustering is:
+<ol><li>Top-down</li><li>Bottom-up</li><li>Density-based</li><li>Distribution-based</li></ol><details><summary>Answer</summary>B. Divisive is top-down.</details></div>
+<div class="q"><b>Q8.</b> In Scatter/Gather, "gather" means:
+<ol><li>Collecting the whole web</li><li>Collecting the documents of the cluster the user selected</li><li>Merging all clusters</li><li>Crawling links</li></ol><details><summary>Answer</summary>B.</details></div>
+
+<h2 id="l15-traps">MCQ traps and quick facts</h2>
+<ul class="trap">
+  <li>Clustering = unsupervised, classes discovered. Classification (L13) = supervised, classes predefined.</li>
+  <li>Flat vs hierarchical (structure). Hard vs soft (membership). K-means = flat + hard. LSI = soft.</li>
+  <li>Cluster hypothesis: same cluster → similar relevance.</li>
+  <li>Applications: search result clustering ("jaguar"), Scatter/Gather, collection clustering, news aggregation, recommenders.</li>
+  <li>Scatter = split into topic clusters; gather = collect the chosen cluster; can repeat. It is interactive.</li>
+  <li>Problem statement: γ : D → {1..K} minimizing an objective; surjective = no empty cluster.</li>
+  <li>Steps: pre-processing → feature extraction → distance → algorithm → evaluation.</li>
+  <li>Distance rules: non-negative (0 only to itself), symmetric, triangle inequality.</li>
+  <li>K-means: K known in advance; random seeds; assign to nearest; recompute mean; stop when nothing changes or max iterations. Minimizes RSS (inertia).</li>
+  <li>RSS always falls as K grows; choose K at the elbow.</li>
+  <li>Agglomerative = bottom-up merge; divisive = top-down split. Drawn as a dendrogram.</li>
+  <li>Single = min, complete = max, average = mean of all pairs, centroid = distance between means. Radius = max distance to centroid; diameter = max distance between two points.</li>
+  <li>Slide example: first merge (11,4)+(12,3) at √2, centroid (11.5, 3.5). K-means example ends with {1, 2} and {3, 4, 5, 6, 7}.</li>
+</ul>
+
+</template>
 <script>
 const LECS = [
  {id:"l1", n:"L1-2", ready:1, title:"Introduction to IR (Lectures 1 and 2)", file:"01_Introduction To IR.pptx.pdf", slides:43, mcq:"m", num:"l", time:"30 min",
@@ -4877,7 +5296,11 @@ const LECS = [
  {id:"l14", ready:1, n:"L14", title:"Web search: crawling, PageRank and HITS", file:"Lec-14 Web-search.pdf", slides:59, mcq:"h", num:"h", time:"1 h 30 min",
   topics:["why text scoring is not enough","web IR vs classical IR","WWW, HTTP, URL, spam, SEO","web graph","bow-tie: SCC, IN, OUT, tendrils","informational / navigational / transactional","search engine components","crawler and URL frontier","robots.txt","PageRank idea","adjacency matrix and A^k","strongly connected","transition matrix","random surfer","eigenvector","power iteration","Markov process","dead ends","spider traps","taxation β","HITS hubs and authorities"],
   covers:"Why text-only scoring (TF-IDF, BM25, LMs) is not enough on the web (authority, spam, scale), a comparison of classical IR and web IR, basic web terms (WWW, HTTP, URL, static and dynamic pages, spam, SEO, adversarial IR), the web as a directed graph and its bow-tie structure, Broder's three query types, the parts of a search engine, how a crawler works (seed set, fetch, parse, URL frontier, DNS, duplicate checks, robots.txt), the idea of PageRank (Page and Brin, 1998), graph and matrix basics (adjacency matrix, paths via A^k, strong connectivity, in/out-degree, column-stochastic transition matrix, random surfer, eigenvalues), the 4-page PageRank example by power iteration and by solving the eigenvector equation (12, 4, 9, 6)/31, Markov chains with a market-share example, dead ends and spider traps with their worked iterations, the taxation fix v' = βMv + (1 − β)e/n with β = 0.8, and HITS hubs and authorities.",
-  nums:["Build a column-stochastic transition matrix from a link graph","PageRank by power iteration: v, Av, A²v, ... (slide answer [0.38, 0.12, 0.29, 0.19])","PageRank exactly by solving A·x = x (12, 4, 9, 6)/31","Taxed PageRank: v' = βMv + (1 − β)e/n with β = 0.8 (spider trap → 15, 19, 95, 19 /148)","Dead-end and spider-trap iterations","Markov chain steady state (market share 0.6 / 0.4)","Paths of length k from A^k","HITS hub and authority updates"]}
+  nums:["Build a column-stochastic transition matrix from a link graph","PageRank by power iteration: v, Av, A²v, ... (slide answer [0.38, 0.12, 0.29, 0.19])","PageRank exactly by solving A·x = x (12, 4, 9, 6)/31","Taxed PageRank: v' = βMv + (1 − β)e/n with β = 0.8 (spider trap → 15, 19, 95, 19 /148)","Dead-end and spider-trap iterations","Markov chain steady state (market share 0.6 / 0.4)","Paths of length k from A^k","HITS hub and authority updates"]},
+ {id:"l15", ready:1, n:"L15", title:"Text clustering: K-means and hierarchical", file:"Lec-15 Clusterinng.pdf", slides:67, mcq:"h", num:"h", time:"1 h 15 min",
+  topics:["what clustering is","unsupervised, no labels","flat vs hierarchical","hard vs soft","cluster hypothesis","clustering vs classification","search result clustering","Scatter/Gather","objective function γ","clustering steps","feature extraction","distance measures","algorithm families","K-means","RSS / inertia","stopping criteria","elbow method","K-means worked example","agglomerative vs divisive","12-point merge example","dendrogram","single / complete / average / centroid linkage","challenges"],
+  covers:"What text clustering is and why it is unsupervised, the clustering objective, flat vs hierarchical and hard vs soft clustering (K-means hard, LSI soft), the cluster hypothesis, clustering vs classification, applications in IR (search result clustering, Scatter/Gather with the 'machine learning in healthcare' example, collection clustering, news, recommenders), the formal problem statement γ : D → {1..K}, the five clustering steps, text representations (TF-IDF, Word2Vec, GloVe, BERT), distance measures and their three properties, families of clustering algorithms, K-means (centroid, RSS / inertia, the algorithm, stopping criteria, the elbow method, the 7-object worked example), hierarchical clustering (agglomerative vs divisive, the 12-point centroid example, the dendrogram), linkage criteria (single, complete, average, centroid), radius and diameter, and the challenges of text clustering.",
+  nums:["Euclidean / Manhattan distance between points","K-means: assign to nearest centroid, recompute the mean, repeat (7-object example ends {1,2} and {3,...,7})","Centroid and RSS of a cluster","Agglomerative merging with centroid distance (first merge (11,4)+(12,3) at √2)","Single / complete / average / centroid linkage between two clusters"]}
 ];
 
 const LV = {h:["h","high"], m:["m","medium"], l:["l","low"]};
